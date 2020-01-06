@@ -30,6 +30,7 @@ const routes = [
 //     ],
 //   },
   {
+    path: '/user',
     component: './DashBoard',
     // component: './404',
   },
