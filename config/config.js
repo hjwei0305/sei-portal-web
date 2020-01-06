@@ -9,7 +9,7 @@ export default {
   // history: 'hash',
   base: 'sei-portal-web',
   publicPath: '/sei-portal-web/',
-  outputPath: '/dist/sei-portal-web',
+  outputPath: '/dist',
   targets: {
     ie: 11,
   },

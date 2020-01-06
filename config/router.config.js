@@ -6,7 +6,7 @@ const routes = [
       {
         name: 'login',
         path: '/user/login',
-        component: './DashBoard',
+        component: './UserLogin',
       },
     ],
   },
