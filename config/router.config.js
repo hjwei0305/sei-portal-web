@@ -1,15 +1,15 @@
 const routes = [
-// {
-//     path: '/user',
-//     component: '../layouts/LoginLayout',
-//     routes: [
-//       {
-//         name: 'login',
-//         path: '/user/login',
-//         component: './userLogin',
-//       },
-//     ],
-//   },
+  {
+    path: '/user',
+    component: '../layouts/LoginLayout',
+    routes: [
+      {
+        name: 'login',
+        path: '/user/login',
+        component: './DashBoard',
+      },
+    ],
+  },
   {
     path: '/',
     component: '../layouts/BasicLayout',
