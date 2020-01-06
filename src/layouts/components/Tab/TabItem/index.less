@@ -1,0 +1,103 @@
+@shadow-color: #f2f2f4;
+@tabs-height: 56px;
+@tab-bg: #fff;
+@tab-bg-active: rgba(0, 0, 0, 0.04);
+@line-block-width: 13px;
+@tab-title-color: #bbb;
+@tab-title-hover-color: #333;
+
+.custom-tabs-item {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  height: @tabs-height;
+  border-bottom: 0;
+  margin: 0 2px;
+  overflow: hidden;
+  line-height: @tabs-height;
+  background: @tab-bg;
+  cursor: pointer;
+  :global {
+    /** 页签操作容器 */
+    .tab-operate-wrapper {
+    	position: absolute;
+    	top: 50%;
+    	right: 5px;
+      transform: translateY(-50%);
+      .icon {
+        display: block;
+        cursor: pointer;
+        &:hover {
+          font-weight: bolder;
+          transform: scale(1.2, 1.2);
+        }
+      }
+    }
+    /** 页签标题样式 */
+    .tab-title {
+      position: relative;
+      overflow: hidden;
+    	height: @tabs-height;
+      color: @tab-title-color;
+      white-space: nowrap;
+      text-align: center;
+      &:hover {
+        color: @tab-title-hover-color;
+      }
+      a {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    }
+  };
+  &_active {
+    z-index: 1000;
+    background: @tab-bg-active;
+    :global {
+      .tab-title {
+        color: @tab-title-hover-color;
+      }
+    };
+  };
+}
+
+/** 包含多个页签项的信息样式 */
+.custom-tabs-more {
+  width: 160px;
+  box-sizing: border-box;
+  padding: 5px;
+  background: @tab-bg;
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  :global {
+    .tabs-more-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      &:hover {
+        background: #f2f5f7;
+      }
+      .title {
+        width: 125px;
+        padding: 5px 0;
+        overflow: hidden;
+        cursor: pointer;
+        font-size: 12px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .icon {
+        display: block;
+        cursor: pointer;
+        &:hover {
+          font-weight: bolder;
+          transform: scale(1.2, 1.2);
+        }
+      }
+    }
+  };
+}

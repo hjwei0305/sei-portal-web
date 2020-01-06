@@ -1,0 +1,33 @@
+@import url('./vars.less');
+
+.portal-layout {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh);
+  min-height: 300px;
+  background-color: @base-bg-color;
+  :global {
+    .layout-sidebar {
+      width: @sidebar-width;
+      background-color: @sidebar-bg-color;
+      transition: width  .3s;
+      &.layout-sidebar-collapsed {
+        width: @sidebar-collapsed-width;
+      }
+    }
+    .layout-center {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      .layout-center-header {
+        height: @center-header-height;
+        background-color: @center-bg-color;
+      }
+      .layout-center-content {
+        flex: 1;
+        box-sizing: border-box;
+        overflow: auto;
+      }
+    }
+  };
+}

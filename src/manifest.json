@@ -1,0 +1,7 @@
+{
+  "name": "sei-portal",
+  "short_name": "sei-portal",
+  "display": "standalone",
+  "start_url": "./?utm_source=homescreen",
+  "background_color": "#001529"
+}

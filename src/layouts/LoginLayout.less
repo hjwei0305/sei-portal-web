@@ -1,0 +1,49 @@
+.login-wrapper {
+  height: calc(100vh);
+  overflow: auto;
+  background: url(../assets/login_background.png) 0px 0px no-repeat;
+  :global {
+    .w {
+      width: 990px;
+      margin: 0 auto;
+    }
+    .header-wrapper {
+      .logo {
+        position: relative;
+        width: 300px;
+        height: 60px;
+        margin: 10px 0;
+        float: left;
+      };
+    }
+    .content-wrapper {
+      position: relative;
+      height: 475px;
+      margin: 10px 0 20px;
+      z-index: 5;
+      clear: both;
+      .login-form {
+        position: relative;
+        top: 156px;
+        z-index: 4;
+        width: 337px;
+        height: 323px;
+        padding: 20px 40px;
+        overflow: hidden;
+        float: right;
+        background: hsla(0, 0%, 100%, 1);
+        .login-form-title {
+          font-size: 20px;
+          line-height: 70px;
+          color: grey;
+          font-weight: 700;
+          text-align: center;
+        }
+        .ant-row.ant-form-item {
+          height: auto;
+          margin-bottom: 12px;
+        }
+      }
+    }
+  };
+}

@@ -1,0 +1,28 @@
+.iframe-wrap {
+  display: flex;
+  flex: 1;
+  padding: 8px;
+  &_loading {
+    iframe {
+      display: none;
+    }
+  }
+
+  &_hidden {
+    display: none;
+  }
+
+  :global {
+    iframe {
+      display: block;
+      flex: 1;
+      border: none;
+      box-shadow: none;
+    }
+    .iframe-wrap-loading {
+      position: absolute;
+      width: 100%;
+      padding-top: 100px;
+    }
+  };
+}

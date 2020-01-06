@@ -1,0 +1,26 @@
+.custom-tabs-operate {
+  position: absolute;
+  top: 0;
+  right: 24px;
+  font-size: 16px;
+  font-weight: bolder;
+  &-popover {
+    :global {
+      .ant-popover-inner-content {
+        padding: 8px 0 !important;
+      }
+
+      .operate-item {
+        padding: 0 16px;
+        line-height: 30px;
+        font-size: 12px;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+          background: #f2f5f7;
+        }
+      }
+    };
+  }
+}
