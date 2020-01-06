@@ -123,4 +123,5 @@ class UserLogin extends Component {
   }
 }
 
-export default Form.create({})(UserLogin);
+// export default Form.create({})(UserLogin);
+export default UserLogin;
