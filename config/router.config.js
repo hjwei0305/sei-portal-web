@@ -10,27 +10,26 @@ const routes = [
 //       },
 //     ],
 //   },
-//   {
-//     path: '/',
-//     component: '../layouts/BasicLayout',
-//     routes: [
-//       {
-//         path: '/',
-//         redirect: '/DashBoard',
-//       },
-//       {
-//         path: '/DashBoard',
-//         name: 'DashBoard',
-//         component: './DashBoard',
-//       },
-//       {
-//         component: './DashBoard',
-//         // component: './404',
-//       },
-//     ],
-//   },
   {
-    path: '/user',
+    path: '/',
+    component: '../layouts/BasicLayout',
+    routes: [
+      {
+        path: '/',
+        redirect: '/DashBoard',
+      },
+      {
+        path: '/DashBoard',
+        name: 'DashBoard',
+        component: './DashBoard',
+      },
+      {
+        component: './DashBoard',
+        // component: './404',
+      },
+    ],
+  },
+  {
     component: './DashBoard',
     // component: './404',
   },
