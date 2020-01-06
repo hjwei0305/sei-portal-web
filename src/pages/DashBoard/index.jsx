@@ -1,7 +1,7 @@
+import React, {Component} from "react";
 import {Button, message, Modal, Tree, Input, Col, Card, Row, Icon, Badge} from "antd";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import React, {Component} from "react";
 import {isEmpty, cloneDeep, get,} from "lodash";
 import { StationNewsCard, RichEditor } from 'seid';
 import styles from './style.less';
