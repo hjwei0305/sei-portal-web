@@ -6,7 +6,7 @@ import plugins from './plugin.config';
 import theme from './theme.config.js';
 
 export default {
-  // history: 'hash',
+  history: 'hash',
   base: 'sei-portal-web',
   publicPath: '/sei-portal-web/',
   outputPath: '/dist',

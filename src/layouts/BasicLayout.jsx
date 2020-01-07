@@ -22,7 +22,7 @@ class BasicLayout extends React.Component {
     /** 模块菜单 */
     moduleMenus: [],
     /** 页签打开模式 */
-    mode: 'iframe'
+    mode: 'spa'
   };
 
   cachePages = {}
