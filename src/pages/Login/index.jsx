@@ -6,7 +6,7 @@ import styles from './index.less';
 
 const FormItem = Form.Item;
 
-class UserLogin extends Component {
+class Login extends Component {
   state = {
     loading: false,
     errorMsg: '',
@@ -123,4 +123,4 @@ class UserLogin extends Component {
   }
 }
 
-export default Form.create({})(UserLogin);
+export default Form.create({})(Login);
