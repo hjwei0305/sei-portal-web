@@ -166,10 +166,10 @@ class BasicLayout extends React.Component {
             </Header>
           </header>
           <content className={cls('layout-center-content')}>
-            {!this.isSubAppRouter() ? children : null}
+            {!this.isSubAppRouter() && !activedKey ? children : null}
             { mode === 'iframe' ? (
               <TabPane
-                style={activedKey==='dashboard' ? {display: 'none'}: {}}
+                style={activedKey==='' ? {display: 'none'}: {}}
                 data={tempTabData}
                 activedKey={activedKey}
                 ref={ inst => this.tabPaneRef = inst }
