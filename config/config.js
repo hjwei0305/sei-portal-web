@@ -7,7 +7,7 @@ import theme from './theme.config.js';
 
 export default {
   history: 'hash',
-  base: 'sei-portal-web',
+  // base: 'sei-portal-web',
   publicPath: '/sei-portal-web/',
   outputPath: '/dist',
   targets: {

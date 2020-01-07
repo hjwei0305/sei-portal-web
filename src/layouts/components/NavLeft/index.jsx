@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
 import { navigateToUrl } from 'single-spa';
+import { Link } from 'umi';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 import logo from '../../../assets/logo@2x.png';
@@ -48,6 +49,31 @@ class NavLeft extends React.Component {
     });
   }
 
+  /** 根据页签模式获取页面 */
+  getMenuNavItemByMode = (item) => {
+    const { mode } = this.props;
+
+    if (mode !== 'iframe') {
+      return (
+        <Link to={item.path}>
+          <Icon type={item.iconType} />
+          <span>{item.title}</span>
+        </Link>
+      );
+       // aExtraProps = {
+       //   href: item.path,
+       //   onClick: navigateToUrl,
+       // };
+    }
+
+    return (
+      <a>
+        <Icon type={item.iconType} />
+        <span>{item.title}</span>
+      </a>
+    );
+  }
+
   // 递归渲染树形菜单
   renderMenu =(data)=>{
     return data.map((item)=>{
@@ -66,14 +92,7 @@ class NavLeft extends React.Component {
           </SubMenu>
         )
       }
-      const { mode } = this.props;
-      let aExtraProps = {};
-      if (mode !== 'iframe') {
-        aExtraProps = {
-          href: item.path,
-          onClick: navigateToUrl,
-        };
-      }
+
 
       return (
         <Menu.Item
@@ -81,12 +100,7 @@ class NavLeft extends React.Component {
           key={item.id}
           onClick={() => { this.handleMenuClick(item)}}
         >
-          <a
-            {...aExtraProps}
-          >
-            <Icon type={item.iconType} />
-            <span>{item.title}</span>
-          </a>
+          {this.getMenuNavItemByMode(item)}
         </Menu.Item>
       );
     });

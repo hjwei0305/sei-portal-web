@@ -4,6 +4,7 @@ import Trigger from 'rc-trigger';
 import classNames from 'classnames';
 import { Icon, } from 'antd';
 import {navigateToUrl} from 'single-spa';
+import { Link, } from 'umi';
 
 import styles from './index.less';
 
@@ -129,6 +130,29 @@ export default class TabItem extends React.Component {
 	  return item;
 	}
 
+  /** 根据页签模式获取页面 */
+  getMenuNavItemByMode = (showItem) => {
+    const { mode } = this.props;
+
+    if (mode !== 'iframe') {
+      return (
+        <Link to={showItem.url}>
+          {showItem.title}
+        </Link>
+      );
+      // aExtraProps = {
+      //   href: showItem.url,
+      //   onClick: navigateToUrl,
+      // };
+    }
+
+    return (
+      <a>
+        {showItem.title}
+      </a>
+    );
+  }
+
 	render() {
 		const {
 		  data,
@@ -140,13 +164,7 @@ export default class TabItem extends React.Component {
 		} = this.props;
 		const isMore =  data && data.length > 1;
 		const showItem = this.getShowTabItem();
-    let aExtraProps = {};
-    if (mode !== 'iframe') {
-      aExtraProps = {
-        href: showItem.url,
-        onClick: navigateToUrl,
-      };
-    }
+
 		return (
 			<div
 		  	className={classNames({
@@ -158,9 +176,7 @@ export default class TabItem extends React.Component {
 		  	style={{ width }}
 			>
 		    <div className="tab-title">
-          <a {...aExtraProps}>
-            {showItem.title}
-          </a>
+          {this.getMenuNavItemByMode(showItem)}
 		    </div>
 		    <div className="tab-operate-wrapper">
 		    	{closable &&
