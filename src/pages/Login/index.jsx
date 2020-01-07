@@ -39,9 +39,6 @@ class Login extends Component {
   }
 
   render() {
-    return (
-      <div>测试</div>
-    );
     const { errorMsg, form, showTenant } = this.props;
     const { loading } = this.state;
     const { getFieldDecorator } = form;
