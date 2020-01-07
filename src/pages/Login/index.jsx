@@ -33,6 +33,10 @@ class Login extends Component {
             loading: false,
           });
         });
+      } else {
+        this.setState({
+          loading: false,
+        });
       }
     });
     e && e.preventDefault();
