@@ -109,7 +109,7 @@ class BasicLayout extends React.Component {
     this.setState({
       activedKey: ''
     }, () => {
-      history.push('/');
+      history.push('/DashBoard');
     });
   }
 
