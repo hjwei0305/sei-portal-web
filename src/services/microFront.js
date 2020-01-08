@@ -12,7 +12,9 @@ export const getSubAppConfig = () => {
     ],
     defer: true,
     // 是否启用 js 沙箱，默认为 false
-    jsSandbox: true,
+    // 如果为true的话，关闭一个子应用的，然后再开任意一个路由，都是会默认打开最后关闭的路由，有坑
+    jsSandbox: false,
+    prefetch: true,
     lifeCycles: {
       afterMount: props => {
         /** todo */
