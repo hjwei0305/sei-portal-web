@@ -12,23 +12,38 @@ const { TabPane, TabHeader, } = Tab;
 
 class BasicLayout extends React.Component {
 
-  state = {
-    /** 是否折叠菜单 */
-    collapsed: false,
-    /** 被激活的页签key */
-    activedKey: '',
-    /** 页签数据 */
-    tabData: [],
-    /** 模块菜单 */
-    moduleMenus: [],
-    /** 页签打开模式 */
-    mode: 'spa'
-  };
+  constructor(props) {
+    super(props);
+    const { history, } = this.props;
+    let activedKey = '';
+    let tabData = [];
+    const pathname = history.location.pathname;
+    if (!['/', '/DashBoard'].includes(pathname)) {
+      activedKey = pathname;
+      tabData = [{
+        id: pathname,
+        title: '新增',
+        url: pathname,
+      }]
+    }
+    this.state = {
+      /** 被激活的页签key */
+      activedKey,
+      /** 页签数据 */
+      tabData,
+      /** 是否折叠菜单 */
+      collapsed: false,
+      /** 模块菜单 */
+      moduleMenus: [],
+      /** 页签打开模式 */
+      mode: 'spa'
+    };
+  }
 
   cachePages = {}
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, } = this.props;
     /** 动态获取子模块配置，并且启动微前端应用 */
     dispatch({
       type: 'base/getApps',
