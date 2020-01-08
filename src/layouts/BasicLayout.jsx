@@ -140,8 +140,8 @@ class BasicLayout extends React.Component {
   }
 
   render() {
-    const { collapsed, activedKey, tabData, moduleMenus, mode, } = this.state;
-    const { children, } = this.props;
+    const { collapsed, activedKey, tabData, moduleMenus, mode, hsi} = this.state;
+    const { children, history, } = this.props;
     if (!this.cachePages[activedKey]) {
       this.cachePages[activedKey] = children;
     }
@@ -177,6 +177,7 @@ class BasicLayout extends React.Component {
                 onChange={this.handleToggleTab}
                 onReload={this.handleReload}
                 mode={mode}
+                history={history}
               />
             </Header>
           </header>
