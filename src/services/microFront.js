@@ -19,7 +19,8 @@ export const getSubAppConfig = () => {
       apps,
       defer: true,
       // 是否启用 js 沙箱，默认为 false
-      jsSandbox: true,
+      jsSandbox: false,
+      prefetch: true,
       lifeCycles: {
         afterMount: props => {
           /** todo */
@@ -30,7 +31,8 @@ export const getSubAppConfig = () => {
     return {
       apps: [],
       defer: true,
-      jsSandbox: true,
+      jsSandbox: false,
+      prefetch: true,
       lifeCycles: {
         afterMount: props => {
           /** todo */
