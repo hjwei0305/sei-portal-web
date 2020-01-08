@@ -72,7 +72,7 @@ class Tabs extends Component {
 
   /** 关闭当前激活的页签 */
   handleCloseCurrent = () => {
-    const { data, onChange, activedKey, onClose, mode } = this.props;
+    const { data, onChange, activedKey, onClose, mode, history } = this.props;
     if (data.length >= 1) {
       let i = data.findIndex(({ id }) => id === activedKey);
       let activingItem = null;
@@ -85,7 +85,8 @@ class Tabs extends Component {
         onChange(activingItem.id);
         if (mode !== 'iframe') {
           /** 导航  */
-          navigateToUrl(activingItem.url);
+          history && history.push(activingItem.url);
+          // navigateToUrl(activingItem.url);
         }
       }
       onClose([activedKey], data.length===1);
