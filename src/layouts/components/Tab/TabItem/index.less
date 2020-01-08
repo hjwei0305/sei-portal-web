@@ -18,11 +18,19 @@
   background: @tab-bg;
   cursor: pointer;
   :global {
+    .tab-top-line {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      border: 1px solid #1890ff;
+      transform: scaleX(0);
+      transition: transform 1s;
+    }
     /** 页签操作容器 */
     .tab-operate-wrapper {
-    	position: absolute;
-    	top: 50%;
-    	right: 5px;
+      position: absolute;
+      top: 50%;
+      right: 5px;
       transform: translateY(-50%);
       .icon {
         display: block;
@@ -57,6 +65,10 @@
     z-index: 1000;
     background: @tab-bg-active;
     :global {
+      .tab-top-line {
+        transform-origin: 0 0;
+        transform: scaleX(1);
+      }
       .tab-title {
         color: @tab-title-hover-color;
       }

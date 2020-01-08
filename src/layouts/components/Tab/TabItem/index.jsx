@@ -175,6 +175,7 @@ export default class TabItem extends React.Component {
 		  	onClick={() => onClick(showItem)}
 		  	style={{ width }}
 			>
+        <div className="tab-top-line"></div>
 		    <div className="tab-title">
           {this.getMenuNavItemByMode(showItem)}
 		    </div>
