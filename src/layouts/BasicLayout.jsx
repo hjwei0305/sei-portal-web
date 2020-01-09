@@ -86,24 +86,19 @@ class BasicLayout extends React.Component {
   };
 
   handleMenuClick = menuItem => {
-    const { menu } = this.props;
-    const { tabData, activedKey } = menu;
-    const isExist = tabData.some(item => item.id === menuItem.id);
-    if (isExist) {
-      if (menuItem.id !== activedKey) {
-        this.updateTabState({
-          activedKey: menuItem.id,
-        });
-      }
-    } else {
-      this.updateTabState({
-        tabData: tabData.concat(menuItem),
-        activedKey: menuItem.id,
-      });
-    }
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'menu/updateTabState',
+      payload: {
+        menuItem,
+      },
+    });
   };
 
   menuConvert = (treeData, cTreeData) => {
+    if (!treeData || !treeData.id) {
+      return null;
+    }
     const tempCTreeData = cTreeData;
     tempCTreeData.title = treeData.name;
     tempCTreeData.id = treeData.id;
@@ -150,7 +145,7 @@ class BasicLayout extends React.Component {
     }
 
     const tempTabData = this.adapterTabData(tabData);
-
+    const tempCurrModule = this.menuConvert(currModule, {});
     return (
       <section className={cls(styles['portal-layout'])}>
         <nav
@@ -160,7 +155,7 @@ class BasicLayout extends React.Component {
           })}
         >
           <NavLeft
-            menuConfig={[this.menuConvert(currModule, {})]}
+            menuConfig={tempCurrModule ? [tempCurrModule] : []}
             onMenuClick={this.handleMenuClick}
             collapsed={collapsed}
             activedMenuKey={activedKey}

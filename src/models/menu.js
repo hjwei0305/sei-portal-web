@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-09 20:07:30
+ * @Last Modified time: 2020-01-09 21:35:58
  */
 import { getMenu } from '@/services/menu';
 
@@ -35,12 +35,32 @@ export default {
         payload,
       });
     },
-    *updateTabState({ payload }, { put }) {
+    *updateTabState({ payload }, { put, select }) {
+      const menu = yield select(state => state.menu);
+      const { tabData, activedKey } = menu;
+      const { menuItem } = payload;
+      let tempPayload = {};
+      if (menuItem) {
+        const isExist = tabData.some(item => item.id === menuItem.id);
+        if (isExist) {
+          if (menuItem.id !== activedKey) {
+            tempPayload.activedKey = menuItem.id;
+          }
+        } else {
+          tempPayload = {
+            tabData: tabData.concat(menuItem),
+            activedKey: menuItem.id,
+          };
+        }
+      } else {
+        tempPayload = payload;
+      }
+
       yield put({
         type: 'updateState',
-        payload,
+        payload: tempPayload,
       });
-      return payload;
+      return tempPayload;
     },
   },
 

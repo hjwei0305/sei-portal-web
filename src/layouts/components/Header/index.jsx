@@ -103,7 +103,18 @@ class Header extends React.Component {
           <MenuSearch
             className={cls('trigger')}
             onSelect={item => {
-              router.push(item.featureUrl);
+              const { dispatch } = this.props;
+              dispatch({
+                type: 'menu/updateTabState',
+                payload: {
+                  menuItem: {
+                    title: item.name,
+                    id: item.id,
+                    iconType: 'profile', // item.iconCls,
+                    path: item.featureUrl,
+                  },
+                },
+              }).then(() => router.push(item.featureUrl));
             }}
           />
           <HeaderDropdown overlay={this.getDropdownMenus()}>
