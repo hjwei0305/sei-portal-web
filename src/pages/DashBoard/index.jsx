@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Button, Card } from 'antd';
 import styles from './index.less';
 
+const copyrightText =
+  'Copyright 2015 www.changhong.com All Rights Reserved 四川长虹电器股份有限公司 版权所有';
+
 class DashBoard extends Component {
   constructor(props) {
     super(props);
@@ -83,6 +86,7 @@ class DashBoard extends Component {
           <div className="dashboard-wc-left">{this.getUrgeToDoCard()}</div>
           <div className="dashboard-wc-right">{this.getQuickMenuCard()}</div>
         </section>
+        <footer className="dashboard-wrapper-footer">{copyrightText}</footer>
       </section>
     );
   }
