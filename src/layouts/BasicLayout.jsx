@@ -54,12 +54,13 @@ class BasicLayout extends React.Component {
   };
 
   handleCloseTab = (ids, isCloseAll) => {
-    const { tabData } = this.state;
+    const { menu } = this.props;
+    const { tabData } = menu;
     const filterData = tabData.filter(item => ids.findIndex(id => item.id === id) === -1);
     if (isCloseAll) {
       this.handleHomeClick();
     }
-    this.setState({
+    this.updateTabState({
       tabData: filterData,
     });
   };
