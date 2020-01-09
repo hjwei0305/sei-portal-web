@@ -1,33 +1,20 @@
 import React from 'react';
 import cls from 'classnames';
-import { Icon, Menu, Avatar, } from 'antd';
+import { router } from 'umi';
+import { connect } from 'dva';
+import { Icon, Menu, Avatar } from 'antd';
+import FullScreen from '@/components/FullScreen';
+import MenuSearch from '@/components/MenuSearch';
 import HeaderDropdown from './components/HeaderDropdown';
 import ExtList from './components/List';
-import { request, CONSTANTS } from '@/utils';
+
 import styles from './index.less';
 
-const { PORTALSERVICE, } = CONSTANTS;
-
-export default class Header extends React.Component {
-
-  state = {
-    modules: [],
-    currModuleName: '',
-  }
-
+class Header extends React.Component {
   componentDidMount() {
-    request.post(`${PORTALSERVICE}/getMenus`)
-    .then(result => {
-      const modules = result.data;
-      this.setState({
-        modules,
-        currModuleName: modules[0].name,
-      }, () => {
-        const { onModuleChange } = this.props;
-        if (onModuleChange) {
-          onModuleChange(modules[0]);
-        }
-      });
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'menu/getMenus',
     });
   }
 
@@ -53,78 +40,90 @@ export default class Header extends React.Component {
     );
 
     return menu;
-  }
+  };
 
   dropdownRender = () => {
-    const { modules } = this.state;
+    const { menu, dispatch } = this.props;
+    const { modules } = menu;
+
     return (
       <ExtList
         dataSource={modules}
-        onItemClick={(item) => {
-          this.setState({
-            currModuleName: item.name,
-          }, () => {
-            const { onModuleChange } = this.props;
-            if (onModuleChange) {
-              onModuleChange(item);
-            }
+        onItemClick={item => {
+          dispatch({
+            type: 'menu/toggleModule',
+            payload: {
+              currModule: item,
+            },
           });
         }}
       />
     );
-  }
+  };
 
   handleHomeClick = () => {
-    const { onHomeClick, } = this.props;
+    const { onHomeClick } = this.props;
     if (onHomeClick) {
       onHomeClick();
     }
-  }
+  };
 
   render() {
-    const { onCollapse, collapsed, children } = this.props;
-    const { currModuleName, } = this.state;
+    const { onCollapse, collapsed, children, menu } = this.props;
+    const { currModule } = menu;
+
     return (
       <section className={cls(styles['header-layout'])}>
-        <div style={{
-          float: 'left',
-        }}>
+        <div
+          style={{
+            float: 'left',
+          }}
+        >
           <span
             className={cls('trigger')}
-            onClick={() => { onCollapse && onCollapse() }}
+            onClick={() => {
+              if (onCollapse) {
+                onCollapse();
+              }
+            }}
           >
             <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
           </span>
-          <HeaderDropdown overlay={this.dropdownRender()} trigger={["click"]}>
+          <HeaderDropdown overlay={this.dropdownRender()} trigger={['click']}>
             <span className={cls('trigger')}>
-              <span className="title">{currModuleName}</span>
-              <Icon
-                type="caret-down"
-                style={{fontSize: '12px', marginLeft: '4px'}}
-              />
+              <span className="title">{currModule.name || ''}</span>
+              <Icon type="caret-down" style={{ fontSize: '12px', marginLeft: '4px' }} />
             </span>
           </HeaderDropdown>
-          <span
-            className={cls('trigger')}
-            onClick={this.handleHomeClick}
-          >
+          <span className={cls('trigger')} onClick={this.handleHomeClick}>
             <Icon type="home" theme="filled" size="14" />
           </span>
         </div>
         <div className={cls('header-layout-right')}>
+          <MenuSearch
+            className={cls('trigger')}
+            onSelect={item => {
+              router.push(item.featureUrl);
+            }}
+          />
           <HeaderDropdown overlay={this.getDropdownMenus()}>
             <span className={`${cls('action', 'account')} ${styles.account}`}>
-              <Avatar icon="user" size="14" />
-              <span className={cls('username')}>
-                张盼
-              </span>
+              <Avatar icon="user" size="13" />
+              <span className={cls('username')}>张盼</span>
             </span>
           </HeaderDropdown>
+          <FullScreen className={cls('trigger')} />
         </div>
-        <div style={{
-          overflow: 'hidden'
-        }}>{children}</div>
+        <div
+          style={{
+            overflow: 'hidden',
+          }}
+        >
+          {children}
+        </div>
       </section>
     );
   }
 }
+
+export default connect(state => ({ menu: state.menu }))(Header);
