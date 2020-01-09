@@ -16,15 +16,15 @@ class DashBoard extends Component {
   /** 获取催办card组件 */
   getUrgeToDoCard = () => (
     <Card
-      title="我的崔办"
+      title="自定义内容"
       bordered={false}
       style={{
         minHeight: 400,
       }}
     >
-      <Card.Grid>寻源管理</Card.Grid>
-      <Card.Grid>定价管理</Card.Grid>
-      <Card.Grid>订单管理</Card.Grid>
+      <Card.Grid>自定义内容</Card.Grid>
+      <Card.Grid>自定义内容</Card.Grid>
+      <Card.Grid>自定义内容</Card.Grid>
     </Card>
   );
 
@@ -36,10 +36,43 @@ class DashBoard extends Component {
         title="收藏菜单(16)"
         bordered={false}
         bodyStyle={{
-          maxHeight: 150,
+          minHeight: 150,
           overflow: 'auto',
           padding: 12,
         }}
+      >
+        {configMenus.map(item => (
+          <Button key={item.id} className={styles.btnLink} title={item.menu.name}>
+            <span
+              style={{
+                width: 120,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {item.menu.name}
+            </span>
+          </Button>
+        ))}
+      </Card>
+    );
+  };
+
+  getMessageCard = () => {
+    const { configMenus } = this.state;
+
+    return (
+      <Card
+        title="消息"
+        bordered={false}
+        style={{ marginTop: '10' }}
+        bodyStyle={{
+          minHeight: 150,
+          overflow: 'auto',
+          padding: 12,
+        }}
+        extra={<a>更多</a>}
       >
         {configMenus.map(item => (
           <Button key={item.id} className={styles.btnLink} title={item.menu.name}>
@@ -84,7 +117,11 @@ class DashBoard extends Component {
         </header>
         <section className="dashboard-wrapper-content">
           <div className="dashboard-wc-left">{this.getUrgeToDoCard()}</div>
-          <div className="dashboard-wc-right">{this.getQuickMenuCard()}</div>
+          <div className="dashboard-wc-right">
+            {this.getQuickMenuCard()}
+            <div style={{ margin: '5px 0' }}></div>
+            {this.getMessageCard()}
+          </div>
         </section>
         <footer className="dashboard-wrapper-footer">{copyrightText}</footer>
       </section>

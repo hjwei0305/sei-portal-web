@@ -70,7 +70,7 @@ class Header extends React.Component {
 
   render() {
     const { onCollapse, collapsed, children, menu } = this.props;
-    const { currModule } = menu;
+    const { currModule, activedKey } = menu;
 
     return (
       <section className={cls(styles['header-layout'])}>
@@ -95,7 +95,10 @@ class Header extends React.Component {
               <Icon type="caret-down" style={{ fontSize: '12px', marginLeft: '4px' }} />
             </span>
           </HeaderDropdown>
-          <span className={cls('trigger')} onClick={this.handleHomeClick}>
+          <span
+            className={cls({ trigger: true, trigger_active: !activedKey })}
+            onClick={this.handleHomeClick}
+          >
             <Icon type="home" theme="filled" size="14" />
           </span>
         </div>
