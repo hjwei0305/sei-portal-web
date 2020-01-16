@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Card } from 'antd';
+import { userInfoOperation } from '@/utils';
 import styles from './index.less';
+
+const { getCurrentUser } = userInfoOperation;
 
 const copyrightText =
   'Copyright 2015 www.changhong.com All Rights Reserved 四川长虹电器股份有限公司 版权所有';
@@ -112,7 +115,7 @@ class DashBoard extends Component {
               </li>
             </ul>
           </div>
-          <h2>早安，张盼，祝您生活愉快！</h2>
+          <h2>{getCurrentUser().userName}，祝您生活愉快！</h2>
           <p>开发人员-基础平台部-虹信软件股份有限公司</p>
         </header>
         <section className="dashboard-wrapper-content">

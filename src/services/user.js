@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-16 15:45:19
+ * @Last Modified time: 2020-01-16 15:51:59
  */
 import { request, CONSTANTS, userInfoOperation } from '@/utils';
 
