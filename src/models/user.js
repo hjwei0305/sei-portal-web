@@ -2,13 +2,13 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-16 15:34:46
+ * @Last Modified time: 2020-01-16 21:22:38
  */
 import { router } from 'umi';
 import { userLogin, userLogout } from '@/services/user';
 import { userInfoOperation } from '@/utils';
 
-const { setCurrentUser, setSessionId, clearUserInfo } = userInfoOperation;
+const { setCurrentUser, setSessionId, clearUserInfo, getSessionId } = userInfoOperation;
 
 export default {
   namespace: 'user',
@@ -32,8 +32,8 @@ export default {
       setSessionId(result.data.sessionId);
       router.replace('/');
     },
-    *userLogout({ payload }, { put }) {
-      userLogout({ sid: payload });
+    *userLogout(_, { put }) {
+      yield userLogout({ sid: getSessionId() });
       clearUserInfo();
       router.replace('/user/login');
       yield put({
