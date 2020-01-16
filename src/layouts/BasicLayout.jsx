@@ -3,9 +3,9 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import Header from './components/Header';
 import NavLeft from './components/NavLeft';
+import Tab from './components/Tab';
 
 import styles from './BasicLayout.less';
-import Tab from './components/Tab';
 
 const { TabPane, TabHeader } = Tab;
 
@@ -202,4 +202,4 @@ class BasicLayout extends React.Component {
   }
 }
 
-export default connect(state => ({ base: state.base, menu: state.menu }))(BasicLayout);
+export default connect(({ base, menu }) => ({ base, menu }))(BasicLayout);

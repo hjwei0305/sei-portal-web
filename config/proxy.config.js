@@ -1,7 +1,11 @@
 export default {
-  "/api-mock": {
+  '/api-mock': {
     target: 'http://rddgit.changhong.com:7300/mock/5dfc741736608e42d52b1d7b',
     changeOrigin: true,
-    pathRewrite: { "^/api-mock" : "" }
+    pathRewrite: { '^/api-mock': '' },
+  },
+  '/sei-gateway': {
+    target: 'http://10.4.208.86:8100',
+    changeOrigin: true,
   },
 };

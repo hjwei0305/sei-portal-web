@@ -1,12 +1,12 @@
 /*
-* @Author: zp
-* @Date:   2019-12-20 13:55:55
-* @Last Modified by:   zp
-* @Last Modified time: 2020-01-06 14:29:18
-*/
-import { request, CONSTANTS, } from '@/utils';
+ * @Author: zp
+ * @Date:   2019-12-20 13:55:55
+ * @Last Modified by:   zp
+ * @Last Modified time: 2020-01-16 09:04:58
+ */
+import { request, CONSTANTS } from '@/utils';
 
-const { PORTALSERVICE, } = CONSTANTS;
+const { SEIAUTHSERVICE } = CONSTANTS;
 
 /**
  * 登录方法
@@ -15,7 +15,7 @@ const { PORTALSERVICE, } = CONSTANTS;
  * password {string} 密码
  */
 export async function login(params) {
-  return request.post(`${PORTALSERVICE}/login`, {
+  return request.post(`${SEIAUTHSERVICE}/auth/login`, {
     params,
   });
 }

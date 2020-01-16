@@ -1,9 +1,17 @@
+import { utils } from 'seid';
+
 const { NODE_ENV } = process.env;
 
-export const HOST = 'http://rddgit.changhong.com:7300/mock/5dfc741736608e42d52b1d7b';
+const { CONST_GLOBAL } = utils.constants;
 
-export const CONTEXTPATH = NODE_ENV === 'development' ? '/api-mock' : '';//'/api-gateway';
+export { CONST_GLOBAL };
+
+export const HOST = '';
+
+export const CONTEXTPATH = NODE_ENV === 'development' ? '/sei-gateway' : '/sei-gateway'; // '/api-gateway';
 
 export const BASEURL = `${HOST}${CONTEXTPATH}`;
 
-export const PORTALSERVICE = `${BASEURL}/portal-service`;
+export const PORTALSERVICE = `/portal-service`;
+
+export const SEIAUTHSERVICE = `${BASEURL}/sei-auth`;

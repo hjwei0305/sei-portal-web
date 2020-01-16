@@ -5,12 +5,20 @@ import { connect } from 'dva';
 import { Icon, Menu, Avatar } from 'antd';
 import FullScreen from '@/components/FullScreen';
 import MenuSearch from '@/components/MenuSearch';
+import { userInfoOperation } from '@/utils';
 import HeaderDropdown from './components/HeaderDropdown';
 import ExtList from './components/List';
 
 import styles from './index.less';
 
+const { getCurrentUser } = userInfoOperation;
+
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.currentUser = getCurrentUser();
+  }
+
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -18,11 +26,17 @@ class Header extends React.Component {
     });
   }
 
+  handleUserMenuClick = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'user/userLogout',
+    });
+  };
+
   /** 获取个人下拉菜单项 */
   getDropdownMenus = () => {
-    const { onMenuClick } = this.props;
     const menu = (
-      <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
+      <Menu className={styles.menu} selectedKeys={[]}>
         <Menu.Item key="userCenter">
           <Icon type="user" />
           用户
@@ -32,7 +46,7 @@ class Header extends React.Component {
           设置
         </Menu.Item>
         <Menu.Divider />
-        <Menu.Item key="logout">
+        <Menu.Item key="logout" onClick={this.handleUserMenuClick}>
           <Icon type="logout" />
           退出
         </Menu.Item>
@@ -49,6 +63,7 @@ class Header extends React.Component {
     return (
       <ExtList
         dataSource={modules}
+        selectable="false"
         onItemClick={item => {
           dispatch({
             type: 'menu/toggleModule',
@@ -123,7 +138,9 @@ class Header extends React.Component {
           <HeaderDropdown overlay={this.getDropdownMenus()}>
             <span className={`${cls('action', 'account')} ${styles.account}`}>
               <Avatar icon="user" size="13" />
-              <span className={cls('username')}>张盼</span>
+              <span className={cls('username')}>
+                {this.currentUser && this.currentUser.userName}
+              </span>
             </span>
           </HeaderDropdown>
           <FullScreen className={cls('trigger')} />
@@ -140,4 +157,4 @@ class Header extends React.Component {
   }
 }
 
-export default connect(state => ({ menu: state.menu }))(Header);
+export default connect(({ menu }) => ({ menu }))(Header);

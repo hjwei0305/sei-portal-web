@@ -13,6 +13,7 @@ const routes = [
   {
     path: '/',
     component: '../layouts/BasicLayout',
+    Routes: ['./src/components/PrivateRoute'],
     routes: [
       {
         path: '/',

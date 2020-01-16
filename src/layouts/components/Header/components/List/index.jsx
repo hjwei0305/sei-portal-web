@@ -2,8 +2,9 @@ import React from 'react';
 import { List } from 'antd';
 import styles from './index.less';
 
-const ExtList = (props) => {
-  const { split=false, size="small", onItemClick, ...rest } = props;
+const ExtList = props => {
+  const { split = false, size = 'small', onItemClick, ...rest } = props;
+
   return (
     <div className={styles['ext-list-wrapper']}>
       <List
@@ -26,7 +27,7 @@ const ExtList = (props) => {
         {...rest}
       />
     </div>
-  )
-}
+  );
+};
 
 export default ExtList;
