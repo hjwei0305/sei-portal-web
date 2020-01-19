@@ -63,12 +63,6 @@ export default class MenuSearch extends React.Component {
     };
   }
 
-  // static getDerivedStateFromProps(nextProps) {
-  //   return {
-  //     filterData: cloneDeep(nextProps.data),
-  //   }
-  // }
-
   /** 获取弹框属性 */
   getModalProps = () => {
     const { visible } = this.state;

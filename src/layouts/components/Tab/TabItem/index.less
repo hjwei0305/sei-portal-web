@@ -17,6 +17,15 @@
   background: @tab-bg;
   border-bottom: 0;
   cursor: pointer;
+  &:hover {
+    :global {
+      .tab-operate-wrapper {
+        .icon {
+          display: block;
+        }
+      }
+    }
+  }
   :global {
     .tab-top-line {
       position: absolute;
@@ -34,7 +43,7 @@
       right: 5px;
       transform: translateY(-50%);
       .icon {
-        display: block;
+        display: none;
         cursor: pointer;
         &:hover {
           font-weight: bolder;

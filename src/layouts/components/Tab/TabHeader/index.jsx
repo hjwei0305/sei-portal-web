@@ -1,24 +1,30 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { debounce } from 'lodash';
-import {navigateToUrl} from 'single-spa';
-
+import { router } from 'umi';
 import TabOperateIcon from '../TabOperateIcon/index.jsx';
 import TabItem from '../TabItem/index.jsx';
 import styles from './index.less';
 
 class Tabs extends Component {
+  /** 页签的默认宽度 */
+  tabItemWidth = 106;
+
+  /** 第一个页签的宽度 */
+  firstWidth = 106;
 
   static propTypes = {
     /** tab 页签数据 */
-    data: propTypes.arrayOf(propTypes.shape({
-      /** 页签id */
-      id: propTypes.string,
-      /** 页签名称 */
-      title: propTypes.string,
-      /** 页签url地址 */
-      url: propTypes.string
-    })).isRequired,
+    data: propTypes.arrayOf(
+      propTypes.shape({
+        /** 页签id */
+        id: propTypes.string,
+        /** 页签名称 */
+        title: propTypes.string,
+        /** 页签url地址 */
+        url: propTypes.string,
+      }),
+    ).isRequired,
     /** 被激活的页签键值 */
     activedKey: propTypes.string.isRequired,
     /** 页签关闭时的回调函数 */
@@ -34,13 +40,15 @@ class Tabs extends Component {
   static defaultProps = {
     mode: 'iframe',
   };
-  /** 页签的默认宽度 */
-  tabItemWidth = 106;
-  /** 第一个页签的宽度 */
-  firstWidth = 106;
+
   state = {
     showCount: undefined,
   };
+
+  componentDidMount() {
+    this.computeShowCount();
+    window.addEventListener('resize', this.handleResize, false);
+  }
 
   componentWillReceiveProps(nextProps) {
     const { data } = this.props;
@@ -49,47 +57,41 @@ class Tabs extends Component {
     }
   }
 
-  componentDidMount() {
-    this.computeShowCount();
-    window.addEventListener('resize', this.handleResize, false);
-  }
-
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize, false);
   }
+  /* eslint-disable */
+  /** 防抖计算可以显示的页签个数 */
+  handleResize = debounce(this.computeShowCount, 300);
 
   /** 根据实际宽度计算可以显示的页签个数 */
   computeShowCount = () => {
     const containerWidth = this.refContainer.offsetWidth;
-    const tabsWidth = containerWidth - 60 - (this.firstWidth+4);
-    const showCount = Math.floor(tabsWidth / (this.tabItemWidth+4)) + 1;
+    const tabsWidth = containerWidth - 60 - (this.firstWidth + 4);
+    const showCount = Math.floor(tabsWidth / (this.tabItemWidth + 4)) + 1;
 
     this.setState({ showCount });
   };
 
-  /** 防抖计算可以显示的页签个数 */
-  handleResize = debounce(this.computeShowCount, 300);
-
   /** 关闭当前激活的页签 */
   handleCloseCurrent = () => {
-    const { data, onChange, activedKey, onClose, mode, history } = this.props;
+    const { data, onChange, activedKey, onClose, mode } = this.props;
     if (data.length >= 1) {
-      let i = data.findIndex(({ id }) => id === activedKey);
+      const i = data.findIndex(({ id }) => id === activedKey);
       let activingItem = null;
       if (i === 0 && data.length > 1) {
-        activingItem = data[i+1];
+        activingItem = data[i + 1];
       } else {
-        activingItem = data[i-1];
+        activingItem = data[i - 1];
       }
       if (activingItem) {
         onChange(activingItem.id);
         if (mode !== 'iframe') {
           /** 导航  */
-          history && history.push(activingItem.url);
-          // navigateToUrl(activingItem.url);
+          router.push(activingItem.url);
         }
       }
-      onClose([activedKey], data.length===1);
+      onClose([activedKey], data.length === 1);
     }
   };
 
@@ -97,9 +99,12 @@ class Tabs extends Component {
   handleCloseAll = () => {
     const { data, onClose } = this.props;
     if (data.length >= 1) {
-      onClose(data.map(({ id }) => id), true);
+      onClose(
+        data.map(({ id }) => id),
+        true,
+      );
     }
-  }
+  };
 
   /** 根据id关闭页签 */
   handleClose = id => {
@@ -109,22 +114,22 @@ class Tabs extends Component {
     } else {
       onClose([id], data.length === 1);
     }
-  }
+  };
 
-  handleClick = (menus) => {
+  handleClick = menus => {
     const { activedKey, onChange } = this.props;
     const { id } = menus;
     if (activedKey !== id) {
       onChange(menus.id);
     }
-  }
+  };
 
   handleReload = () => {
     const { onReload, activedKey } = this.props;
     onReload(activedKey);
-  }
+  };
 
-  renderTabItem = (data, index, sum) => {
+  renderTabItem = (data, index) => {
     const { activedKey, mode } = this.props;
 
     let actived = false;
@@ -164,9 +169,7 @@ class Tabs extends Component {
     }
 
     return [
-      ...visibleTabs.map((tab, index) =>
-        this.renderTabItem([tab], index, data.length),
-      ),
+      ...visibleTabs.map((tab, index) => this.renderTabItem([tab], index, data.length)),
       this.renderTabItem(tabsMore, showCount - 1, data.length),
     ];
   };
@@ -175,7 +178,7 @@ class Tabs extends Component {
     const { data } = this.props;
     return (
       <div
-        className={styles["custom-tabs"]}
+        className={styles['custom-tabs']}
         ref={ref => {
           this.refContainer = ref;
         }}
