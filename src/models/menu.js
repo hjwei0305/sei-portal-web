@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-19 10:59:43
+ * @Last Modified time: 2020-01-19 20:28:21
  */
 import { getMenu } from '@/services/menu';
 
@@ -16,6 +16,8 @@ export default {
     tabData: [],
     /** 被激活的页签key */
     activedKey: '',
+    /** 页签打开模式 */
+    mode: 'spa',
   },
 
   effects: {

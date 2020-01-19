@@ -10,31 +10,11 @@ import styles from './BasicLayout.less';
 const { TabPane, TabHeader } = Tab;
 
 class BasicLayout extends React.Component {
-  cachePages = {};
-
   constructor(props) {
     super(props);
-    // const { history, } = this.props;
-    // let activedKey = '';
-    // let tabData = [];
-    // const pathname = history.location.pathname;
-    // if (!['/', '/DashBoard'].includes(pathname)) {
-    //   activedKey = pathname;
-    //   tabData = [{
-    //     id: pathname,
-    //     title: '新增',
-    //     url: pathname,
-    //   }]
-    // }
     this.state = {
-      /** 被激活的页签key */
-      // activedKey,
-      /** 页签数据 */
-      // tabData,
       /** 是否折叠菜单 */
       collapsed: false,
-      /** 页签打开模式 */
-      mode: 'spa',
     };
   }
 
@@ -138,12 +118,9 @@ class BasicLayout extends React.Component {
   adapterTabData = data => data.map(item => ({ id: item.id, url: item.path, title: item.title }));
 
   render() {
-    const { collapsed, mode } = this.state;
+    const { collapsed } = this.state;
     const { children, history, menu } = this.props;
-    const { currModule, activedKey, tabData } = menu;
-    if (!this.cachePages[activedKey]) {
-      this.cachePages[activedKey] = children;
-    }
+    const { currModule, activedKey, tabData, mode } = menu;
 
     const tempTabData = this.adapterTabData(tabData);
     const tempCurrModule = this.menuConvert(currModule, {});
