@@ -60,9 +60,6 @@ class Tabs extends Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize, false);
   }
-  /* eslint-disable */
-  /** 防抖计算可以显示的页签个数 */
-  handleResize = debounce(this.computeShowCount, 300);
 
   /** 根据实际宽度计算可以显示的页签个数 */
   computeShowCount = () => {
@@ -72,6 +69,10 @@ class Tabs extends Component {
 
     this.setState({ showCount });
   };
+
+  /* eslint-disable */
+  /** 防抖计算可以显示的页签个数 */
+  handleResize = debounce(this.computeShowCount, 300);
 
   /** 关闭当前激活的页签 */
   handleCloseCurrent = () => {
