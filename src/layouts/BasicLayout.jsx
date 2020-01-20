@@ -172,9 +172,9 @@ class BasicLayout extends React.Component {
             ) : (
               <div
                 id="root-subapp"
-                style={{
-                  display: this.isSubAppRouter() ? 'block' : 'none',
-                }}
+                // style={{
+                //   display: this.isSubAppRouter() ? 'block' : 'none',
+                // }}
               ></div>
             )}
           </content>
