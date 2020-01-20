@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-20 08:43:52
+ * @Last Modified time: 2020-01-20 15:08:57
  */
 import { router } from 'umi';
 import { userLogin, userLogout } from '@/services/user';
