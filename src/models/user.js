@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-16 21:22:38
+ * @Last Modified time: 2020-01-20 08:43:52
  */
 import { router } from 'umi';
 import { userLogin, userLogout } from '@/services/user';
@@ -33,9 +33,9 @@ export default {
       router.replace('/');
     },
     *userLogout(_, { put }) {
+      router.replace('/user/login');
       yield userLogout({ sid: getSessionId() });
       clearUserInfo();
-      router.replace('/user/login');
       yield put({
         type: 'updateState',
         payload: {
