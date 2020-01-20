@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Card, Empty } from 'antd';
 import { ExtEcharts } from 'seid';
 import moment from 'moment';
-import { userInfoOperation } from '@/utils';
+import { userInfoOperation, CONSTANTS } from '@/utils';
 import styles from './index.less';
 
 const { getCurrentUser } = userInfoOperation;
+const { COPYRIGHTTEXT } = CONSTANTS;
 
 const barProps = {
   onChartReady: () => {},
@@ -183,9 +184,6 @@ const lineProps = {
   },
 };
 
-const copyrightText =
-  'Copyright 2015 www.changhong.com All Rights Reserved 四川长虹电器股份有限公司 版权所有';
-
 class DashBoard extends Component {
   /** 获取自定义组件 */
   getCustomCmp = () => {
@@ -293,7 +291,7 @@ class DashBoard extends Component {
             {this.getOtherCard()}
           </div>
         </section>
-        <footer className="dashboard-wrapper-footer">{copyrightText}</footer>
+        <footer className="dashboard-wrapper-footer">{COPYRIGHTTEXT}</footer>
       </section>
     );
   }

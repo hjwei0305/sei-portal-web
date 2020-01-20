@@ -36,32 +36,6 @@ export default {
     },
   },
 
-  // subscriptions: {
-  // setup({dispatch, history, query}) {
-  //       return history.listen(async ({ pathname, search, query}) => {
-  //         let activedKey = '';
-  //         let tabData = [];
-  //         if (!['/', '/DashBoard', '/user/login'].includes(pathname) && init) {
-  //           init = false;
-  //           activedKey = pathname;
-  //           tabData = [{
-  //             id: pathname,
-  //             title: '新增',
-  //             url: pathname,
-  //           }];
-  //           dispatch({
-  //             type: 'menu/updateState',
-  //             payload: {
-  //               activedKey,
-  //               tabData,
-  //             }
-  //           });
-  //         }
-  //       })
-  //     }
-  //
-  //   },
-
   reducers: {
     getAppsSuccess(state, { payload }) {
       return {

@@ -15,3 +15,6 @@ export const BASEURL = `${HOST}${CONTEXTPATH}`;
 export const PORTALSERVICE = `/portal-service`;
 
 export const SEIAUTHSERVICE = `${BASEURL}/sei-auth`;
+
+export const COPYRIGHTTEXT =
+  'Copyright 2015 www.changhong.com All Rights Reserved 四川长虹电器股份有限公司 版权所有';

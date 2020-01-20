@@ -2,9 +2,24 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-19 20:28:21
+ * @Last Modified time: 2020-01-20 17:27:53
  */
 import { getMenu } from '@/services/menu';
+
+let init = true;
+let initPathname = '';
+
+function getAllLeaf(tree, result = []) {
+  for (let i = tree.length - 1; i >= 0; i -= 1) {
+    const item = tree[i];
+    if (item.children && item.children.length) {
+      getAllLeaf(item.children, result);
+    } else {
+      result.push(item);
+    }
+  }
+  return result;
+}
 
 export default {
   namespace: 'menu',
@@ -23,12 +38,41 @@ export default {
   effects: {
     *getMenus(_, { put }) {
       const result = yield getMenu();
+      const payload = {
+        modules: result.data,
+        currModule: result.data[0],
+      };
+      if (initPathname) {
+        const temp = getAllLeaf(result.data).filter(item => item.featureUrl === initPathname);
+        let tabData = [
+          {
+            id: 'other',
+            path: initPathname,
+            title: '其他',
+            url: initPathname,
+          },
+        ];
+        let activedKey = 'other';
+        if (temp && temp.length) {
+          const { id, featureUrl, name } = temp[0];
+          tabData = [
+            {
+              id,
+              path: featureUrl,
+              title: name,
+              url: featureUrl,
+            },
+          ];
+          activedKey = id;
+        }
+        payload.tabData = tabData;
+        payload.activedKey = activedKey;
+        initPathname = '';
+      }
+
       yield put({
         type: 'updateState',
-        payload: {
-          modules: result.data,
-          currModule: result.data[0],
-        },
+        payload,
       });
     },
     *toggleModule({ payload }, { put }) {
@@ -63,6 +107,17 @@ export default {
         payload: tempPayload,
       });
       return tempPayload;
+    },
+  },
+
+  subscriptions: {
+    setup({ history }) {
+      return history.listen(async ({ pathname }) => {
+        if (!['/', '/DashBoard', '/user/login'].includes(pathname) && init) {
+          init = false;
+          initPathname = pathname;
+        }
+      });
     },
   },
 
