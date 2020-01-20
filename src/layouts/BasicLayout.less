@@ -29,6 +29,18 @@
         box-sizing: border-box;
         padding: 8px;
         overflow: auto;
+        #root-subapp {
+          height: 100%;
+          overflow: hidden;
+          > div {
+            height: 100%;
+            overflow: hidden;
+            > div {
+              height: 100%;
+              overflow: auto;
+            }
+          }
+        }
       }
     }
   }
