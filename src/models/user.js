@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-20 15:08:57
+ * @Last Modified time: 2020-01-21 08:50:13
  */
 import { router } from 'umi';
 import { userLogin, userLogout } from '@/services/user';
@@ -40,6 +40,13 @@ export default {
         type: 'updateState',
         payload: {
           userInfo: null,
+        },
+      });
+      yield put({
+        type: 'menu/updateState',
+        payload: {
+          tabData: [],
+          activedKey: '',
         },
       });
     },
