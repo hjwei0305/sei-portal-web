@@ -2,9 +2,10 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-21 08:50:13
+ * @Last Modified time: 2020-01-21 10:49:01
  */
 import { router } from 'umi';
+import { notification } from 'antd';
 import { userLogin, userLogout } from '@/services/user';
 import { userInfoOperation } from '@/utils';
 
@@ -21,16 +22,24 @@ export default {
   effects: {
     *userLogin({ payload }, { put }) {
       const result = yield userLogin(payload);
-      yield put({
-        type: 'updateState',
-        payload: {
-          userInfo: result.data,
-          sessionId: result.data.sessionId,
-        },
-      });
-      setCurrentUser(result.data);
-      setSessionId(result.data.sessionId);
-      router.replace('/');
+      const { successful, data, message } = result.data || {};
+      if (successful) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            userInfo: data,
+            sessionId: data.sessionId,
+          },
+        });
+        setCurrentUser(data);
+        setSessionId(data.sessionId);
+        router.replace('/');
+      } else {
+        notification.error({
+          message: '接口请求异常',
+          description: message,
+        });
+      }
     },
     *userLogout(_, { put }) {
       router.replace('/user/login');
