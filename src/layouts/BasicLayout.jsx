@@ -124,6 +124,7 @@ class BasicLayout extends React.Component {
 
     const tempTabData = this.adapterTabData(tabData);
     const tempCurrModule = this.menuConvert(currModule, {});
+    const isSubAppRouter = this.isSubAppRouter();
     return (
       <section className={cls(styles['portal-layout'])}>
         <nav
@@ -159,7 +160,7 @@ class BasicLayout extends React.Component {
             </Header>
           </header>
           <content className={cls('layout-center-content')}>
-            {!this.isSubAppRouter() && !activedKey ? children : null}
+            {!isSubAppRouter && !activedKey ? children : null}
             {mode === 'iframe' ? (
               <TabPane
                 style={activedKey === '' ? { display: 'none' } : {}}
@@ -172,9 +173,9 @@ class BasicLayout extends React.Component {
             ) : (
               <div
                 id="root-subapp"
-                // style={{
-                //   display: this.isSubAppRouter() ? 'block' : 'none',
-                // }}
+                style={{
+                  display: isSubAppRouter ? 'block' : 'none',
+                }}
               ></div>
             )}
           </content>
