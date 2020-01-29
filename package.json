@@ -21,12 +21,7 @@
     "prettier": "prettier -c --write \"**/*\"",
     "start": "umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
-    "start:no-ui": "cross-env UMI_UI=none umi dev",
-    "test": "umi test",
-    "test:all": "node ./tests/run-tests.js",
-    "test:component": "umi test ./src/components",
-    "tsc": "tsc",
-    "ui": "umi ui"
+    "start:no-ui": "cross-env UMI_UI=none umi dev"
   },
   "husky": {
     "hooks": {

@@ -86,7 +86,7 @@ class Tabs extends Component {
         activingItem = data[i - 1];
       }
       if (activingItem) {
-        onChange(activingItem.id);
+        onChange(activingItem.id, activingItem);
         if (mode !== 'iframe') {
           /** 导航  */
           router.push(activingItem.url);
@@ -121,7 +121,7 @@ class Tabs extends Component {
     const { activedKey, onChange } = this.props;
     const { id } = menus;
     if (activedKey !== id) {
-      onChange(menus.id);
+      onChange(menus.id, menus);
     }
   };
 

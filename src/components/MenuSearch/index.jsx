@@ -50,7 +50,7 @@ export default class MenuSearch extends React.Component {
         iconCls: '',
       },
     ],
-    showField: 'name',
+    showField: 'title',
     onSelect: noop,
   };
 
@@ -117,7 +117,7 @@ export default class MenuSearch extends React.Component {
     return filterData.map(item => (
       <li key={item.id} onClick={() => this.handleSelect(item)}>
         {item[showField]}
-        <p>{item.namePath.slice(1)}</p>
+        <p>{item.urlPath.slice(1)}</p>
       </li>
     ));
   };

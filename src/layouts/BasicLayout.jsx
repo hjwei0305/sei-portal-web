@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
+import { Helmet } from 'react-helmet';
 import Header from './components/Header';
 import NavLeft from './components/NavLeft';
 import Tab from './components/Tab';
@@ -60,40 +61,20 @@ class BasicLayout extends React.Component {
     });
   };
 
-  handleToggleTab = id => {
+  handleToggleTab = (id, activedMenu) => {
     this.updateTabState({
-      activedKey: id,
+      activedMenu,
     });
   };
 
-  handleMenuClick = menuItem => {
+  handleMenuClick = activedMenu => {
     const { dispatch } = this.props;
     dispatch({
       type: 'menu/updateTabState',
       payload: {
-        menuItem,
+        activedMenu,
       },
     });
-  };
-
-  menuConvert = (treeData, cTreeData) => {
-    if (!treeData || !treeData.id) {
-      return null;
-    }
-    const tempCTreeData = cTreeData;
-    tempCTreeData.title = treeData.name;
-    tempCTreeData.id = treeData.id;
-    tempCTreeData.iconType = 'profile'; // treeData.iconCls;
-    tempCTreeData.path = treeData.featureUrl;
-
-    if (treeData.children) {
-      tempCTreeData.children = [];
-      treeData.children.forEach(item => {
-        const temp = {};
-        tempCTreeData.children.push(this.menuConvert(item, temp));
-      });
-    }
-    return tempCTreeData;
   };
 
   handleHomeClick = () => {
@@ -101,7 +82,7 @@ class BasicLayout extends React.Component {
     dispatch({
       type: 'menu/updateTabState',
       payload: {
-        activedKey: '',
+        activedMenu: null,
       },
     }).then(() => {
       history.push('/DashBoard');
@@ -114,19 +95,45 @@ class BasicLayout extends React.Component {
     return base.apps.some(item => history.location.pathname.startsWith(item.base));
   };
 
-  /** 适配页签数据 */
-  adapterTabData = data => data.map(item => ({ id: item.id, url: item.path, title: item.title }));
+  getBreadCrumb = () => {
+    const { menu } = this.props;
+    const { urlPath = '' } = menu.activedMenu || {};
+    if (urlPath) {
+      const urlPaths = urlPath.slice(1).split('/');
+      let preUrlPath = urlPaths.slice(0, -1).join('/');
+      if (preUrlPath) {
+        preUrlPath += '/';
+      }
+
+      return (
+        <div className={cls(styles['breadcrumb-wrapper'])}>
+          <span className="pre-urlpath">{preUrlPath}</span>
+          <span className="curr-urlpath">{urlPaths.pop()}</span>
+        </div>
+      );
+    }
+
+    return urlPath;
+  };
 
   render() {
     const { collapsed } = this.state;
     const { children, history, menu } = this.props;
-    const { currModule, activedKey, tabData, mode } = menu;
-
-    const tempTabData = this.adapterTabData(tabData);
-    const tempCurrModule = this.menuConvert(currModule, {});
+    const { tabData, mode, currMenuTree, activedMenu } = menu;
     const isSubAppRouter = this.isSubAppRouter();
+    let activedKey = '';
+    let title = '平台首页';
+    if (activedMenu) {
+      const { id, title: tempTitle } = activedMenu;
+      activedKey = id;
+      title = tempTitle;
+    }
     return (
       <section className={cls(styles['portal-layout'])}>
+        <Helmet>
+          <title>{title}</title>
+          <meta name="description" content={title} />
+        </Helmet>
         <nav
           className={cls({
             'layout-sidebar': true,
@@ -134,7 +141,7 @@ class BasicLayout extends React.Component {
           })}
         >
           <NavLeft
-            menuConfig={tempCurrModule ? [tempCurrModule] : []}
+            menuConfig={currMenuTree ? [currMenuTree] : []}
             onMenuClick={this.handleMenuClick}
             collapsed={collapsed}
             activedMenuKey={activedKey}
@@ -148,15 +155,19 @@ class BasicLayout extends React.Component {
               collapsed={collapsed}
               onHomeClick={this.handleHomeClick}
             >
-              <TabHeader
-                data={tempTabData}
-                activedKey={activedKey}
-                onClose={this.handleCloseTab}
-                onChange={this.handleToggleTab}
-                onReload={this.handleReload}
-                mode={mode}
-                history={history}
-              />
+              {mode === 'spa' ? (
+                this.getBreadCrumb()
+              ) : (
+                <TabHeader
+                  data={tabData}
+                  activedKey={activedKey}
+                  onClose={this.handleCloseTab}
+                  onChange={this.handleToggleTab}
+                  onReload={this.handleReload}
+                  mode={mode}
+                  history={history}
+                />
+              )}
             </Header>
           </header>
           <content className={cls('layout-center-content')}>
@@ -164,7 +175,7 @@ class BasicLayout extends React.Component {
             {mode === 'iframe' ? (
               <TabPane
                 style={activedKey === '' ? { display: 'none' } : {}}
-                data={tempTabData}
+                data={tabData}
                 activedKey={activedKey}
                 ref={inst => {
                   this.tabPaneRef = inst;

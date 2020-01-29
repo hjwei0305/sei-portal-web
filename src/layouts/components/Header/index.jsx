@@ -5,8 +5,8 @@ import { connect } from 'dva';
 import { Icon, Menu, Avatar } from 'antd';
 import FullScreen from '@/components/FullScreen';
 import MenuSearch from '@/components/MenuSearch';
+import ExtDropdown from '@/components/ExtDropdown';
 import { userInfoOperation } from '@/utils';
-import HeaderDropdown from './components/HeaderDropdown';
 import ExtList from './components/List';
 
 import styles from './index.less';
@@ -58,17 +58,17 @@ class Header extends React.Component {
 
   dropdownRender = () => {
     const { menu, dispatch } = this.props;
-    const { modules } = menu;
+    const { menuTrees } = menu;
 
     return (
       <ExtList
-        dataSource={modules}
+        dataSource={menuTrees}
         selectable="false"
-        onItemClick={item => {
+        onItemClick={currMenuTree => {
           dispatch({
             type: 'menu/toggleModule',
             payload: {
-              currModule: item,
+              currMenuTree,
             },
           });
         }}
@@ -85,7 +85,8 @@ class Header extends React.Component {
 
   render() {
     const { onCollapse, collapsed, children, menu } = this.props;
-    const { currModule, activedKey } = menu;
+    const { allLeafMenus, currMenuTree, activedMenu } = menu;
+    const activedKey = activedMenu ? activedMenu.id : '';
 
     return (
       <section className={cls(styles['header-layout'])}>
@@ -104,12 +105,12 @@ class Header extends React.Component {
           >
             <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
           </span>
-          <HeaderDropdown overlay={this.dropdownRender()} trigger={['click']}>
+          <ExtDropdown overlay={this.dropdownRender()} trigger={['click']}>
             <span className={cls('trigger')}>
-              <span className="title">{currModule.name || ''}</span>
+              <span className="title">{currMenuTree ? currMenuTree.title : ''}</span>
               <Icon type="caret-down" style={{ fontSize: '12px', marginLeft: '4px' }} />
             </span>
-          </HeaderDropdown>
+          </ExtDropdown>
           <span
             className={cls({ trigger: true, trigger_active: !activedKey })}
             onClick={this.handleHomeClick}
@@ -120,29 +121,25 @@ class Header extends React.Component {
         <div className={cls('header-layout-right')}>
           <MenuSearch
             className={cls('trigger')}
-            onSelect={item => {
+            data={allLeafMenus}
+            onSelect={currMenu => {
               const { dispatch } = this.props;
               dispatch({
                 type: 'menu/updateTabState',
                 payload: {
-                  menuItem: {
-                    title: item.name,
-                    id: item.id,
-                    iconType: 'profile', // item.iconCls,
-                    path: item.featureUrl,
-                  },
+                  activedMenu: currMenu,
                 },
-              }).then(() => router.push(item.featureUrl));
+              }).then(() => router.push(currMenu.url));
             }}
           />
-          <HeaderDropdown overlay={this.getDropdownMenus()}>
+          <ExtDropdown overlay={this.getDropdownMenus()}>
             <span className={`${cls('action', 'account')} ${styles.account}`}>
               <Avatar icon="user" size="13" />
               <span className={cls('username')}>
                 {this.currentUser && this.currentUser.userName}
               </span>
             </span>
-          </HeaderDropdown>
+          </ExtDropdown>
           <FullScreen className={cls('trigger')} />
         </div>
         <div

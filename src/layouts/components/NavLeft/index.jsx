@@ -28,10 +28,6 @@ class NavLeft extends React.Component {
     };
   }
 
-  componentDidMount() {
-    /** todo */
-  }
-
   componentWillReceiveProps(nextProps) {
     const { activedMenuKey } = this.props;
     if (activedMenuKey !== nextProps.activedMenuKey) {
@@ -59,7 +55,7 @@ class NavLeft extends React.Component {
 
     if (mode !== 'iframe') {
       return (
-        <Link to={item.path}>
+        <Link to={item.url}>
           <Icon type={item.iconType} />
           <span>{item.title}</span>
         </Link>

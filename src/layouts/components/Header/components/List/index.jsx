@@ -3,7 +3,7 @@ import { List } from 'antd';
 import styles from './index.less';
 
 const ExtList = props => {
-  const { split = false, size = 'small', onItemClick, ...rest } = props;
+  const { split = false, size = 'small', onItemClick, dataSource } = props;
 
   return (
     <div className={styles['ext-list-wrapper']}>
@@ -20,11 +20,12 @@ const ExtList = props => {
                 }
               }}
             >
-              {item.name}
+              {item.title}
             </span>
           </List.Item>
         )}
-        {...rest}
+        dataSource={dataSource}
+        selectable="false"
       />
     </div>
   );

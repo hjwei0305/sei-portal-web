@@ -6,7 +6,6 @@ export const dva = {
   config: {
     onError(err) {
       err.preventDefault();
-      console.log(err);
       notification.error({
         message: '接口请求异常',
         description: err.message,
