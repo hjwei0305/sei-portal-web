@@ -2,9 +2,12 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-29 11:37:41
+ * @Last Modified time: 2020-01-29 20:49:58
  */
 // import { getMenu } from '@/services/menu';
+import { treeOperation } from '@/utils';
+
+const { getTreeLeaf, traverseCopyTrees } = treeOperation;
 
 const tempResult = {
   status: null,
@@ -78,36 +81,14 @@ let init = true;
 /** 刷新页面的时候的第一次路由地址 */
 let initPathname = '';
 
-/** 获取树的所有叶子结点 */
-function getAllLeaf(tree, result = []) {
-  for (let i = tree.length - 1; i >= 0; i -= 1) {
-    const item = tree[i];
-    if (item.children && item.children.length) {
-      getAllLeaf(item.children, result);
-    } else {
-      result.push(item);
-    }
-  }
-  return result;
-}
-
 /**
- * 适配后台接口返回的菜单数据
- * @param  {Array} trees  菜单树
- * @param  {Array}  result 结果数组
- * @return {Array}        适配后的菜单树
+ * 适配后台接口返回的菜单
+ * @param  {Object} tree  菜单树
+ * @return {Object}        适配后的菜单树
  */
-function adapterMenus(trees, result = []) {
-  for (let i = 0, len = trees.length; i < len; i += 1) {
-    const { id, name: title, featureUrl: url, namePath: urlPath, children } = trees[i];
-    const menuTree = { id, title, url, urlPath, children, iconType: 'profile' };
-    if (children && children.length) {
-      menuTree.children = adapterMenus(children, []);
-    }
-    result.push(menuTree);
-  }
-
-  return result;
+function adapterMenus(tree) {
+  const { id, name: title, featureUrl: url, namePath: urlPath, children } = tree;
+  return { id, title, url, urlPath, children, iconType: 'profile' };
 }
 
 export default {
@@ -132,8 +113,8 @@ export default {
     *getMenus(_, { put }) {
       // const result = yield getMenu();
       const result = tempResult;
-      const menuTrees = adapterMenus(result.data);
-      const allLeafMenus = getAllLeaf(menuTrees);
+      const menuTrees = traverseCopyTrees(result.data, adapterMenus);
+      const allLeafMenus = getTreeLeaf(menuTrees);
       const payload = {
         menuTrees,
         allLeafMenus,

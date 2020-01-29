@@ -5,8 +5,6 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// let init = true;
-
 export default {
   namespace: 'base',
 
