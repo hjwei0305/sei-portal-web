@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Icon, Button, Input } from 'antd';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
+import md5 from 'md5';
 import styles from './index.less';
 
 const FormItem = Form.Item;
@@ -14,7 +15,7 @@ class Login extends Component {
       if (!err) {
         dispatch({
           type: 'user/userLogin',
-          payload: values,
+          payload: { ...values, password: md5(values.password) },
         });
       }
     });
