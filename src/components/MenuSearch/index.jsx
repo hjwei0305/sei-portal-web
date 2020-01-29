@@ -20,36 +20,7 @@ export default class MenuSearch extends React.Component {
 
   static defaultProps = {
     className: '',
-    data: [
-      {
-        id: '59C01B9D-DDD7-11E9-AB96-0242C0A84421',
-        code: '91039',
-        name: '通告主数据',
-        rank: 0,
-        nodeLevel: 2,
-        parentId: '2E7F3BA3-DDDA-11E9-A9A9-0242C0A84421',
-        codePath: '|91036|91038|91039',
-        namePath: '/消息管理/通告/通告主数据',
-        children: null,
-        featureCode: 'NOTIFY-TGGL-FB',
-        featureUrl: '/sei-notify-web/metaData/notifyContent',
-        iconCls: '',
-      },
-      {
-        id: '59C01B9D-DDD7-11E9-AB96-0242C0A844212',
-        code: '91039',
-        name: '通告发布',
-        rank: 0,
-        nodeLevel: 2,
-        parentId: '2E7F3BA3-DDDA-11E9-A9A9-0242C0A8442123',
-        codePath: '|91036|91038|91039',
-        namePath: '/消息管理/通告/通告发布',
-        children: null,
-        featureCode: 'NOTIFY-TGGL-FB',
-        featureUrl: '/sei-notify-web/metaData/bulletin',
-        iconCls: '',
-      },
-    ],
+    data: [],
     showField: 'title',
     onSelect: noop,
   };

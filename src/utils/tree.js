@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-29 20:03:21
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-29 20:49:17
+ * @Last Modified time: 2020-01-29 21:00:11
  */
 import { cloneDeep } from 'lodash';
 
@@ -23,6 +23,7 @@ export const getTreeLeaf = (trees = [], result = []) => {
 /**
  * 遍历复制树
  * @param  {Array} trees  菜单树
+ * @param  {Fun}   callback 回调函数
  * @param  {Array}  result 结果数组
  * @return {Array}        复制后的树
  */
