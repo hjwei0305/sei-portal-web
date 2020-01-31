@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 10:51:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-31 13:03:49
+ * @Last Modified time: 2020-01-31 17:22:09
  */
 import { utils } from 'seid';
 
@@ -22,6 +22,16 @@ export const getCurrentLocale = () => localStorage.get(CURRENT_LOCALE);
 
 export const setCurrentLocale = locale => {
   localStorage.set(CURRENT_LOCALE, locale);
+};
+
+export const adaptLocale = locale => {
+  if (locale) {
+    if (locale.includes('-')) {
+      return locale.split('-').join('_');
+    }
+    return locale.split('_').join('-');
+  }
+  return null;
 };
 
 /** sid保存到session */
