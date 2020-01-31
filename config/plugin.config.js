@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-06 10:48:11
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-19 13:52:24
+ * @Last Modified time: 2020-01-31 13:34:09
  */
 export default [
   [
@@ -18,7 +18,6 @@ export default [
       dva: {
         hmr: true,
       },
-      title: '平台',
       locale: {
         enable: true,
         default: 'zh-CN',

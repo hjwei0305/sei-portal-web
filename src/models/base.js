@@ -7,10 +7,10 @@ function sleep(ms) {
 
 export default {
   namespace: 'base',
-
   state: {
     name: 'Qiankun',
     apps: [],
+    locale: 'zh-CN',
   },
 
   effects: {
@@ -23,7 +23,7 @@ export default {
 
       const config = yield getSubAppConfig();
       yield put({
-        type: 'getAppsSuccess',
+        type: 'updateState',
         payload: {
           apps: config.apps,
         },
@@ -35,12 +35,6 @@ export default {
   },
 
   reducers: {
-    getAppsSuccess(state, { payload }) {
-      return {
-        ...state,
-        ...payload,
-      };
-    },
     updateState(state, { payload }) {
       return {
         ...state,

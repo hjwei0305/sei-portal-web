@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { Helmet } from 'react-helmet';
+import { formatMessage } from 'umi-plugin-react/locale';
 import Header from './components/Header';
 import NavLeft from './components/NavLeft';
 import Tab from './components/Tab';
@@ -122,7 +123,7 @@ class BasicLayout extends React.Component {
     const { tabData, mode, currMenuTree, activedMenu } = menu;
     const isSubAppRouter = this.isSubAppRouter();
     let activedKey = '';
-    let title = '平台首页';
+    let title = formatMessage({ id: 'app.dashboard', desc: '平台首页' });
     if (activedMenu) {
       const { id, title: tempTitle } = activedMenu;
       activedKey = id;

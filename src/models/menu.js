@@ -2,12 +2,13 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-29 20:49:58
+ * @Last Modified time: 2020-01-31 13:25:02
  */
 // import { getMenu } from '@/services/menu';
-import { treeOperation } from '@/utils';
+import { treeOperation, userInfoOperation } from '@/utils';
 
 const { getTreeLeaf, traverseCopyTrees } = treeOperation;
+const { getCurrentLocale } = userInfoOperation;
 
 const tempResult = {
   status: null,
@@ -76,6 +77,73 @@ const tempResult = {
   ],
 };
 
+const tempEnResult = {
+  status: null,
+  success: true,
+  statusCode: 200,
+  message: '请求数据成功',
+  data: [
+    {
+      id: '47953A97-DDD7-11E9-AB96-0242C0A84421',
+      code: '91036',
+      name: 'message management',
+      rank: 8,
+      nodeLevel: 0,
+      parentId: '',
+      codePath: '|91036',
+      namePath: '/message management',
+      children: [
+        {
+          id: '2E7F3BA3-DDDA-11E9-A9A9-0242C0A84421',
+          code: '91038',
+          name: 'notify',
+          rank: 1,
+          nodeLevel: 1,
+          parentId: '47953A97-DDD7-11E9-AB96-0242C0A84421',
+          codePath: '|91036|91038',
+          namePath: '/message management/notify',
+          children: [
+            {
+              id: '59C01B9D-DDD7-11E9-AB96-0242C0A84421',
+              code: '91039',
+              name: 'notify master data',
+              rank: 0,
+              nodeLevel: 2,
+              parentId: '2E7F3BA3-DDDA-11E9-A9A9-0242C0A84421',
+              codePath: '|91036|91038|91039',
+              namePath: '/message management/notify/notify master data',
+              children: null,
+              featureCode: 'NOTIFY-TGGL-FB',
+              featureUrl: '/sei-notify-web/metaData/notifyContent',
+              iconCls: '',
+            },
+            {
+              id: '59C01B9D-DDD7-11E9-AB96-0242C0A844212',
+              code: '91039',
+              name: 'notify publish',
+              rank: 0,
+              nodeLevel: 2,
+              parentId: '2E7F3BA3-DDDA-11E9-A9A9-0242C0A8442123',
+              codePath: '|91036|91038|91039',
+              namePath: '/message management/notify/notify publish',
+              children: null,
+              featureCode: 'NOTIFY-TGGL-FB',
+              featureUrl: '/sei-notify-web/metaData/bulletin',
+              iconCls: '',
+            },
+          ],
+          featureCode: null,
+          featureUrl: null,
+          iconCls: '',
+        },
+      ],
+      featureCode: null,
+      featureUrl: null,
+      iconCls: '',
+    },
+  ],
+};
+
 /** 是否刷新页面的时候的第一次路由 */
 let init = true;
 /** 刷新页面的时候的第一次路由地址 */
@@ -112,7 +180,7 @@ export default {
   effects: {
     *getMenus(_, { put }) {
       // const result = yield getMenu();
-      const result = tempResult;
+      const result = getCurrentLocale() === 'en-US' ? tempEnResult : tempResult;
       const menuTrees = traverseCopyTrees(result.data, adapterMenus);
       const allLeafMenus = getTreeLeaf(menuTrees);
       const payload = {

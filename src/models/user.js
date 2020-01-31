@@ -2,14 +2,20 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-21 10:49:01
+ * @Last Modified time: 2020-01-31 13:07:00
  */
 import { router } from 'umi';
 import { notification } from 'antd';
 import { userLogin, userLogout } from '@/services/user';
 import { userInfoOperation } from '@/utils';
 
-const { setCurrentUser, setSessionId, clearUserInfo, getSessionId } = userInfoOperation;
+const {
+  setCurrentUser,
+  setSessionId,
+  clearUserInfo,
+  getSessionId,
+  setCurrentLocale,
+} = userInfoOperation;
 
 export default {
   namespace: 'user',
@@ -33,6 +39,7 @@ export default {
         });
         setCurrentUser(data);
         setSessionId(data.sessionId);
+        setCurrentLocale(data.locale);
         router.replace('/');
       } else {
         notification.error({
@@ -51,6 +58,7 @@ export default {
           userInfo: null,
         },
       });
+      /** 更新菜单相关状态 */
       yield put({
         type: 'menu/updateState',
         payload: {

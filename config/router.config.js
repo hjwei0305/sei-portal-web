@@ -25,13 +25,11 @@ const routes = [
         component: './DashBoard',
       },
       {
-        // component: './DashBoard',
         component: './404',
       },
     ],
   },
   {
-    // component: './DashBoard',
     component: './404',
   },
 ];

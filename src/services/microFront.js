@@ -5,7 +5,6 @@ export const getSubAppConfig = () =>
   request
     .get(`/apps.config.json?random=${new Date().getTime()}`)
     .then(res => {
-      // const reg = /^https?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\? i)?=?&?[a-zA-Z0-9_-](\?)?)*)*$/;
       const { success, data } = res || {};
       let apps = [];
       if (success) {

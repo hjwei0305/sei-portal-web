@@ -53,26 +53,36 @@ class Login extends Component {
         <FormItem>
           {getFieldDecorator('account', {
             initialValue: '',
-            rules: [{ required: true, message: '请输入用户名!' }],
+            rules: [
+              {
+                required: true,
+                message: formatMessage({ id: 'login.userName-invalid', desc: '请输入用户名!' }),
+              },
+            ],
           })(
             <Input
               disabled={isLoading}
               autoFocus="autofocus"
               prefix={<Icon type="user" style={colorStyle} />}
-              placeholder={formatMessage({ id: 'user-login.login.userName' })}
+              placeholder={formatMessage({ id: 'login.userName' })}
             />,
           )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
             initialValue: '',
-            rules: [{ required: true, message: '请输入密码!' }],
+            rules: [
+              {
+                required: true,
+                message: formatMessage({ id: 'login.password-invalid', desc: '请输入密码!' }),
+              },
+            ],
           })(
             <Input
               disabled={isLoading}
               prefix={<Icon type="lock" style={colorStyle} />}
               type="password"
-              placeholder={formatMessage({ id: 'user-login.login.password' })}
+              placeholder={formatMessage({ id: 'login.password' })}
             />,
           )}
         </FormItem>
@@ -83,7 +93,9 @@ class Login extends Component {
             onClick={this.login}
             className="login-form-button"
           >
-            {!isLoading ? '登录' : '登录中'}
+            {!isLoading
+              ? formatMessage({ id: 'login.login', desc: '登录' })
+              : formatMessage({ id: 'login.loginning', desc: '登录中...' })}
           </Button>
         </FormItem>
         <div>
@@ -98,7 +110,7 @@ class Login extends Component {
               float: 'right',
             }}
           >
-            找回密码
+            {formatMessage({ id: 'login.forgot-password', desc: '忘记密码' })}
           </a>
         </div>
       </Form>

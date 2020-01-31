@@ -27,33 +27,6 @@
       float: right;
       height: 100%;
       overflow: hidden;
-      .action {
-        display: inline-block;
-        height: 100%;
-        padding: 0 12px;
-        cursor: pointer;
-        transition: all 0.3s;
-        > i {
-          vertical-align: middle;
-        }
-        &:hover {
-          background: @trigger-hover-bg;
-        }
-        &:global(.opened) {
-          background: @trigger-hover-bg;
-        }
-        .username {
-          margin-left: 5px;
-          vertical-align: middle;
-        }
-      }
-      .account {
-        .avatar {
-          margin-right: 8px;
-          vertical-align: top;
-          background: rgba(255, 255, 255, 0.85);
-        }
-      }
     }
   }
 }

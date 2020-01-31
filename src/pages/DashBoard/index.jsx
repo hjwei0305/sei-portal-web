@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, Empty } from 'antd';
 import { ExtEcharts } from 'seid';
 import moment from 'moment';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { userInfoOperation, CONSTANTS } from '@/utils';
 import styles from './index.less';
 
@@ -254,7 +255,10 @@ class DashBoard extends Component {
   );
 
   getUserGreeting = () =>
-    `${moment(new Date()).format('A')}好，${getCurrentUser().userName}，祝您生活愉快！`;
+    formatMessage({ id: 'dashboard.welcome' }, [
+      moment(new Date()).format('A'),
+      getCurrentUser().userName,
+    ]);
 
   getUserInfo = () => '开发人员-基础平台部-虹信软件股份有限公司';
 
