@@ -38,7 +38,6 @@ export default class UserIcon extends React.Component {
   };
 
   render() {
-    console.log(styles['user-icon-wrapper']);
     return (
       <ExtDropdown overlay={this.dropdownRender()}>
         <span className={cls(styles['user-icon-wrapper'], 'trigger')}>

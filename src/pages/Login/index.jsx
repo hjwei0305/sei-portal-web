@@ -98,21 +98,23 @@ class Login extends Component {
               : formatMessage({ id: 'login.loginning', desc: '登录中...' })}
           </Button>
         </FormItem>
-        <div>
-          <a
-            onClick={() => {
-              const { handleFindPassword } = this.props;
-              if (handleFindPassword) {
-                handleFindPassword();
-              }
-            }}
-            style={{
-              float: 'right',
-            }}
-          >
-            {formatMessage({ id: 'login.forgot-password', desc: '忘记密码' })}
-          </a>
-        </div>
+        {/*
+          <div>
+            <a
+              onClick={() => {
+                const { handleFindPassword } = this.props;
+                if (handleFindPassword) {
+                  handleFindPassword();
+                }
+              }}
+              style={{
+                float: 'right',
+              }}
+            >
+              {formatMessage({ id: 'login.forgot-password', desc: '忘记密码' })}
+            </a>
+          </div>
+        */}
       </Form>
     );
   }

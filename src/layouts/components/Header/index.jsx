@@ -3,6 +3,7 @@ import cls from 'classnames';
 import { router } from 'umi';
 import { connect } from 'dva';
 import { Icon } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
 import FullScreen from '@/components/FullScreen';
 import MenuSearch from '@/components/MenuSearch';
 import { userInfoOperation } from '@/utils';
@@ -69,6 +70,10 @@ export default class Header extends React.Component {
           <MenuSearch
             className={cls('trigger')}
             data={allLeafMenus}
+            placeholder={formatMessage({
+              id: 'app.menusearch.placeholder',
+              desc: '请输入关键字查询',
+            })}
             onSelect={currMenu => {
               const { dispatch } = this.props;
               dispatch({

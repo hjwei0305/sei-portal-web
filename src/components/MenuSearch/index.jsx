@@ -16,6 +16,8 @@ export default class MenuSearch extends React.Component {
     onSelect: propTypes.func,
     /** 显示字段 */
     showField: propTypes.string,
+    /** 搜索占位字符串 */
+    placeholder: propTypes.string,
   };
 
   static defaultProps = {
@@ -23,6 +25,7 @@ export default class MenuSearch extends React.Component {
     data: [],
     showField: 'title',
     onSelect: noop,
+    placeholder: '输入关键字搜索',
   };
 
   constructor(props) {
@@ -94,7 +97,7 @@ export default class MenuSearch extends React.Component {
   };
 
   render() {
-    const { className } = this.props;
+    const { className, placeholder } = this.props;
 
     return (
       <React.Fragment>
@@ -102,7 +105,7 @@ export default class MenuSearch extends React.Component {
           <Icon type="search" />
         </span>
         <Modal {...this.getModalProps()}>
-          <Search placeholder="输入关键字搜索" onSearch={this.handleSearch} enterButton />
+          <Search placeholder={placeholder} onSearch={this.handleSearch} enterButton />
           <ul>{this.getFilterDataCmp()}</ul>
         </Modal>
       </React.Fragment>
