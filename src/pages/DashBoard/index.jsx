@@ -185,7 +185,7 @@ const lineProps = {
   },
 };
 
-class DashBoard extends Component {
+export default class DashBoard extends Component {
   /** 获取自定义组件 */
   getCustomCmp = () => {
     const bodyStyle = { height: 400 };
@@ -300,5 +300,3 @@ class DashBoard extends Component {
     );
   }
 }
-
-export default DashBoard;

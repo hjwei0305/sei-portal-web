@@ -7,7 +7,9 @@ import styles from './index.less';
 
 const FormItem = Form.Item;
 
-class Login extends Component {
+@connect(({ user, loading }) => ({ user, loading }))
+@Form.create()
+export default class Login extends Component {
   login = e => {
     const { form, dispatch } = this.props;
 
@@ -119,5 +121,3 @@ class Login extends Component {
     );
   }
 }
-
-export default connect(({ user, loading }) => ({ user, loading }))(Form.create({})(Login));

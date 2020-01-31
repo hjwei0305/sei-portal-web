@@ -11,7 +11,8 @@ import styles from './BasicLayout.less';
 
 const { TabPane, TabHeader } = Tab;
 
-class BasicLayout extends React.Component {
+@connect(({ base, menu }) => ({ base, menu }))
+export default class BasicLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -196,5 +197,3 @@ class BasicLayout extends React.Component {
     );
   }
 }
-
-export default connect(({ base, menu }) => ({ base, menu }))(BasicLayout);

@@ -1,32 +1,48 @@
 @import url('../../vars.less');
 
 .nav-left-wrapper {
-	box-sizing: border-box;
-	height: 100%;
-	overflow: auto;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
   :global {
     .layout-logo {
-      overflow: hidden;
       height: @center-header-height;
+      overflow: hidden;
       line-height: @center-header-height;
       text-align: center;
       img {
         height: 36px;
       }
     }
+    .ant-menu-inline {
+      .ant-menu-item,
+      .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item,
+      .ant-menu-item-group
+        > .ant-menu-item-group-list
+        > .ant-menu-submenu
+        > .ant-menu-submenu-title,
+      .ant-menu-submenu > .ant-menu-submenu-title {
+        > a {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
     .ant-menu-inline-collapsed {
       width: @sidebar-collapsed-width;
       .ant-menu-item,
-      .ant-menu-item-group>.ant-menu-item-group-list>.ant-menu-item,
-      .ant-menu-item-group>.ant-menu-item-group-list>.ant-menu-submenu>.ant-menu-submenu-title,
-      .ant-menu-submenu>.ant-menu-submenu-title {
+      .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item,
+      .ant-menu-item-group
+        > .ant-menu-item-group-list
+        > .ant-menu-submenu
+        > .ant-menu-submenu-title,
+      .ant-menu-submenu > .ant-menu-submenu-title {
         padding: 0 10px !important;
         text-align: center;
       }
     }
-
-
-  };
+  }
   &.nav-left-wrapper-collapsed {
     :global {
       .layout-logo {
@@ -34,6 +50,6 @@
           width: 36px;
         }
       }
-    };
+    }
   }
 }
