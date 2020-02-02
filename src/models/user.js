@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-31 17:20:05
+ * @Last Modified time: 2020-02-02 10:28:19
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -31,7 +31,7 @@ export default {
   effects: {
     *userLogin({ payload }, { put }) {
       const result = yield userLogin({ ...payload, locale: adaptLocale(getCurrentLocale()) });
-      const { success, data } = result || {};
+      const { success, data, message } = result || {};
       const { sessionId, locale, loginStatus } = data || {};
       if (success && loginStatus === 'success') {
         yield put({
@@ -43,13 +43,13 @@ export default {
         });
         setCurrentUser(data);
         setSessionId(sessionId);
-        setCurrentLocale(adaptLocale(locale));
-        setLocale(adaptLocale(locale));
+        setCurrentLocale(adaptLocale(locale || 'zh_CN'));
+        setLocale(adaptLocale(locale || 'zh_CN'));
         router.replace('/');
       } else {
         notification.error({
           message: '接口请求异常',
-          description: data.message,
+          description: message,
         });
       }
     },
