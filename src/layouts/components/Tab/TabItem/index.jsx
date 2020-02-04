@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Trigger from 'rc-trigger';
 import classNames from 'classnames';
 import { Icon } from 'antd';
-import { Link } from 'umi';
+import { Link, router } from 'umi';
 
 import styles from './index.less';
 
@@ -83,7 +83,13 @@ export default class TabItem extends React.Component {
           <div className="tabs-more-wrap" onClick={this.handlePopupClick}>
             {dropdownData.map(({ title, url, id }) => (
               <div key={id} className="tabs-more-item" title={title}>
-                <div onClick={() => onClick({ id, url, title })} className="title">
+                <div
+                  onClick={() => {
+                    onClick({ id, url, title });
+                    router.push(url);
+                  }}
+                  className="title"
+                >
                   {title}
                 </div>
                 <Icon type="close" className="icon" onClick={() => onClose(id)} />
