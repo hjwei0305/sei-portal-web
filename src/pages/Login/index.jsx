@@ -10,6 +10,20 @@ const FormItem = Form.Item;
 @connect(({ user, loading }) => ({ user, loading }))
 @Form.create()
 export default class Login extends Component {
+  componentDidMount() {
+    document.addEventListener('keydown', this.onKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown);
+  }
+
+  onKeyDown = e => {
+    if (e.keyCode === 13) {
+      this.login();
+    }
+  };
+
   login = e => {
     const { form, dispatch } = this.props;
 
