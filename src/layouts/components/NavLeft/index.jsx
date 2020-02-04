@@ -73,7 +73,7 @@ class NavLeft extends React.Component {
   // 递归渲染树形菜单
   renderMenu = data =>
     data.map(item => {
-      if (item.children) {
+      if (item.children && item.children.length) {
         const title = (
           <span>
             <Icon type={item.iconType} />
