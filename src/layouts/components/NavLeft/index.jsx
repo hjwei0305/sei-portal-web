@@ -2,6 +2,7 @@ import React from 'react';
 import { Menu, Icon } from 'antd';
 import { Link } from 'umi';
 import cls from 'classnames';
+import { isEqual } from 'lodash';
 import PropTypes from 'prop-types';
 import logo from '../../../assets/logo@2x.png';
 import collapsedLogo from '../../../assets/logo_notxt@2x.png';
@@ -22,18 +23,53 @@ class NavLeft extends React.Component {
 
   constructor(props) {
     super(props);
-
+    const { activedMenuKey, menuConfig } = props;
     this.state = {
-      currentSelectedKeys: [props.activedMenuKey],
+      currentSelectedKeys: [activedMenuKey],
+      openKeys: this.getInitOpenKeys(menuConfig),
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const { activedMenuKey } = this.props;
+    const { activedMenuKey, menuConfig } = this.props;
     if (activedMenuKey !== nextProps.activedMenuKey) {
       this.updateCurrentSelected(nextProps.activedMenuKey);
     }
+    if (!isEqual(menuConfig, nextProps.menuConfig)) {
+      this.setState({
+        openKeys: this.getInitOpenKeys(),
+      });
+    }
   }
+
+  getInitOpenKeys = menuConfig => {
+    if (menuConfig && menuConfig.length) {
+      return [menuConfig[0].id];
+    }
+    return null;
+  };
+
+  handleOpenChange = openKeys => {
+    this.setState({
+      openKeys,
+    });
+    // console.log(openKeys);
+    // const {
+    //   menuConfig
+    // } = this.props;
+    // const menus = curModuleMenu.children;
+    // const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+    // const key = menus.find(item => item.id === latestOpenKey);
+    // if (!key) {
+    //   this.setState({
+    //     openKeys
+    //   });
+    // } else {
+    //   this.setState({
+    //     openKeys: latestOpenKey ? [latestOpenKey] : [],
+    //   });
+    // }
+  };
 
   handleMenuClick = item => {
     const { onMenuClick } = this.props;
@@ -102,7 +138,7 @@ class NavLeft extends React.Component {
     });
 
   render() {
-    const { currentSelectedKeys } = this.state;
+    const { currentSelectedKeys, openKeys } = this.state;
     const { collapsed, menuConfig = [] } = this.props;
 
     return (
@@ -120,6 +156,8 @@ class NavLeft extends React.Component {
           mode="inline"
           theme="dark"
           inlineCollapsed={collapsed}
+          onOpenChange={this.handleOpenChange}
+          openKeys={openKeys}
         >
           {this.renderMenu(menuConfig)}
         </Menu>
