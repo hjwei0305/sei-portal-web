@@ -4,7 +4,7 @@ import { Link } from 'umi';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import PropTypes from 'prop-types';
-import logo from '../../../assets/logo@2x.png';
+import logo from '../../../assets/logo.svg';
 import collapsedLogo from '../../../assets/logo_notxt@2x.png';
 
 import styles from './index.less';
@@ -50,21 +50,18 @@ class NavLeft extends React.Component {
     return null;
   };
 
-  handleOpenChange = openKeys => {
+  handleOpenChange = curOpenKeys => {
     this.setState({
-      openKeys,
+      openKeys: curOpenKeys,
     });
-    // console.log(openKeys);
-    // const {
-    //   menuConfig
-    // } = this.props;
-    // const menus = curModuleMenu.children;
-    // const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+    // const { openKeys, } = this.state;
+    // const { menuConfig, } = this.props;
+    // const menus = menuConfig[0].children;
+    // const latestOpenKey = curOpenKeys.find(key => openKeys.indexOf(key) === -1);
     // const key = menus.find(item => item.id === latestOpenKey);
+
     // if (!key) {
-    //   this.setState({
-    //     openKeys
-    //   });
+    //   this.setState({ openKeys: curOpenKeys, });
     // } else {
     //   this.setState({
     //     openKeys: latestOpenKey ? [latestOpenKey] : [],
