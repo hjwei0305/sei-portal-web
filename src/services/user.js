@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-06 22:42:31
+ * @Last Modified time: 2020-02-06 23:45:13
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -28,6 +28,6 @@ export async function userLogout(params) {
   return request({
     url: `${SEIAUTHSERVICE}/auth/logout`,
     method: 'POST',
-    body: params.sid,
+    data: params.sid,
   });
 }
