@@ -8,7 +8,10 @@ export const getSubAppConfig = () =>
       const { success, data } = res || {};
       let apps = [];
       if (success) {
-        apps = data.map(item => item);
+        apps = data.map(item => {
+          item.entry += `/index.html?random=${new Date().getTime()}`;
+          return item;
+        });
       }
 
       return {

@@ -8,4 +8,9 @@ export default {
     target: 'http://10.4.208.86:8100',
     changeOrigin: true,
   },
+  '/apps-config': {
+    target: 'http://10.4.208.86:8100',
+    changeOrigin: true,
+    pathRewrite: { '^/apps-config': '' },
+  },
 };
