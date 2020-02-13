@@ -10,6 +10,10 @@ const FormItem = Form.Item;
 @connect(({ user, loading }) => ({ user, loading }))
 @Form.create()
 export default class Login extends Component {
+  state = {
+    showTenant: false,
+  };
+
   componentDidMount() {
     document.addEventListener('keydown', this.onKeyDown);
   }
@@ -32,6 +36,19 @@ export default class Login extends Component {
         dispatch({
           type: 'user/userLogin',
           payload: { ...values, password: md5(values.password) },
+        }).then(res => {
+          const { success, data } = res || {};
+          if (success) {
+            if (data.loginStatus === 'multiTenant') {
+              this.setState({
+                showTenant: true,
+              });
+            } else {
+              dispatch({
+                type: 'user/getUserFeatures',
+              });
+            }
+          }
         });
       }
     });
@@ -41,8 +58,9 @@ export default class Login extends Component {
   };
 
   render() {
-    const { errorMsg, form, showTenant, loading } = this.props;
+    const { errorMsg, form, loading } = this.props;
     const { getFieldDecorator } = form;
+    const { showTenant } = this.state;
     const isLoading = loading.effects['user/userLogin'];
     const colorStyle = { color: 'rgba(0,0,0,.25)' };
     const FormItemStyle = { margin: 0, color: 'red' };
@@ -55,8 +73,8 @@ export default class Login extends Component {
         ) : null}
         {showTenant ? (
           <FormItem>
-            {getFieldDecorator('tenantCode', {
-              rules: [{ required: false, message: '请输入租户账号!' }],
+            {getFieldDecorator('tenant', {
+              rules: [{ required: true, message: '请输入租户账号!' }],
             })(
               <Input
                 disabled={isLoading}

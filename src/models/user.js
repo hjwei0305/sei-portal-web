@@ -2,12 +2,12 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-02 10:28:19
+ * @Last Modified time: 2020-02-13 16:05:49
  */
 import { router } from 'umi';
 import { notification } from 'antd';
 import { setLocale } from 'umi-plugin-react/locale';
-import { userLogin, userLogout } from '@/services/user';
+import { userLogin, userLogout, getAuthorizedFeatures } from '@/services/user';
 import { userInfoOperation } from '@/utils';
 
 const {
@@ -18,6 +18,9 @@ const {
   setCurrentLocale,
   getCurrentLocale,
   adaptLocale,
+  getCurrentUser,
+  setCurrentAuth,
+  setCurrentPolicy,
 } = userInfoOperation;
 
 export default {
@@ -32,7 +35,7 @@ export default {
     *userLogin({ payload }, { put }) {
       const result = yield userLogin({ ...payload, locale: adaptLocale(getCurrentLocale()) });
       const { success, data, message } = result || {};
-      const { sessionId, locale, loginStatus } = data || {};
+      const { sessionId, locale, loginStatus, authorityPolicy } = data || {};
       if (success && loginStatus === 'success') {
         yield put({
           type: 'updateState',
@@ -43,6 +46,7 @@ export default {
         });
         setCurrentUser(data);
         setSessionId(sessionId);
+        setCurrentPolicy(authorityPolicy);
         setCurrentLocale(adaptLocale(locale || 'zh_CN'));
         setLocale(adaptLocale(locale || 'zh_CN'));
         router.replace('/');
@@ -52,6 +56,8 @@ export default {
           description: message,
         });
       }
+
+      return result;
     },
     *userLogout(_, { put }) {
       router.replace('/user/login');
@@ -71,6 +77,13 @@ export default {
           activedKey: '',
         },
       });
+    },
+    *getUserFeatures(_, { call }) {
+      const user = getCurrentUser();
+      const result = yield call(getAuthorizedFeatures, user.userId);
+      if (result && result.success) {
+        setCurrentAuth(result.data);
+      }
     },
   },
 

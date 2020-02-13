@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-06 23:45:13
+ * @Last Modified time: 2020-02-13 15:46:10
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -30,4 +30,9 @@ export async function userLogout(params) {
     method: 'POST',
     data: params.sid,
   });
+}
+
+/** 获取当前用户有权限的功能项集合 */
+export async function getAuthorizedFeatures(userId) {
+  return request.get(`${SEIAUTHSERVICE}/auth/getAuthorizedFeatures?userId=${userId}`);
 }

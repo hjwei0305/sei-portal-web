@@ -2,13 +2,13 @@
  * @Author: zp
  * @Date:   2020-01-16 10:51:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-01-31 17:22:09
+ * @Last Modified time: 2020-02-13 16:00:05
  */
 import { utils } from 'seid';
 
 const { sessionStorage, localStorage } = utils.storage;
 const { CONST_GLOBAL } = utils.constants;
-const { CURRENT_USER, TOKEN_KEY, CURRENT_LOCALE } = CONST_GLOBAL;
+const { CURRENT_USER, TOKEN_KEY, CURRENT_LOCALE, AUTH, POLICY } = CONST_GLOBAL;
 
 /** 用户信息保存到session */
 export const setCurrentUser = user => {
@@ -23,6 +23,9 @@ export const getCurrentLocale = () => localStorage.get(CURRENT_LOCALE);
 export const setCurrentLocale = locale => {
   localStorage.set(CURRENT_LOCALE, locale);
 };
+
+export const setCurrentAuth = auths => sessionStorage.set(AUTH, auths);
+export const setCurrentPolicy = policy => sessionStorage.set(POLICY, policy);
 
 export const adaptLocale = locale => {
   if (locale) {

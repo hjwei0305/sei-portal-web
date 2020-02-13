@@ -24,7 +24,7 @@ class NavLeft extends React.Component {
   constructor(props) {
     super(props);
     const { activedMenuKey, menuConfig } = props;
-    console.log(menuConfig, 'menuConfig');
+
     this.state = {
       currentSelectedKeys: [activedMenuKey],
       openKeys: this.getInitOpenKeys(menuConfig),
