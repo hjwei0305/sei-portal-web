@@ -7,6 +7,7 @@ import theme from './theme.config.js';
 
 export default {
   history: 'hash',
+  hash: true,
   publicPath: '/sei-portal-web/',
   targets: {
     ie: 11,
@@ -24,7 +25,7 @@ export default {
         libraryName: 'antd',
         libraryDirectory: 'es',
         style: true,
-      }
+      },
     ],
     [
       'import',
@@ -33,7 +34,7 @@ export default {
         libraryDirectory: 'es',
         style: true,
       },
-      'seid'
+      'seid',
     ],
   ],
   lessLoaderOptions: {
