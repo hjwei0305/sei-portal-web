@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-14 10:37:52
+ * @Last Modified time: 2020-02-14 11:03:39
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -84,7 +84,7 @@ export default {
         type: 'menu/updateState',
         payload: {
           tabData: [],
-          activedKey: '',
+          activedMenu: null,
         },
       });
     },
@@ -95,7 +95,7 @@ export default {
         type: 'menu/updateState',
         payload: {
           tabData: [],
-          activedKey: '',
+          activedMenu: null,
         },
       });
     },

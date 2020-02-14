@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Card, Empty } from 'antd';
 import { ExtEcharts } from 'seid';
 import moment from 'moment';
@@ -193,7 +193,7 @@ export default class DashBoard extends Component {
       marginBottom: 10,
     };
     return (
-      <>
+      <Fragment>
         <Card style={style} title="用户订单" bordered={false} bodyStyle={bodyStyle}>
           <ExtEcharts {...pieProps} />
         </Card>
@@ -205,7 +205,7 @@ export default class DashBoard extends Component {
         <Card title="用户访问量" bordered={false} bodyStyle={bodyStyle}>
           <ExtEcharts {...lineProps} />
         </Card>
-      </>
+      </Fragment>
     );
   };
 
