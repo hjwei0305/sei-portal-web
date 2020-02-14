@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
 import { Link } from 'umi';
+import { ScrollBar } from 'seid';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import PropTypes from 'prop-types';
@@ -148,16 +149,20 @@ class NavLeft extends React.Component {
         <div className="layout-logo">
           <img src={collapsed ? collapsedLogo : logo} alt="logo" />
         </div>
-        <Menu
-          selectedKeys={currentSelectedKeys}
-          mode="inline"
-          theme="dark"
-          inlineCollapsed={collapsed}
-          onOpenChange={this.handleOpenChange}
-          openKeys={openKeys}
-        >
-          {this.renderMenu(menuConfig)}
-        </Menu>
+        <div className="layout-menu">
+          <ScrollBar>
+            <Menu
+              selectedKeys={currentSelectedKeys}
+              mode="inline"
+              theme="dark"
+              inlineCollapsed={collapsed}
+              onOpenChange={this.handleOpenChange}
+              openKeys={openKeys}
+            >
+              {this.renderMenu(menuConfig)}
+            </Menu>
+          </ScrollBar>
+        </div>
       </div>
     );
   }
