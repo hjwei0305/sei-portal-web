@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-04 14:14:42
+ * @Last Modified time: 2020-02-14 23:47:24
  */
 import { getMenu } from '@/services/menu';
 import { treeOperation } from '@/utils';
@@ -58,6 +58,16 @@ export default {
         };
         if (initPathname) {
           const temp = allLeafMenus.filter(item => item.url === initPathname);
+          let currMenuTree = menuTrees[0];
+          for (let i = menuTrees.length - 1; i >= 0; i -= 1) {
+            const leafMenus = getTreeLeaf([menuTrees[i]]);
+            /* eslint no-loop-func: 0 */
+            const isCurrMenuTree = leafMenus.some(item => item.url === initPathname);
+            if (isCurrMenuTree) {
+              currMenuTree = menuTrees[i];
+              break;
+            }
+          }
           let activedMenu = {
             id: 'other',
             title: '其他',
@@ -69,6 +79,7 @@ export default {
           }
           payload.tabData = [activedMenu];
           payload.activedMenu = activedMenu;
+          payload.currMenuTree = currMenuTree;
           initPathname = '';
         }
 
