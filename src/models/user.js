@@ -2,13 +2,13 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-13 16:05:49
+ * @Last Modified time: 2020-02-14 10:37:52
  */
 import { router } from 'umi';
 import { notification } from 'antd';
 import { setLocale } from 'umi-plugin-react/locale';
 import { userLogin, userLogout, getAuthorizedFeatures } from '@/services/user';
-import { userInfoOperation } from '@/utils';
+import { userInfoOperation, eventBus } from '@/utils';
 
 const {
   setCurrentUser,
@@ -29,6 +29,16 @@ export default {
   state: {
     userInfo: null,
     sessionId: null,
+  },
+
+  subscriptions: {
+    eventBusListenter({ dispatch }) {
+      eventBus.addListener('redirectLogin', () => {
+        dispatch({
+          type: 'redirectLogin',
+        });
+      });
+    },
   },
 
   effects: {
@@ -69,6 +79,17 @@ export default {
           userInfo: null,
         },
       });
+      /** 更新菜单相关状态 */
+      yield put({
+        type: 'menu/updateState',
+        payload: {
+          tabData: [],
+          activedKey: '',
+        },
+      });
+    },
+    *redirectLogin(_, { put }) {
+      router.replace('/user/login');
       /** 更新菜单相关状态 */
       yield put({
         type: 'menu/updateState',
