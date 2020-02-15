@@ -22,15 +22,15 @@ export const getSubAppConfig = () =>
     lifeCycles: {
       beforeLoad: props => {
         window.beforeLoadPorps = props;
-        console.log(props, 'beforeLoad');
+        // console.log(props, 'beforeLoad');
       },
       beforeMount: props => {
         window.beforeMountPorps = props;
-        console.log(props, 'beforeMount');
+        // console.log(props, 'beforeMount');
       },
       afterMount: props => {
         window.afterMountPorps = props;
-        console.log(props, 'afterMount');
+        // console.log(props, 'afterMount');
       },
     },
   });
