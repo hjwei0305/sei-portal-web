@@ -19,6 +19,20 @@ export const getSubAppConfig = () =>
     defer: true,
     jsSandbox: false,
     prefetch: true,
+    lifeCycles: {
+      beforeLoad: props => {
+        window.beforeLoadPorps = props;
+        console.log(props, 'beforeLoad');
+      },
+      beforeMount: props => {
+        window.beforeMountPorps = props;
+        console.log(props, 'beforeMount');
+      },
+      afterMount: props => {
+        window.afterMountPorps = props;
+        console.log(props, 'afterMount');
+      },
+    },
   });
 // /** 获取子应用注册表 */
 // request
