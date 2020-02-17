@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
+import { router } from 'umi';
 import { Icon, Menu, Avatar } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import ExtDropdown from '@/components/ExtDropdown';
@@ -24,9 +25,17 @@ export default class UserIcon extends React.Component {
     });
   };
 
+  handleSetting = () => {
+    router.push('/sei-basic-web/userProfile');
+  };
+
   dropdownRender = () => {
     const menu = (
       <Menu selectedKeys={[]}>
+        <Menu.Item key="setting" onClick={this.handleSetting}>
+          <Icon type="setting" />
+          个人设置
+        </Menu.Item>
         <Menu.Item key="logout" onClick={this.handleClick}>
           <Icon type="logout" />
           {formatMessage({ id: 'app.logout', desc: '退出' })}
