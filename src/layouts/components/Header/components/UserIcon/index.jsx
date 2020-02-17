@@ -26,7 +26,19 @@ export default class UserIcon extends React.Component {
   };
 
   handleSetting = () => {
-    router.push('/sei-basic-web/userProfile');
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'menu/updateTabState',
+      payload: {
+        activedMenu: {
+          id: '/sei-basic-web/userProfile',
+          title: '个人设置',
+          url: '/sei-basic-web/userProfile',
+        },
+      },
+    }).then(({ activedMenu }) => {
+      router.push(activedMenu.url);
+    });
   };
 
   dropdownRender = () => {
