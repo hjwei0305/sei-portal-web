@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-14 23:47:24
+ * @Last Modified time: 2020-02-18 21:35:49
  */
 import { getMenu } from '@/services/menu';
 import { treeOperation } from '@/utils';
@@ -38,7 +38,7 @@ export default {
     /** 被激活的菜单项 */
     activedMenu: null,
     /** 页签打开模式 spa spa-tab iframe */
-    mode: 'spa-tab',
+    mode: 'iframe',
     /** 所有菜单树的叶子菜单 */
     allLeafMenus: [],
   },

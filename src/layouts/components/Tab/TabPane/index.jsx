@@ -21,24 +21,28 @@ class TabPane extends React.Component {
   ref = {}
 
   reload = id => {
-    this.ref[id] && this.ref[id].reload();
-  }
+    if (this.ref[id]) {
+      this.ref[id].reload();
+    }
+  };
 
   renderIframes() {
     const { data = [], activedKey } = this.props;
 
-    return (
-      data.map(({ url, id }) => (
+    return data.map(({ url, id }) => {
+      const temp = url.split('/');
+
+      return (
         <Iframe
-          url={url}
+          url={`/${temp[1]}/#${url}`}
           key={id}
           ref={ref => {
             this.ref[id] = ref;
           }}
           visible={activedKey === id}
         />
-      ))
-    );
+      );
+    });
   }
 
   render() {
