@@ -8,7 +8,7 @@ export { CONST_GLOBAL };
 
 export const HOST = '';
 
-export const CONTEXTPATH = NODE_ENV === 'development' ? '/sei-gateway' : '/sei-gateway'; // '/api-gateway';
+export const CONTEXTPATH = NODE_ENV === 'development' ? '/api-gateway' : '/api-gateway'; // '/api-gateway';
 
 export const BASEURL = `${HOST}${CONTEXTPATH}`;
 
