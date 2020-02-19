@@ -23,7 +23,7 @@ class Iframe extends Component {
   };
 
   state = {
-    loading: true,
+    loading: false,
   };
 
   setIframeRef = ref => {
