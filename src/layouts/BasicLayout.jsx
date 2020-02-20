@@ -27,7 +27,31 @@ export default class BasicLayout extends React.Component {
     dispatch({
       type: 'base/getApps',
     });
+    window.addEventListener('message', this.delegateTab, false);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('message', this.delegateTab);
+  }
+
+  delegateTab = (e) => {
+    // data={ tabAction:'',item:{} }
+    const { data, } = e;
+    const { tabAction, item, } = data || {} ;
+    if (data.tabAction === "open") {
+      const tab = {
+        id: item.id,
+        title: item.name,
+        url: item.featureUrl,
+      };
+      this.handleMenuClick(tab);
+    }
+
+    if (data.tabAction === "close") {
+      this.handleCloseTab([item.id]);
+    }
+
+  };
 
   toggoleCollapsed = () => {
     const { collapsed } = this.state;
