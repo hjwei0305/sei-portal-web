@@ -28,13 +28,20 @@ class TabPane extends React.Component {
 
   renderIframes() {
     const { data = [], activedKey } = this.props;
+    const reg = /^https?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\? i)?=?&?[a-zA-Z0-9_-](\?)?)*)*$/;
 
     return data.map(({ url, id }) => {
-      const temp = url.split('/');
+      let tempUrl = url;
+      if (!reg.test(tempUrl)) {
+        const temp = url.split('/');
+        if (!temp.includes('#')) {
+          tempUrl = `/${temp[1]}/#${url}`;
+        }
+      }
 
       return (
         <Iframe
-          url={`/${temp[1]}/#${url}`}
+          url={tempUrl}
           key={id}
           ref={ref => {
             this.ref[id] = ref;
