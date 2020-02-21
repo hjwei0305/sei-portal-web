@@ -87,10 +87,10 @@ class Tabs extends Component {
       }
       if (activingItem) {
         onChange(activingItem.id, activingItem);
-        if (mode !== 'iframe') {
+        // if (mode !== 'iframe') {
           /** 导航  */
           router.push(activingItem.url);
-        }
+        // }
       }
       onClose([activedKey], data.length === 1);
     }
