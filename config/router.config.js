@@ -24,13 +24,7 @@ const routes = [
         name: 'DashBoard',
         component: './DashBoard',
       },
-      {
-        component: './404',
-      },
     ],
-  },
-  {
-    component: './404',
   },
 ];
 
