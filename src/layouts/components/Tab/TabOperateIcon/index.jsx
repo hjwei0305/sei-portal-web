@@ -5,7 +5,7 @@ import styles from './index.less';
 
 class TabOperateIcon extends Component {
   static propTypes = {
-    // onReloadCurrent: PropTypes.func.isRequired,
+    onReloadCurrent: PropTypes.func.isRequired,
     onCloseCurrent: PropTypes.func.isRequired,
     onCloseAll: PropTypes.func.isRequired,
   };
@@ -23,7 +23,7 @@ class TabOperateIcon extends Component {
   };
 
   render() {
-    const { onCloseCurrent, onCloseAll } = this.props;
+    const { onCloseCurrent, onCloseAll, onReloadCurrent, } = this.props;
     const { visible } = this.state;
     return (
       <div className={styles['custom-tabs-operate']}>
@@ -32,6 +32,9 @@ class TabOperateIcon extends Component {
           visible={visible}
           content={
             <div onClick={this.handleClick}>
+              <div className="operate-item" onClick={onReloadCurrent}>
+                {'刷新当前'}
+              </div>
               <div className="operate-item" onClick={onCloseCurrent}>
                 {'关闭当前'}
               </div>
