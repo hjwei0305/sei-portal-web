@@ -107,7 +107,7 @@ export default class MenuSearch extends React.Component {
         </span>
         <Modal {...this.getModalProps()}>
           <Search placeholder={placeholder} onSearch={this.handleSearch} enterButton />
-          <ul style={{ height: 400, }}>
+          <ul style={{ maxHeight: 400, overflow: 'auto', }}>
             <ScrollBar>
               {this.getFilterDataCmp()}
             </ScrollBar>
