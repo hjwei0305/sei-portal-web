@@ -129,11 +129,11 @@ export default class TabItem extends React.Component {
   getMenuNavItemByMode = showItem => {
     const { mode } = this.props;
 
-    if (mode !== 'iframe') {
-      return <Link to={showItem.url}>{showItem.title}</Link>;
-    }
+    // if (mode !== 'iframe') {
+    return <Link to={showItem.url}>{showItem.title}</Link>;
+    // }
 
-    return <a>{showItem.title}</a>;
+    // return <a>{showItem.title}</a>;
   };
 
   render() {
