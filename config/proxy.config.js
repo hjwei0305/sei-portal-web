@@ -4,7 +4,7 @@ export default {
     changeOrigin: true,
     pathRewrite: { '^/api-mock': '' },
   },
-  '/sei-gateway': {
+  '/api-gateway': {
     target: 'http://10.4.208.86:8100',
     changeOrigin: true,
   },

@@ -22,13 +22,6 @@ export default class Header extends React.Component {
     this.currentUser = getCurrentUser();
   }
 
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'menu/getMenus',
-    });
-  }
-
   handleHomeClick = () => {
     const { onHomeClick } = this.props;
     if (onHomeClick) {
