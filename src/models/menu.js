@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-24 14:01:08
+ * @Last Modified time: 2020-02-24 15:17:53
  */
 import { getMenu } from '@/services/menu';
 import { treeOperation } from '@/utils';
@@ -83,18 +83,12 @@ export default {
         }
 
         yield put({
-          type: 'updateState',
+          type: '_updateState',
           payload,
         });
       }
     },
-    *toggleModule({ payload }, { put }) {
-      yield put({
-        type: 'updateState',
-        payload,
-      });
-    },
-    *updateTabState({ payload }, { put, select }) {
+    *openTab({ payload }, { put, select }) {
       const menu = yield select(state => state.menu);
       const { tabData } = menu;
       const { activedMenu } = payload;
@@ -114,10 +108,32 @@ export default {
       }
 
       yield put({
-        type: 'updateState',
+        type: '_updateState',
         payload: tempPayload,
       });
       return tempPayload;
+    },
+    *closeTab({ payload }, { put, select }) {
+      const menu = yield select(state => state.menu);
+      const { tabData } = menu;
+      const { tabIds } = payload;
+      const tempTabData = tabData.filter(item => !tabIds.includes(item.id));
+      yield put({
+        type: '_updateState',
+        payload: {
+          tabData: tempTabData,
+        },
+      });
+
+      return tempTabData;
+    },
+    *updateState({ payload }, { put }) {
+      yield put({
+        type: '_updateState',
+        payload,
+      });
+
+      return payload;
     },
   },
 
@@ -133,7 +149,7 @@ export default {
   },
 
   reducers: {
-    updateState(state, { payload }) {
+    _updateState(state, { payload }) {
       return {
         ...state,
         ...payload,

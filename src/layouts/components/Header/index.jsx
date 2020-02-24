@@ -6,22 +6,14 @@ import { Icon } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import FullScreen from '@/components/FullScreen';
 import MenuSearch from '@/components/MenuSearch';
-import { userInfoOperation } from '@/utils';
 import SelectModule from './components/SelectModule';
 import SelectLang from './components/SelectLang';
 import UserIcon from './components/UserIcon';
 
 import styles from './index.less';
 
-const { getCurrentUser } = userInfoOperation;
-
 @connect(({ menu }) => ({ menu }))
 export default class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.currentUser = getCurrentUser();
-  }
-
   handleHomeClick = () => {
     const { onHomeClick } = this.props;
     if (onHomeClick) {
@@ -70,7 +62,7 @@ export default class Header extends React.Component {
             onSelect={currMenu => {
               const { dispatch } = this.props;
               dispatch({
-                type: 'menu/updateTabState',
+                type: 'menu/openTab',
                 payload: {
                   activedMenu: currMenu,
                 },

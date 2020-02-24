@@ -9,7 +9,7 @@ export default class SelectModule extends React.Component {
   handleClick = currMenuTree => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'menu/toggleModule',
+      type: 'menu/updateState',
       payload: {
         currMenuTree,
       },

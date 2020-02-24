@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
+import { router } from 'umi';
 import { Helmet } from 'react-helmet';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { userInfoOperation } from '@/utils';
@@ -46,24 +47,23 @@ export default class BasicLayout extends React.Component {
   }
 
   delegateTab = e => {
-    // data={ tabAction:'',item:{} }
     const { data } = e;
     const { tabAction, item } = data || {};
-    if (tabAction === 'open') {
-      const tab = {
-        id: item.id,
-        title: item.name,
-        url: item.featureUrl,
+    if (['open', 'close'].includes(tabAction)) {
+      const { id, name: title, featureUrl: url } = item || {};
+      let params = {
+        activedMenu: { id, title, url },
       };
-      this.handleMenuClick(tab);
-    }
-
-    if (tabAction === 'close') {
-      this.handleCloseTab([item.id]);
+      if (tabAction === 'close') {
+        params = {
+          tabIds: [id],
+        };
+      }
+      this.handleTabs(tabAction, params);
     }
   };
 
-  toggoleCollapsed = () => {
+  handleTogCollapsed = () => {
     const { collapsed } = this.state;
     this.setState({
       collapsed: !collapsed,
@@ -71,14 +71,12 @@ export default class BasicLayout extends React.Component {
   };
 
   handleCloseTab = (ids, isCloseAll) => {
-    const { menu } = this.props;
-    const { tabData } = menu;
-    const filterData = tabData.filter(item => ids.findIndex(id => item.id === id) === -1);
-    if (isCloseAll) {
-      this.handleHomeClick();
-    }
-    this.updateTabState({
-      tabData: filterData,
+    this.handleTabs('close', {
+      tabIds: ids,
+    }).then(() => {
+      if (isCloseAll) {
+        this.handleHomeClick();
+      }
     });
   };
 
@@ -88,40 +86,26 @@ export default class BasicLayout extends React.Component {
     }
   };
 
-  /** 更新页签相关的状态 */
-  updateTabState = payload => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'menu/updateState',
-      payload,
-    });
-  };
-
   handleToggleTab = (id, activedMenu) => {
-    this.updateTabState({
+    this.handleTabs('open', {
       activedMenu,
     });
   };
 
-  handleMenuClick = activedMenu => {
+  /** 页签操作 */
+  handleTabs = (type, payload) => {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'menu/updateTabState',
-      payload: {
-        activedMenu,
-      },
+    return dispatch({
+      type: `menu/${type}Tab`,
+      payload,
     });
   };
 
   handleHomeClick = () => {
-    const { history, dispatch } = this.props;
-    dispatch({
-      type: 'menu/updateTabState',
-      payload: {
-        activedMenu: null,
-      },
+    this.handleTabs('open', {
+      activedMenu: null,
     }).then(() => {
-      history.push('/DashBoard');
+      router.push('/DashBoard');
     });
   };
 
@@ -178,7 +162,11 @@ export default class BasicLayout extends React.Component {
         >
           <NavLeft
             menuConfig={currMenuTree ? [currMenuTree] : []}
-            onMenuClick={this.handleMenuClick}
+            onMenuClick={currMenu => {
+              this.handleTabs('open', {
+                activedMenu: currMenu,
+              });
+            }}
             collapsed={collapsed}
             activedMenuKey={activedKey}
             mode={mode}
@@ -187,7 +175,7 @@ export default class BasicLayout extends React.Component {
         <section className={cls('layout-center')}>
           <header className={cls('layout-center-header')}>
             <Header
-              onCollapse={this.toggoleCollapsed}
+              onCollapse={this.handleTogCollapsed}
               collapsed={collapsed}
               onHomeClick={this.handleHomeClick}
             >

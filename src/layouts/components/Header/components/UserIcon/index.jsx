@@ -28,7 +28,7 @@ export default class UserIcon extends React.Component {
   handleSetting = () => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'menu/updateTabState',
+      type: 'menu/openTab',
       payload: {
         activedMenu: {
           id: '/sei-basic-web/userProfile',
