@@ -4,7 +4,6 @@ import { Link } from 'umi';
 import { ScrollBar } from 'seid';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
-// import PropTypes from 'prop-types';
 import logo from '../../../assets/logo.svg';
 import collapsedLogo from '../../../assets/logo_notxt@2x.png';
 
@@ -13,15 +12,6 @@ import styles from './index.less';
 const { SubMenu } = Menu;
 
 class NavLeft extends React.Component {
-  // static propTypes = {
-  //   /** 页签打开模式 */
-  //   mode: PropTypes.string,
-  // };
-
-  // static defaultProps = {
-  //   mode: 'iframe',
-  // };
-
   constructor(props) {
     super(props);
     const { activedMenuKey, menuConfig } = props;
@@ -51,25 +41,6 @@ class NavLeft extends React.Component {
     return null;
   };
 
-  // handleOpenChange = curOpenKeys => {
-  //   this.setState({
-  //     openKeys: curOpenKeys,
-  //   });
-  // const { openKeys, } = this.state;
-  // const { menuConfig, } = this.props;
-  // const menus = menuConfig[0].children;
-  // const latestOpenKey = curOpenKeys.find(key => openKeys.indexOf(key) === -1);
-  // const key = menus.find(item => item.id === latestOpenKey);
-
-  // if (!key) {
-  //   this.setState({ openKeys: curOpenKeys, });
-  // } else {
-  //   this.setState({
-  //     openKeys: latestOpenKey ? [latestOpenKey] : [],
-  //   });
-  // }
-  // };
-
   handleMenuClick = item => {
     const { onMenuClick } = this.props;
     this.updateCurrentSelected(item.id);
@@ -90,27 +61,6 @@ class NavLeft extends React.Component {
       <span>{item.title}</span>
     </Link>
   );
-
-  /** 根据页签模式获取页面 */
-  // getMenuNavItemByMode = item => {
-  // const { mode } = this.props;
-
-  // if (mode !== 'iframe') {
-  // return (
-  //   <Link to={item.url}>
-  //     <Icon type={item.iconType} />
-  //     <span>{item.title}</span>
-  //   </Link>
-  // );
-  // }
-
-  // return (
-  //   <a>
-  //     <Icon type={item.iconType} />
-  //     <span>{item.title}</span>
-  //   </a>
-  // );
-  // };
 
   // 递归渲染树形菜单
   renderMenu = data =>
@@ -165,8 +115,6 @@ class NavLeft extends React.Component {
                 mode="inline"
                 theme="dark"
                 inlineCollapsed={collapsed}
-                // onOpenChange={this.handleOpenChange}
-                // openKeys={openKeys}
               >
                 {this.renderMenu(menuConfig)}
               </Menu>
