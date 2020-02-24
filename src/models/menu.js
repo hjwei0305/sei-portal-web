@@ -2,13 +2,12 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-24 13:49:32
+ * @Last Modified time: 2020-02-24 14:01:08
  */
 import { getMenu } from '@/services/menu';
-import { treeOperation, userInfoOperation } from '@/utils';
+import { treeOperation } from '@/utils';
 
 const { getTreeLeaf, traverseCopyTrees } = treeOperation;
-const { getCurrentUser } = userInfoOperation;
 
 /** 是否刷新页面的时候的第一次路由 */
 let init = true;
@@ -123,20 +122,11 @@ export default {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
+    setup({ history }) {
       return history.listen(async ({ pathname }) => {
         if (!['/', '/DashBoard', '/user/login'].includes(pathname) && init) {
           init = false;
           initPathname = pathname;
-        }
-
-        if (!['/', '/user/login'].includes(pathname)) {
-          const userId = getCurrentUser() || {};
-          if (userId) {
-            dispatch({
-              type: 'getMenus',
-            });
-          }
         }
       });
     },

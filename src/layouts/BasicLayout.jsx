@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { Helmet } from 'react-helmet';
 import { formatMessage } from 'umi-plugin-react/locale';
+import { userInfoOperation } from '@/utils';
 import Header from './components/Header';
 import NavLeft from './components/NavLeft';
 import Tab from './components/Tab';
@@ -10,6 +11,7 @@ import Tab from './components/Tab';
 import styles from './BasicLayout.less';
 
 const { TabPane, TabHeader } = Tab;
+const { getCurrentUser } = userInfoOperation;
 
 @connect(({ base, menu }) => ({ base, menu }))
 export default class BasicLayout extends React.Component {
@@ -23,10 +25,19 @@ export default class BasicLayout extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
+    const { userId } = getCurrentUser() || {};
     /** 动态获取子模块配置，并且启动微前端应用 */
     dispatch({
       type: 'base/getApps',
     });
+    if (userId) {
+      dispatch({
+        type: 'menu/getMenus',
+        payload: {
+          userId,
+        },
+      });
+    }
     window.addEventListener('message', this.delegateTab, false);
   }
 
@@ -34,11 +45,11 @@ export default class BasicLayout extends React.Component {
     window.removeEventListener('message', this.delegateTab);
   }
 
-  delegateTab = (e) => {
+  delegateTab = e => {
     // data={ tabAction:'',item:{} }
-    const { data, } = e;
-    const { tabAction, item, } = data || {} ;
-    if (data.tabAction === "open") {
+    const { data } = e;
+    const { tabAction, item } = data || {};
+    if (tabAction === 'open') {
       const tab = {
         id: item.id,
         title: item.name,
@@ -47,10 +58,9 @@ export default class BasicLayout extends React.Component {
       this.handleMenuClick(tab);
     }
 
-    if (data.tabAction === "close") {
+    if (tabAction === 'close') {
       this.handleCloseTab([item.id]);
     }
-
   };
 
   toggoleCollapsed = () => {
