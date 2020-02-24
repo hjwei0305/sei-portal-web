@@ -146,7 +146,7 @@ export default class BasicLayout extends React.Component {
     if (activedMenu) {
       const { id, title: tempTitle } = activedMenu;
       activedKey = id;
-      title = tempTitle;
+      title = `${currMenuTree && currMenuTree.title}-${tempTitle}`;
     }
     return (
       <section className={cls(styles['portal-layout'])}>
