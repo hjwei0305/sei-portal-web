@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-24 11:27:58
+ * @Last Modified time: 2020-02-24 13:50:41
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -59,9 +59,7 @@ export default {
         setCurrentPolicy(authorityPolicy);
         setCurrentLocale(adaptLocale(locale || 'zh_CN'));
         setLocale(adaptLocale(locale || 'zh_CN'));
-        setTimeout(() => {
-          router.replace('/');
-        }, 0);
+        router.replace('/');
       } else {
         notification.error({
           message: '接口请求异常',

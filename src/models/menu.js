@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-24 11:25:28
+ * @Last Modified time: 2020-02-24 13:49:32
  */
 import { getMenu } from '@/services/menu';
 import { treeOperation, userInfoOperation } from '@/utils';
@@ -130,7 +130,7 @@ export default {
           initPathname = pathname;
         }
 
-        if (pathname !== '/user/login') {
+        if (!['/', '/user/login'].includes(pathname)) {
           const userId = getCurrentUser() || {};
           if (userId) {
             dispatch({
