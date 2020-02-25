@@ -2,12 +2,12 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-24 13:50:41
+ * @Last Modified time: 2020-02-25 13:44:24
  */
 import { router } from 'umi';
 import { notification } from 'antd';
 import { setLocale } from 'umi-plugin-react/locale';
-import { userLogin, userLogout, getAuthorizedFeatures } from '@/services/user';
+import { userLogin, userLogout, getAuthorizedFeatures, clearUserAuthCaches } from '@/services/user';
 import { userInfoOperation, eventBus } from '@/utils';
 
 const {
@@ -71,6 +71,8 @@ export default {
     },
     *userLogout(_, { put }) {
       router.replace('/user/login');
+      const user = getCurrentUser();
+      yield clearUserAuthCaches(user.userId);
       yield userLogout({ sid: getSessionId() });
       clearUserInfo();
       yield put({

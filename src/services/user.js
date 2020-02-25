@@ -2,11 +2,11 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-13 15:46:10
+ * @Last Modified time: 2020-02-25 13:44:53
  */
 import { request, CONSTANTS } from '@/utils';
 
-const { SEIAUTHSERVICE } = CONSTANTS;
+const { SEIAUTHSERVICE, BASICSERVICE } = CONSTANTS;
 
 /**
  * 登录方法
@@ -35,4 +35,9 @@ export async function userLogout(params) {
 /** 获取当前用户有权限的功能项集合 */
 export async function getAuthorizedFeatures(userId) {
   return request.get(`${SEIAUTHSERVICE}/auth/getAuthorizedFeatures?userId=${userId}`);
+}
+
+/** 清除用户缓存 */
+export async function clearUserAuthCaches(userId) {
+  return request.post(`${BASICSERVICE}/user/clearUserAuthorizedCaches/${userId}`);
 }
