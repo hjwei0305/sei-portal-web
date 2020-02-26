@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-25 13:44:24
+ * @Last Modified time: 2020-02-26 17:20:50
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -62,7 +62,7 @@ export default {
         router.replace('/');
       } else {
         notification.error({
-          message: '接口请求异常',
+          // message: '接口请求异常',
           description: message,
         });
       }
