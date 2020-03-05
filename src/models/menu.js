@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-02-24 17:31:42
+ * @Last Modified time: 2020-03-05 10:53:45
  */
 import { getMenu } from '@/services/menu';
 import { treeOperation } from '@/utils';
@@ -33,7 +33,15 @@ export default {
     /** 当前菜单树 */
     currMenuTree: null,
     /** 页签数据 */
-    tabData: [],
+    tabData: [
+      {
+        id: 'flow-homepage',
+        url: '/sei-flow-web/homepage',
+        title: '流程首页',
+        urlPath: '',
+        iconType: '',
+      },
+    ],
     /** 被激活的菜单项 */
     activedMenu: null,
     /** 页签打开模式 spa spa-tab iframe */
