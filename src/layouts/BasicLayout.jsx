@@ -198,7 +198,7 @@ export default class BasicLayout extends React.Component {
             {!isSubAppRouter && !activedKey ? children : null}
             {mode === 'iframe' ? (
               <TabPane
-                style={activedKey === '' ? { display: 'none' } : {}}
+                style={activedKey === '' ? { visibility: 'hidden', height: 0 } : {}}
                 data={tabData}
                 activedKey={activedKey}
                 ref={inst => {
