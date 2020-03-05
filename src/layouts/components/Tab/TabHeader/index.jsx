@@ -88,8 +88,8 @@ class Tabs extends Component {
       if (activingItem) {
         onChange(activingItem.id, activingItem);
         // if (mode !== 'iframe') {
-          /** 导航  */
-          router.push(activingItem.url);
+        /** 导航  */
+        router.push(activingItem.url);
         // }
       }
       onClose([activedKey], data.length === 1);
@@ -149,6 +149,7 @@ class Tabs extends Component {
         key={data[0].id}
         onClose={this.handleClose}
         onClick={this.handleClick}
+        closable={index !== 0}
         activedKey={activedKey}
         actived={actived}
         mode={mode}
