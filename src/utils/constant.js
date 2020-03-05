@@ -20,3 +20,17 @@ export const BASICSERVICE = `${BASEURL}/sei-basic`;
 
 export const COPYRIGHTTEXT =
   'Copyright 2015 www.changhong.com All Rights Reserved 四川长虹电器股份有限公司 版权所有';
+
+/** 非菜单页面 */
+export const NoMenuPages = [
+  {
+    id: '/sei-flow-web/flow-homepage',
+    url: '/sei-flow-web/homepage',
+    title: '我的任务',
+  },
+  {
+    id: '/sei-basic-web/userProfile',
+    title: '个人设置',
+    url: '/sei-basic-web/userProfile',
+  },
+];

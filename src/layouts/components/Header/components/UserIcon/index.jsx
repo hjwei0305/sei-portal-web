@@ -5,10 +5,11 @@ import { router } from 'umi';
 import { Icon, Menu, Avatar } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import ExtDropdown from '@/components/ExtDropdown';
-import { userInfoOperation } from '@/utils';
+import { userInfoOperation, CONSTANTS } from '@/utils';
 
 import styles from './index.less';
 
+const { NoMenuPages } = CONSTANTS;
 const { getCurrentUser } = userInfoOperation;
 
 @connect(() => ({}))
@@ -30,11 +31,7 @@ export default class UserIcon extends React.Component {
     dispatch({
       type: 'menu/openTab',
       payload: {
-        activedMenu: {
-          id: '/sei-basic-web/userProfile',
-          title: '个人设置',
-          url: '/sei-basic-web/userProfile',
-        },
+        activedMenu: NoMenuPages[1],
       },
     }).then(({ activedMenu }) => {
       router.push(activedMenu.url);

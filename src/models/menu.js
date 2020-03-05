@@ -2,11 +2,12 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-03-05 10:53:45
+ * @Last Modified time: 2020-03-05 14:05:38
  */
 import { getMenu } from '@/services/menu';
-import { treeOperation } from '@/utils';
+import { treeOperation, CONSTANTS } from '@/utils';
 
+const { NoMenuPages } = CONSTANTS;
 const { getTreeLeaf, traverseCopyTrees } = treeOperation;
 
 /** 是否刷新页面的时候的第一次路由 */
@@ -33,15 +34,7 @@ export default {
     /** 当前菜单树 */
     currMenuTree: null,
     /** 页签数据 */
-    tabData: [
-      {
-        id: 'flow-homepage',
-        url: '/sei-flow-web/homepage',
-        title: '流程首页',
-        urlPath: '',
-        iconType: '',
-      },
-    ],
+    tabData: [NoMenuPages[0]],
     /** 被激活的菜单项 */
     activedMenu: null,
     /** 页签打开模式 spa spa-tab iframe */
@@ -64,7 +57,7 @@ export default {
           currMenuTree: menuTrees[0],
         };
         if (initPathname) {
-          const temp = allLeafMenus.filter(item => item.url === initPathname);
+          const temp = allLeafMenus.concat(NoMenuPages).filter(item => item.url === initPathname);
           let currMenuTree = menuTrees[0];
           for (let i = menuTrees.length - 1; i >= 0; i -= 1) {
             const leafMenus = getTreeLeaf([menuTrees[i]]);
@@ -84,7 +77,11 @@ export default {
           if (temp && temp.length) {
             [activedMenu] = temp;
           }
-          payload.tabData = [activedMenu];
+          if (activedMenu.id !== NoMenuPages[0].id) {
+            payload.tabData = [NoMenuPages[0], activedMenu];
+          } else {
+            payload.tabData = [activedMenu];
+          }
           payload.activedMenu = activedMenu;
           payload.currMenuTree = currMenuTree;
           initPathname = '';
