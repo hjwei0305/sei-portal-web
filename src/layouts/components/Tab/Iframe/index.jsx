@@ -16,10 +16,16 @@ class Iframe extends Component {
     url: propTypes.string.isRequired,
     /** 是否显示这个iframe */
     visible: propTypes.bool.isRequired,
+    /** id */
+    id: propTypes.string,
+    /** 标题 */
+    title: propTypes.string,
   };
 
   static defaultProps = {
     onLoaded: noop,
+    id: '',
+    title: '',
   };
 
   state = {
@@ -42,7 +48,7 @@ class Iframe extends Component {
   };
 
   render() {
-    const { url = '', visible, key } = this.props;
+    const { url = '', visible, id, title } = this.props;
     const { loading } = this.state;
 
     const className = classNames({
@@ -56,11 +62,10 @@ class Iframe extends Component {
         {loading && <Spin className="iframe-wrap-loading" size="large" tip="加载中..." />}
         <iframe
           ref={this.setIframeRef}
-          title={url}
-          name={url}
+          title={title}
           src={url}
           onLoad={this.handleLoaded}
-          id={key}
+          id={id}
         />
       </div>
     );
