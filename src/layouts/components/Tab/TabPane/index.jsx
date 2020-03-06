@@ -1,5 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import { eventBus } from '@/utils';
 import Iframe from '../Iframe';
 
 class TabPane extends React.Component {
@@ -26,6 +27,12 @@ class TabPane extends React.Component {
       this.ref[id].reload();
     }
   };
+
+  componentDidMount() {
+    eventBus.addListener('refresh', id => {
+      this.reload(id);
+    });
+  }
 
   renderIframes() {
     const { data = [], activedKey } = this.props;

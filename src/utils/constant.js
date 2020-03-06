@@ -28,6 +28,8 @@ export const NoMenuPages = [
     url: '/sei-flow-web/homepage',
     title: '我的任务',
     noClosable: true,
+    /** 激活刷新 */
+    activedRefresh: true,
   },
   {
     id: '/sei-basic-web/userProfile',
