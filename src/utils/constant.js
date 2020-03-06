@@ -27,6 +27,7 @@ export const NoMenuPages = [
     id: '/sei-flow-web/flow-homepage',
     url: '/sei-flow-web/homepage',
     title: '我的任务',
+    noClosable: true,
   },
   {
     id: '/sei-basic-web/userProfile',

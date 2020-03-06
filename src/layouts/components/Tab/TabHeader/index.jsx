@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { debounce } from 'lodash';
+import { message } from 'antd';
 import { router } from 'umi';
 import TabOperateIcon from '../TabOperateIcon/index.jsx';
 import TabItem from '../TabItem/index.jsx';
@@ -79,20 +80,25 @@ class Tabs extends Component {
     const { data, onChange, activedKey, onClose, mode } = this.props;
     if (data.length >= 1) {
       const i = data.findIndex(({ id }) => id === activedKey);
-      let activingItem = null;
-      if (i === 0 && data.length > 1) {
-        activingItem = data[i + 1];
+      const currActivedMenu = data[i];
+      if (currActivedMenu.noClosable) {
+        message.warn('当前页签不可关闭');
       } else {
-        activingItem = data[i - 1];
+        let activingItem = null;
+        if (i === 0 && data.length > 1) {
+          activingItem = data[i + 1];
+        } else {
+          activingItem = data[i - 1];
+        }
+        if (activingItem) {
+          onChange(activingItem.id, activingItem);
+          // if (mode !== 'iframe') {
+          /** 导航  */
+          router.push(activingItem.url);
+          // }
+        }
+        onClose([activedKey], data.length === 1);
       }
-      if (activingItem) {
-        onChange(activingItem.id, activingItem);
-        // if (mode !== 'iframe') {
-        /** 导航  */
-        router.push(activingItem.url);
-        // }
-      }
-      onClose([activedKey], data.length === 1);
     }
   };
 
