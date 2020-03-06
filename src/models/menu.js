@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-03-05 14:05:38
+ * @Last Modified time: 2020-03-06 14:53:21
  */
 import { getMenu } from '@/services/menu';
 import { treeOperation, CONSTANTS } from '@/utils';
@@ -120,15 +120,25 @@ export default {
     },
     *closeTab({ payload }, { put, select }) {
       const menu = yield select(state => state.menu);
-      const { tabData } = menu;
+      const { tabData, activedMenu } = menu;
       const { tabIds } = payload;
       const tempTabData = tabData.filter(item => !tabIds.includes(item.id));
-      yield put({
-        type: '_updateState',
-        payload: {
-          tabData: tempTabData,
-        },
-      });
+      if (!activedMenu || !tabIds.includes(activedMenu.id)) {
+        yield put({
+          type: '_updateState',
+          payload: {
+            tabData: tempTabData,
+          },
+        });
+      } else {
+        yield put({
+          type: '_updateState',
+          payload: {
+            tabData: tempTabData,
+            activedMenu: tempTabData.pop(),
+          },
+        });
+      }
 
       return tempTabData;
     },
