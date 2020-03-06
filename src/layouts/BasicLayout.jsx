@@ -161,7 +161,7 @@ export default class BasicLayout extends React.Component {
           })}
         >
           <NavLeft
-            menuConfig={currMenuTree ? [currMenuTree] : []}
+            menuConfig={currMenuTree ? currMenuTree.children || [] : []}
             onMenuClick={currMenu => {
               this.handleTabs('open', {
                 activedMenu: currMenu,
