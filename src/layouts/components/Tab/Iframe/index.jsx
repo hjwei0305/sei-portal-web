@@ -42,7 +42,7 @@ class Iframe extends Component {
   };
 
   render() {
-    const { url = '', visible } = this.props;
+    const { url = '', visible, key } = this.props;
     const { loading } = this.state;
 
     const className = classNames({
@@ -60,7 +60,7 @@ class Iframe extends Component {
           name={url}
           src={url}
           onLoad={this.handleLoaded}
-          id={url}
+          id={key}
         />
       </div>
     );
