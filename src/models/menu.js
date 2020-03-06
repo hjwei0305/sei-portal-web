@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by:   zp
- * @Last Modified time: 2020-03-06 14:53:21
+ * @Last Modified time: 2020-03-06 15:15:59
  */
 import { getMenu } from '@/services/menu';
 import { treeOperation, CONSTANTS } from '@/utils';
@@ -123,6 +123,7 @@ export default {
       const { tabData, activedMenu } = menu;
       const { tabIds } = payload;
       const tempTabData = tabData.filter(item => !tabIds.includes(item.id));
+      console.log(tempTabData, tabData, tabIds, activedMenu);
       if (!activedMenu || !tabIds.includes(activedMenu.id)) {
         yield put({
           type: '_updateState',
