@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { router } from 'umi';
+// import { router } from 'umi';
 import { Icon, Menu, Avatar } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import ExtDropdown from '@/components/ExtDropdown';
@@ -33,9 +33,10 @@ export default class UserIcon extends React.Component {
       payload: {
         activedMenu: NoMenuPages[1],
       },
-    }).then(({ activedMenu }) => {
-      router.push(activedMenu.url);
     });
+    // .then(({ activedMenu }) => {
+    //   router.push(activedMenu.url);
+    // });
   };
 
   dropdownRender = () => {
