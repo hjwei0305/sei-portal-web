@@ -67,7 +67,7 @@ export default class TabItem extends React.Component {
   };
 
   getDropdownComponent = () => {
-    const { data, onClick, onClose, activedKey } = this.props;
+    const { data, onClick, onClose, activedKey, mode } = this.props;
     const { dropdownVisible } = this.state;
     const dropdownData = [...data];
     const activedIndex = data.findIndex(({ id }) => id === activedKey);
@@ -86,7 +86,9 @@ export default class TabItem extends React.Component {
                 <div
                   onClick={() => {
                     onClick({ id, url, title });
-                    router.push(url);
+                    if (mode !== 'iframe') {
+                      router.push(url);
+                    }
                   }}
                   className="title"
                 >
@@ -129,11 +131,11 @@ export default class TabItem extends React.Component {
   getMenuNavItemByMode = showItem => {
     const { mode } = this.props;
 
-    // if (mode !== 'iframe') {
-    return <Link to={showItem.url}>{showItem.title}</Link>;
-    // }
+    if (mode !== 'iframe') {
+      return <Link to={showItem.url}>{showItem.title}</Link>;
+    }
 
-    // return <a>{showItem.title}</a>;
+    return <a>{showItem.title}</a>;
   };
 
   render() {

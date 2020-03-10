@@ -55,12 +55,23 @@ class NavLeft extends React.Component {
     });
   };
 
-  getMenuNavItemByMode = item => (
-    <Link to={item.url}>
-      <Icon type={item.iconType} />
-      <span>{item.title}</span>
-    </Link>
-  );
+  getMenuNavItemByMode = item => {
+    const { mode } = this.props;
+    if (mode !== 'iframe') {
+      return (
+        <Link to={item.url}>
+          <Icon type={item.iconType} />
+          <span>{item.title}</span>
+        </Link>
+      );
+    }
+    return (
+      <Link>
+        <Icon type={item.iconType} />
+        <span>{item.title}</span>
+      </Link>
+    );
+  };
 
   // 递归渲染树形菜单
   renderMenu = data =>

@@ -92,10 +92,11 @@ class Tabs extends Component {
         }
         if (activingItem) {
           onChange(activingItem.id, activingItem);
-          // if (mode !== 'iframe') {
-          /** 导航  */
-          router.push(activingItem.url);
-          // }
+          /** 安全考虑，防止复制地址，访问没有权限的地址，切换页签的时候禁止地址变化 */
+          if (mode !== 'iframe') {
+            /** 导航  */
+            router.push(activingItem.url);
+          }
         }
         onClose([activedKey], data.length === 1);
       }
