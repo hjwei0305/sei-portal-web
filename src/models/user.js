@@ -8,8 +8,9 @@ import { router } from 'umi';
 import { notification } from 'antd';
 import { setLocale } from 'umi-plugin-react/locale';
 import { userLogin, userLogout, getAuthorizedFeatures, clearUserAuthCaches } from '@/services/user';
-import { userInfoOperation, eventBus } from '@/utils';
+import { userInfoOperation, eventBus, CONSTANTS } from '@/utils';
 
+const { NoMenuPages } = CONSTANTS;
 const {
   setCurrentUser,
   setSessionId,
@@ -85,7 +86,7 @@ export default {
       yield put({
         type: 'menu/updateState',
         payload: {
-          tabData: [],
+          tabData: [NoMenuPages[0]],
           activedMenu: null,
         },
       });
@@ -96,7 +97,7 @@ export default {
       yield put({
         type: 'menu/updateState',
         payload: {
-          tabData: [],
+          tabData: [NoMenuPages[0]],
           activedMenu: null,
         },
       });
