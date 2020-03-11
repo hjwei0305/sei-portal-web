@@ -92,7 +92,7 @@ export default class BasicLayout extends React.Component {
     }).then(() => {
       if (activedMenu.activedRefresh) {
         // eventBus.emit('refresh', id);
-        eventBus.emit('child_refresh', id);
+        eventBus.emit(`${id}_refresh`);
       }
     });
   };
