@@ -47,10 +47,6 @@ class Iframe extends Component {
     });
   };
 
-  componentDidMount() {
-    this.reload();
-  }
-
   render() {
     const { url = '', visible, id, title } = this.props;
     const { loading } = this.state;
