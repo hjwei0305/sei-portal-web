@@ -66,10 +66,10 @@ class NavLeft extends React.Component {
       );
     }
     return (
-      <Link>
+      <span>
         <Icon type={item.iconType} />
         <span>{item.title}</span>
-      </Link>
+      </span>
     );
   };
 
@@ -118,8 +118,8 @@ class NavLeft extends React.Component {
           <img src={collapsed ? collapsedLogo : logo} alt="logo" />
         </div>
         <div className="layout-menu">
-          <ScrollBar>
-            {openKeys ? (
+          {openKeys ? (
+            <ScrollBar>
               <Menu
                 defaultOpenKeys={openKeys}
                 selectedKeys={currentSelectedKeys}
@@ -129,8 +129,8 @@ class NavLeft extends React.Component {
               >
                 {this.renderMenu(menuConfig)}
               </Menu>
-            ) : null}
-          </ScrollBar>
+            </ScrollBar>
+          ) : null}
         </div>
       </div>
     );
