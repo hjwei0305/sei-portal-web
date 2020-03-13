@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { router } from 'umi';
-import { notification, List } from 'antd';
 import { Helmet } from 'react-helmet';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { userInfoOperation, eventBus } from '@/utils';
@@ -49,7 +48,7 @@ export default class BasicLayout extends React.Component {
 
   delegateTab = e => {
     const { data } = e;
-    const { tabAction, item, action, data: actionData } = data || {};
+    const { tabAction, item } = data || {};
     if (['open', 'close'].includes(tabAction)) {
       const { id, name: title, featureUrl: url } = item || {};
       let params = {
@@ -61,27 +60,6 @@ export default class BasicLayout extends React.Component {
         };
       }
       this.handleTabs(tabAction, params);
-    }
-    if (action && action === 'notify-next-info') {
-      const nextNode = actionData;
-      let component = null;
-      component = nextNode.map(node => {
-        const { name, executorSet } = node;
-        return (
-          <List
-            header={name}
-            dataSource={executorSet || []}
-            renderItem={executor => (
-              <List.Item>{`${executor.code}-【${executor.name}】`}</List.Item>
-            )}
-          />
-        );
-      });
-
-      notification.info({
-        message: '下一步节点信息',
-        description: <React.Fragment>{component}</React.Fragment>,
-      });
     }
   };
 
