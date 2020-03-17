@@ -7,7 +7,6 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import FullScreen from '@/components/FullScreen';
 import MenuSearch from '@/components/MenuSearch';
 import SelectModule from './components/SelectModule';
-import SelectLang from './components/SelectLang';
 import UserIcon from './components/UserIcon';
 
 import styles from './index.less';
@@ -71,7 +70,6 @@ export default class Header extends React.Component {
           />
           <UserIcon />
           <FullScreen className={cls('trigger')} />
-          <SelectLang />
         </div>
         <div
           style={{
