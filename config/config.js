@@ -18,6 +18,7 @@ export default {
   plugins,
   routes,
   theme,
+  devtool: 'source-map',
   extraBabelPlugins: [
     [
       'import',

@@ -1,0 +1,7 @@
+[defaults]
+url = http://10.4.208.77:9000/
+org = sei
+project = sei-web
+ 
+[auth]
+token = b36be127fb384b71aa062c495bda8d69e6553c51c42d4324a04c341f5ba12e96
