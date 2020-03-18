@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Icon, Button, Input } from 'antd';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
-import md5 from 'md5';
+// import md5 from 'md5';
 import styles from './index.less';
 
 const FormItem = Form.Item;
@@ -29,27 +29,29 @@ export default class Login extends Component {
   };
 
   login = e => {
-    const { form, dispatch } = this.props;
-    form.validateFieldsAndScroll((err, values) => {
+    // const { form, dispatch } = this.props;
+    // form.validateFieldsAndScroll((err, values) => {
+    const { form } = this.props;
+    form.validateFieldsAndScroll(err => {
       if (!err) {
-        const test = {};
-        dispatch({
-          type: 'user/userLogin',
-          payload: { ...values, password: md5(values.password), dd: test.a.b },
-        }).then(res => {
-          const { success, data } = res || {};
-          if (success) {
-            if (data.loginStatus === 'multiTenant') {
-              this.setState({
-                showTenant: true,
-              });
-            } else {
-              dispatch({
-                type: 'user/getUserFeatures',
-              });
-            }
-          }
-        });
+        throw new Error('登录异常');
+        // dispatch({
+        //   type: 'user/userLogin',
+        //   payload: { ...values, password: md5(values.password) },
+        // }).then(res => {
+        //   const { success, data } = res || {};
+        //   if (success) {
+        //     if (data.loginStatus === 'multiTenant') {
+        //       this.setState({
+        //         showTenant: true,
+        //       });
+        //     } else {
+        //       dispatch({
+        //         type: 'user/getUserFeatures',
+        //       });
+        //     }
+        //   }
+        // });
       }
     });
     if (e) {
