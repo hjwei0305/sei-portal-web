@@ -3,7 +3,6 @@ import { Form, Icon, Button, Input } from 'antd';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
 import md5 from 'md5';
-import * as Sentry from '@sentry/browser';
 import styles from './index.less';
 
 const FormItem = Form.Item;
@@ -31,7 +30,6 @@ export default class Login extends Component {
 
   login = e => {
     const { form, dispatch } = this.props;
-    Sentry.captureMessage('登录');
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         dispatch({
@@ -51,6 +49,8 @@ export default class Login extends Component {
             }
           }
         });
+      } else {
+        throw new Error('登录错误测试');
       }
     });
     if (e) {
