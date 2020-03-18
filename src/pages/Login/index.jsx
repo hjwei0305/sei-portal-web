@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Icon, Button, Input } from 'antd';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
-// import md5 from 'md5';
+import md5 from 'md5';
 import styles from './index.less';
 
 const FormItem = Form.Item;
@@ -28,34 +28,32 @@ export default class Login extends Component {
     }
   };
 
-  // login = e => {
-  login = () => {
-    // const { form, dispatch } = this.props;
-    throw new Error('testst');
-    // form.validateFieldsAndScroll((err, values) => {
-    //   if (!err) {
-    //     dispatch({
-    //       type: 'user/userLogin',
-    //       payload: { ...values, password: md5(values.password) },
-    //     }).then(res => {
-    //       const { success, data } = res || {};
-    //       if (success) {
-    //         if (data.loginStatus === 'multiTenant') {
-    //           this.setState({
-    //             showTenant: true,
-    //           });
-    //         } else {
-    //           dispatch({
-    //             type: 'user/getUserFeatures',
-    //           });
-    //         }
-    //       }
-    //     });
-    //   }
-    // });
-    // if (e) {
-    //   e.preventDefault();
-    // }
+  login = e => {
+    const { form, dispatch } = this.props;
+    form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        dispatch({
+          type: 'user/userLogin',
+          payload: { ...values, password: md5(values.password) },
+        }).then(res => {
+          const { success, data } = res || {};
+          if (success) {
+            if (data.loginStatus === 'multiTenant') {
+              this.setState({
+                showTenant: true,
+              });
+            } else {
+              dispatch({
+                type: 'user/getUserFeatures',
+              });
+            }
+          }
+        });
+      }
+    });
+    if (e) {
+      e.preventDefault();
+    }
   };
 
   render() {
