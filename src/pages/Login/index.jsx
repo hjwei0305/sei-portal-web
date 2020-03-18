@@ -34,7 +34,7 @@ export default class Login extends Component {
       if (!err) {
         dispatch({
           type: 'user/userLogin',
-          payload: { ...values, password: md5(values.password), kk: values.mm.dd },
+          payload: { ...values, password: md5(values.password) },
         }).then(res => {
           const { success, data } = res || {};
           if (success) {
