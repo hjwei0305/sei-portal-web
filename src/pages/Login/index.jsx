@@ -50,7 +50,8 @@ export default class Login extends Component {
           }
         });
       } else {
-        throw new Error('登录错误测试');
+        const mm = {};
+        console.log(mm.tt.a);
       }
     });
     if (e) {
