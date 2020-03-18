@@ -32,9 +32,10 @@ export default class Login extends Component {
     const { form, dispatch } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        const test = {};
         dispatch({
           type: 'user/userLogin',
-          payload: { ...values, password: md5(values.password) },
+          payload: { ...values, password: md5(values.password), dd: test.a.b },
         }).then(res => {
           const { success, data } = res || {};
           if (success) {
@@ -49,9 +50,6 @@ export default class Login extends Component {
             }
           }
         });
-      } else {
-        const mm = {};
-        console.log(mm.tt.a);
       }
     });
     if (e) {
