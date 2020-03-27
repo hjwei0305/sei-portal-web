@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Card, Empty } from 'antd';
-import { ExtEcharts } from 'seid';
+import { ExtEcharts } from 'suid';
 import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { userInfoOperation, CONSTANTS } from '@/utils';

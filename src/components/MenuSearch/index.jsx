@@ -2,7 +2,7 @@ import React from 'react';
 import propTypes from 'prop-types';
 import { noop } from 'lodash';
 import { Icon, Modal, Input } from 'antd';
-import { ScrollBar, } from 'seid';
+import { ScrollBar } from 'suid';
 import styles from './index.less';
 
 const { Search } = Input;
@@ -107,10 +107,8 @@ export default class MenuSearch extends React.Component {
         </span>
         <Modal {...this.getModalProps()}>
           <Search placeholder={placeholder} onSearch={this.handleSearch} enterButton />
-          <ul style={{ maxHeight: 400, overflow: 'auto', }}>
-            <ScrollBar>
-              {this.getFilterDataCmp()}
-            </ScrollBar>
+          <ul style={{ maxHeight: 400, overflow: 'auto' }}>
+            <ScrollBar>{this.getFilterDataCmp()}</ScrollBar>
           </ul>
         </Modal>
       </React.Fragment>

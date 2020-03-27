@@ -1,4 +1,4 @@
-import { utils } from 'seid';
+import { utils } from 'suid';
 import { notification } from 'antd';
 import eventBus from './eventBus';
 

@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-01-06 10:48:11
- * @Last Modified by:   zp
- * @Last Modified time: 2020-01-31 17:50:23
+ * @Last Modified by: zp
+ * @Last Modified time: 2020-03-27 14:08:04
  */
 export default [
   [
@@ -28,7 +28,7 @@ export default [
       },
       dll: {
         include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
-        exclude: ['@babel/runtime', 'netlify-lambda', '@umijs/plugin-qiankun', 'seid'],
+        exclude: ['@babel/runtime', 'netlify-lambda', '@umijs/plugin-qiankun', 'suid'],
       },
     },
   ],

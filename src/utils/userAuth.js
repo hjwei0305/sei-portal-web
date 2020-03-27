@@ -1,10 +1,10 @@
 /*
  * @Author: zp
  * @Date:   2020-01-16 10:51:41
- * @Last Modified by:   zp
- * @Last Modified time: 2020-02-13 16:00:05
+ * @Last Modified by: zp
+ * @Last Modified time: 2020-03-27 14:06:05
  */
-import { utils } from 'seid';
+import { utils } from 'suid';
 
 const { sessionStorage, localStorage } = utils.storage;
 const { CONST_GLOBAL } = utils.constants;

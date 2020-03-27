@@ -55,7 +55,7 @@
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "screenfull": "^5.0.0",
-    "seid": "^1.1.44",
+    "suid": "^1.2.14",
     "umi": "^2.8.7",
     "umi-plugin-react": "^1.9.5"
   },

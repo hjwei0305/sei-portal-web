@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
 import { Link } from 'umi';
-import { ScrollBar } from 'seid';
+import { ScrollBar } from 'suid';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import logo from '../../../assets/logo.svg';
