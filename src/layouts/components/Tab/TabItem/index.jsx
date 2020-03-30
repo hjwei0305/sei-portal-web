@@ -67,7 +67,7 @@ export default class TabItem extends React.Component {
   };
 
   getDropdownComponent = () => {
-    const { data, onClick, onClose, mode } = this.props;
+    const { data, onClick, onClose, activedKey, mode } = this.props;
     const { dropdownVisible } = this.state;
     const dropdownData = [...data];
     // const activedIndex = data.findIndex(({ id }) => id === activedKey);
@@ -82,7 +82,14 @@ export default class TabItem extends React.Component {
         popup={
           <div className="tabs-more-wrap" onClick={this.handlePopupClick}>
             {dropdownData.map(({ title, url, id }) => (
-              <div key={id} className="tabs-more-item" title={title}>
+              <div
+                key={id}
+                className={classNames({
+                  [styles['tabs-more-item']]: true,
+                  [styles['tabs-more-item_active']]: activedKey === id,
+                })}
+                title={title}
+              >
                 <div
                   onClick={() => {
                     onClick({ id, url, title });
