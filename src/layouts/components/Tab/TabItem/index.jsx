@@ -85,8 +85,8 @@ export default class TabItem extends React.Component {
               <div
                 key={id}
                 className={classNames({
-                  [styles['tabs-more-item']]: true,
-                  [styles['tabs-more-item_active']]: activedKey === id,
+                  'tabs-more-item': true,
+                  'tabs-more-item_active': activedKey === id,
                 })}
                 title={title}
               >
