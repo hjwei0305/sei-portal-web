@@ -1,3 +1,5 @@
+@import '../../../vars.less';
+
 @shadow-color: #f2f2f4;
 @tabs-height: 56px;
 @tab-bg: #fff;
@@ -18,7 +20,8 @@
   border-bottom: 0;
   cursor: pointer;
   &:hover {
-    font-weight: 700;
+    // font-weight: 700;
+    background-color: #f8f8f8;
     :global {
       .tab-operate-wrapper {
         .icon {
@@ -80,7 +83,7 @@
   &_active {
     z-index: 1000;
     font-weight: 700;
-    background: @tab-bg-active;
+    background: @base-bg-color !important;
     :global {
       .tab-top-line {
         transform: scaleX(1);

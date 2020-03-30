@@ -67,14 +67,14 @@ export default class TabItem extends React.Component {
   };
 
   getDropdownComponent = () => {
-    const { data, onClick, onClose, activedKey, mode } = this.props;
+    const { data, onClick, onClose, mode } = this.props;
     const { dropdownVisible } = this.state;
     const dropdownData = [...data];
-    const activedIndex = data.findIndex(({ id }) => id === activedKey);
+    // const activedIndex = data.findIndex(({ id }) => id === activedKey);
 
-    if (activedIndex > -1) {
-      dropdownData.splice(activedIndex, 1);
-    }
+    // if (activedIndex > -1) {
+    //   dropdownData.splice(activedIndex, 1);
+    // }
 
     return (
       <Trigger
