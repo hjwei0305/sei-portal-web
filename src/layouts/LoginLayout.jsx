@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet';
 import React from 'react';
 import { formatMessage } from 'umi-plugin-react/locale';
 import SelectLang from './components/Header/components/SelectLang';
-import logo from '../assets/logo@2x.png';
+import logo from '../assets/logonew@2x.png';
 import styles from './LoginLayout.less';
 
 const LoginLayout = props => {
