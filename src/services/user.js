@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
- * @Last Modified by:   zp
- * @Last Modified time: 2020-02-25 13:44:53
+ * @Last Modified by: zp
+ * @Last Modified time: 2020-03-31 16:48:18
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -30,6 +30,11 @@ export async function userLogout(params) {
     method: 'POST',
     data: params.sid,
   });
+}
+
+/** 获取验证码 */
+export async function getVerifyCode(reqId) {
+  return request.get(`${SEIAUTHSERVICE}/auth/verifyCode?reqId=${reqId}`);
 }
 
 /** 获取当前用户有权限的功能项集合 */

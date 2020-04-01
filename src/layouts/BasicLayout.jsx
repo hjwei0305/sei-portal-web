@@ -38,6 +38,12 @@ export default class BasicLayout extends React.Component {
           userId,
         },
       });
+      dispatch({
+        type: 'user/getUserFeatures',
+        payload: {
+          userId,
+        },
+      });
     }
     window.addEventListener('message', this.delegateTab, false);
   }

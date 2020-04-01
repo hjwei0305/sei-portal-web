@@ -3,16 +3,19 @@ import { Form, Icon, Button, Input } from 'antd';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
 import md5 from 'md5';
+import { utils } from 'suid';
 import styles from './index.less';
 
 const FormItem = Form.Item;
-
 @connect(({ user, loading }) => ({ user, loading }))
 @Form.create()
 export default class Login extends Component {
   state = {
     showTenant: false,
+    showVertifCode: false,
   };
+
+  loginReqId = utils.getUUID();
 
   componentDidMount() {
     document.addEventListener('keydown', this.onKeyDown);
@@ -21,6 +24,16 @@ export default class Login extends Component {
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeyDown);
   }
+
+  handleVertify = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'user/getVerifyCode',
+      payload: {
+        reqId: this.loginReqId,
+      },
+    });
+  };
 
   onKeyDown = e => {
     if (e.keyCode === 13) {
@@ -34,7 +47,7 @@ export default class Login extends Component {
       if (!err) {
         dispatch({
           type: 'user/userLogin',
-          payload: { ...values, password: md5(values.password) },
+          payload: { ...values, password: md5(values.password), reqId: this.loginReqId },
         }).then(res => {
           const { success, data } = res || {};
           if (success) {
@@ -42,11 +55,12 @@ export default class Login extends Component {
               this.setState({
                 showTenant: true,
               });
-            } else {
-              dispatch({
-                type: 'user/getUserFeatures',
-              });
             }
+            // else {
+            // dispatch({
+            //   type: 'user/getUserFeatures',
+            // });
+            // }
           }
         });
       }
@@ -57,9 +71,10 @@ export default class Login extends Component {
   };
 
   render() {
-    const { errorMsg, form, loading } = this.props;
+    const { errorMsg, form, loading, user } = this.props;
+    const { verifyCode } = user;
     const { getFieldDecorator } = form;
-    const { showTenant } = this.state;
+    const { showTenant, showVertifCode } = this.state;
     const isLoading = loading.effects['user/userLogin'];
     const colorStyle = { color: 'rgba(0,0,0,.25)' };
     const FormItemStyle = { margin: 0, color: 'red' };
@@ -119,6 +134,27 @@ export default class Login extends Component {
             />,
           )}
         </FormItem>
+        {showVertifCode ? (
+          <FormItem>
+            {getFieldDecorator('verifyCode', {
+              initialValue: '',
+              rules: [
+                {
+                  required: true,
+                  message: '请输入验证码!',
+                },
+              ],
+            })(
+              <Input
+                disabled={isLoading}
+                prefix={<Icon type="lock" style={colorStyle} />}
+                type="password"
+                placeholder="验证码"
+                addonAfter={<img alt="验证码" onClick={this.handleVertify} src={verifyCode} />}
+              />,
+            )}
+          </FormItem>
+        ) : null}
         <FormItem>
           <Button
             loading={isLoading}
