@@ -145,8 +145,7 @@ export default class Login extends Component {
           })(
             <Input
               disabled={isLoading}
-              prefix={<Icon type="lock" style={colorStyle} />}
-              type="password"
+              prefix={<Icon type="code" style={colorStyle} />}
               placeholder={formatMessage({ id: 'login.password' })}
             />,
           )}
