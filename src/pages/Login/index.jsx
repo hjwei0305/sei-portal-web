@@ -145,7 +145,8 @@ export default class Login extends Component {
           })(
             <Input
               disabled={isLoading}
-              prefix={<Icon type="code" style={colorStyle} />}
+              prefix={<Icon type="lock" style={colorStyle} />}
+              type="password"
               placeholder={formatMessage({ id: 'login.password' })}
             />,
           )}
@@ -163,8 +164,7 @@ export default class Login extends Component {
             })(
               <Input
                 disabled={isLoading}
-                prefix={<Icon type="lock" style={colorStyle} />}
-                type="password"
+                prefix={<Icon type="code" style={colorStyle} />}
                 placeholder="验证码"
                 addonAfter={<img alt="验证码" onClick={this.handleVertify} src={verifyCode} />}
               />,
