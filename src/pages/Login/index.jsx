@@ -51,9 +51,26 @@ export default class Login extends Component {
         }).then(res => {
           const { success, data } = res || {};
           if (success) {
+            /** 多租户 */
             if (data.loginStatus === 'multiTenant') {
               this.setState({
                 showTenant: true,
+              });
+            }
+            /** 验证码 */
+            if (data.loginStatus === 'captchaError') {
+              dispatch({
+                type: 'user/getVerifyCode',
+                payload: {
+                  reqId: this.loginReqId,
+                },
+              }).then(result => {
+                const { success: scs } = result || {};
+                if (scs) {
+                  this.setState({
+                    showVertifCode: true,
+                  });
+                }
               });
             }
             // else {
@@ -134,7 +151,7 @@ export default class Login extends Component {
             />,
           )}
         </FormItem>
-        {showVertifCode ? (
+        {showVertifCode && verifyCode ? (
           <FormItem>
             {getFieldDecorator('verifyCode', {
               initialValue: '',
