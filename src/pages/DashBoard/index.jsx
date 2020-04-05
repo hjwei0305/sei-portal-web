@@ -286,14 +286,7 @@ export default class DashBoard extends Component {
           <p>{this.getUserInfo()}</p>
         </header>
         <section className="dashboard-wrapper-content">
-          <div className="dashboard-wc-left">{this.getCustomCmp()}</div>
-          <div className="dashboard-wc-right">
-            {this.getQuickMenuCard()}
-            <div style={{ margin: '5px 0' }}></div>
-            {this.getMessageCard()}
-            <div style={{ margin: '5px 0' }}></div>
-            {this.getOtherCard()}
-          </div>
+          <iframe sr='/sei-dashboard-web/scene/kanban/p3g3wn' />
         </section>
         <footer className="dashboard-wrapper-footer">{COPYRIGHTTEXT}</footer>
       </section>
