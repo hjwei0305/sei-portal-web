@@ -286,7 +286,7 @@ export default class DashBoard extends Component {
           <p>{this.getUserInfo()}</p>
         </header>
         <section className="dashboard-wrapper-content">
-          <iframe sr='/sei-dashboard-web/scene/kanban/p3g3wn' />
+          <iframe style={{ display: 'block',flex: 1,border: 'none',boxShadow: 'none',width:'100%',height:'100%'}} sr='/sei-dashboard-web/#/sei-dashboard-web/scene/kanban/p3g3wn' />
         </section>
         <footer className="dashboard-wrapper-footer">{COPYRIGHTTEXT}</footer>
       </section>
