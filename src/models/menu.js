@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-01 14:41:10
+ * @Last Modified time: 2020-04-07 16:27:06
  */
 import { getMenu } from '@/services/menu';
 import { treeOperation, CONSTANTS } from '@/utils';
@@ -45,8 +45,8 @@ export default {
   },
 
   effects: {
-    *getMenus(_, { put }) {
-      const result = yield getMenu();
+    *getMenus(_, { put, call }) {
+      const result = yield call(getMenu);
       const { success, data } = result || {};
       // const result = getCurrentLocale() === 'en-US' ? tempEnResult : tempResult;
       if (success) {
