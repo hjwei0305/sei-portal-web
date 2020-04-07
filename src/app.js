@@ -1,6 +1,8 @@
 import { notification } from 'antd';
 import { getSubAppConfig } from '@/services/microFront';
-import 'fetch-polyfill';
+import fetchPolyfill from './fetchPolyfill';
+
+fetchPolyfill();
 // import * as Sentry from '@sentry/browser';
 
 // Sentry.init({
