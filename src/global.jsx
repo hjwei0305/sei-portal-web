@@ -1,4 +1,7 @@
-import React from 'react';
+// import React from 'react';
+import fetchPolyfill from './fetchPolyfill';
+
+fetchPolyfill();
 
 if ('serviceWorker' in navigator) {
   // unregister service worker
