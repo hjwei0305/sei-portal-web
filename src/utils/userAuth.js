@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 10:51:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-03-27 14:06:05
+ * @Last Modified time: 2020-04-08 10:51:00
  */
 import { utils } from 'suid';
 
@@ -34,7 +34,7 @@ export const adaptLocale = locale => {
     }
     return locale.split('_').join('-');
   }
-  return null;
+  return 'zh_CN';
 };
 
 /** sid保存到session */

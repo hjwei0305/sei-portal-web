@@ -1,6 +1,5 @@
 export default function() {
   var self = window;
-  console.log(self);
   if (self.fetch) {
     return;
   }
