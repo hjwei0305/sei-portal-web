@@ -2,10 +2,10 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-07 16:27:06
+ * @Last Modified time: 2020-04-10 10:29:17
  */
 import { getMenu } from '@/services/menu';
-import { treeOperation, CONSTANTS } from '@/utils';
+import { treeOperation, CONSTANTS, eventBus } from '@/utils';
 import { cloneDeep } from 'lodash';
 
 const { NoMenuPages } = CONSTANTS;
@@ -148,6 +148,11 @@ export default {
         type: '_updateState',
         payload,
       });
+      const { activedMenu } = payload;
+      const { id, activedRefresh } = activedMenu || {};
+      if (activedMenu && activedRefresh) {
+        eventBus.emit(`${id}_refresh`);
+      }
 
       return payload;
     },

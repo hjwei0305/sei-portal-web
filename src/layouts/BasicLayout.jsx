@@ -4,7 +4,8 @@ import cls from 'classnames';
 import { router } from 'umi';
 import { Helmet } from 'react-helmet';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { userInfoOperation, eventBus } from '@/utils';
+import { userInfoOperation } from '@/utils';
+// import { userInfoOperation, eventBus } from '@/utils';
 import Header from './components/Header';
 import NavLeft from './components/NavLeft';
 import Tab from './components/Tab';
@@ -95,12 +96,13 @@ export default class BasicLayout extends React.Component {
   handleToggleTab = (id, activedMenu) => {
     this.handleTabs('open', {
       activedMenu,
-    }).then(() => {
-      if (activedMenu.activedRefresh) {
-        // eventBus.emit('refresh', id);
-        eventBus.emit(`${id}_refresh`);
-      }
     });
+    // .then(() => {
+    //   if (activedMenu.activedRefresh) {
+    //     // eventBus.emit('refresh', id);
+    //     eventBus.emit(`${id}_refresh`);
+    //   }
+    // });
   };
 
   /** 页签操作 */
