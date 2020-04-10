@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: zp
- * @Last Modified time: 2020-03-31 16:48:18
+ * @Last Modified time: 2020-04-10 13:52:14
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -17,7 +17,11 @@ const { SEIAUTHSERVICE, BASICSERVICE } = CONSTANTS;
  * id {string} 唯一值
  */
 export async function userLogin(params) {
-  return request.post(`${SEIAUTHSERVICE}/auth/login`, params);
+  return request.post(`${SEIAUTHSERVICE}/auth/login`, params, {
+    headers: {
+      needToken: false,
+    },
+  });
 }
 
 /**
