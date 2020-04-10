@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-10 10:29:17
+ * @Last Modified time: 2020-04-10 10:58:49
  */
 import { getMenu } from '@/services/menu';
 import { treeOperation, CONSTANTS, eventBus } from '@/utils';
@@ -148,12 +148,6 @@ export default {
         type: '_updateState',
         payload,
       });
-      const { activedMenu } = payload;
-      const { id, activedRefresh } = activedMenu || {};
-      if (activedMenu && activedRefresh) {
-        eventBus.emit(`${id}_refresh`);
-      }
-
       return payload;
     },
   },
@@ -171,6 +165,11 @@ export default {
 
   reducers: {
     _updateState(state, { payload }) {
+      const { activedMenu } = payload;
+      const { id, activedRefresh } = activedMenu || {};
+      if (activedMenu && activedRefresh) {
+        eventBus.emit(`${id}_refresh`);
+      }
       return {
         ...state,
         ...payload,
