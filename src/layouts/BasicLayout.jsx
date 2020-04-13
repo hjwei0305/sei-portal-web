@@ -57,7 +57,6 @@ export default class BasicLayout extends React.Component {
   handleAfterSuccess = () => {
     const { menu } = this.props;
     const { activedMenu } = menu;
-    console.log(activedMenu, 'activedMenu');
     if (activedMenu) {
       this.handleReload(activedMenu.id);
     }

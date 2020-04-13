@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date: 2020-04-13 15:01:55
- * @Last Modified by:   zp
- * @Last Modified time: 2020-04-13 15:01:55
+ * @Last Modified by: zp
+ * @Last Modified time: 2020-04-13 15:06:54
  */
 import React, { Component } from 'react';
 import { connect } from 'dva';
@@ -118,7 +118,6 @@ export class ConfirmLoginModal extends Component {
     const { showTenant, showVertifCode } = this.state;
     const isLoading = loading.effects['user/quickLogin'];
     const userInfo = getCurrentUser();
-    console.log('ConfirmLoginModal -> render -> userInfo', userInfo);
     const { account, tenantCode } = userInfo || {};
 
     return (
