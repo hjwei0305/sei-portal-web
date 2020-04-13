@@ -4,8 +4,11 @@ import { router } from 'umi';
 import { ExtModal, utils } from 'suid';
 import { Button } from 'antd';
 import md5 from 'md5';
+import { userInfoOperation } from '@/utils';
 
 import LoginForm from './Form';
+
+const { getCurrentUser } = userInfoOperation;
 
 @connect(({ user, loading }) => ({ user, loading }))
 export class ConfirmLoginModal extends Component {
@@ -105,9 +108,10 @@ export class ConfirmLoginModal extends Component {
 
   render() {
     const { loading, user, visible } = this.props;
-    const { verifyCode, userInfo } = user;
+    const { verifyCode } = user;
     const { showTenant, showVertifCode } = this.state;
     const isLoading = loading.effects['user/quickLogin'];
+    const userInfo = getCurrentUser();
     const { account, tenantCode } = userInfo || {};
 
     return (
