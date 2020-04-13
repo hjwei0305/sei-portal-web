@@ -2,14 +2,16 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-13 14:32:11
+ * @Last Modified time: 2020-04-13 14:42:01
  */
+import { router } from 'umi';
 import { getMenu } from '@/services/menu';
-import { treeOperation, CONSTANTS, eventBus } from '@/utils';
+import { treeOperation, CONSTANTS, eventBus, userInfoOperation } from '@/utils';
 import { cloneDeep } from 'lodash';
 
 const { NoMenuPages } = CONSTANTS;
 const { getTreeLeaf, traverseCopyTrees } = treeOperation;
+const { getCurrentUser } = userInfoOperation;
 
 /** 是否刷新页面的时候的第一次路由 */
 let init = true;
@@ -96,12 +98,17 @@ export default {
       }
     },
     *timeoutLogin(_, { put }) {
-      yield put({
-        type: '_updateState',
-        payload: {
-          loginVisible: true,
-        },
-      });
+      const userInfo = getCurrentUser();
+      if (userInfo) {
+        yield put({
+          type: '_updateState',
+          payload: {
+            loginVisible: true,
+          },
+        });
+      } else {
+        router.replace('/user/login');
+      }
     },
     *openTab({ payload }, { put, select }) {
       const menu = yield select(state => state.menu);
