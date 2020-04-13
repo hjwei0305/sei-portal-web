@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-10 10:58:49
+ * @Last Modified time: 2020-04-13 14:32:11
  */
 import { getMenu } from '@/services/menu';
 import { treeOperation, CONSTANTS, eventBus } from '@/utils';
@@ -42,13 +42,14 @@ export default {
     mode: 'iframe',
     /** 所有菜单树的叶子菜单 */
     allLeafMenus: [],
+    /** 是否显示登录框 */
+    loginVisible: false,
   },
 
   effects: {
     *getMenus(_, { put, call }) {
       const result = yield call(getMenu);
       const { success, data } = result || {};
-      // const result = getCurrentLocale() === 'en-US' ? tempEnResult : tempResult;
       if (success) {
         const menuTrees = traverseCopyTrees(data, adapterMenus);
         const allLeafMenus = getTreeLeaf(menuTrees);
@@ -93,6 +94,14 @@ export default {
           payload,
         });
       }
+    },
+    *timeoutLogin(_, { put }) {
+      yield put({
+        type: '_updateState',
+        payload: {
+          loginVisible: true,
+        },
+      });
     },
     *openTab({ payload }, { put, select }) {
       const menu = yield select(state => state.menu);
@@ -159,6 +168,13 @@ export default {
           init = false;
           initPathname = pathname;
         }
+      });
+    },
+    eventBusListenter({ dispatch }) {
+      eventBus.addListener('timeoutLogin', () => {
+        dispatch({
+          type: 'timeoutLogin',
+        });
       });
     },
   },

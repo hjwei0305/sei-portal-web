@@ -5,7 +5,8 @@ import { router } from 'umi';
 import { Helmet } from 'react-helmet';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { userInfoOperation } from '@/utils';
-// import { userInfoOperation, eventBus } from '@/utils';
+// import { userInfoOperation,  } from '@/utils';
+import ConfirmLoginModal from '@/pages/Login/ConfirmLoginModal';
 import Header from './components/Header';
 import NavLeft from './components/NavLeft';
 import Tab from './components/Tab';
@@ -53,6 +54,13 @@ export default class BasicLayout extends React.Component {
     window.removeEventListener('message', this.delegateTab);
   }
 
+  handleAfterSuccess = () => {
+    const { activedMenu } = this.props;
+    if (activedMenu) {
+      this.handleReload(activedMenu.id);
+    }
+  };
+
   delegateTab = e => {
     const { data } = e;
     const { tabAction, item } = data || {};
@@ -97,12 +105,6 @@ export default class BasicLayout extends React.Component {
     this.handleTabs('open', {
       activedMenu,
     });
-    // .then(() => {
-    //   if (activedMenu.activedRefresh) {
-    //     // eventBus.emit('refresh', id);
-    //     eventBus.emit(`${id}_refresh`);
-    //   }
-    // });
   };
 
   /** 页签操作 */
@@ -152,7 +154,7 @@ export default class BasicLayout extends React.Component {
   render() {
     const { collapsed } = this.state;
     const { children, history, menu } = this.props;
-    const { tabData, mode, currMenuTree, activedMenu } = menu;
+    const { tabData, mode, currMenuTree, activedMenu, loginVisible } = menu;
     const isSubAppRouter = this.isSubAppRouter();
     let activedKey = '';
     let title = formatMessage({ id: 'app.dashboard', desc: '平台首页' });
@@ -228,6 +230,14 @@ export default class BasicLayout extends React.Component {
             )}
           </content>
         </section>
+        {loginVisible ? (
+          <ConfirmLoginModal
+            title="用户登录"
+            visible={loginVisible}
+            footer={null}
+            afterSuccess={this.handleAfterSuccess}
+          />
+        ) : null}
       </section>
     );
   }
