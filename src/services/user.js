@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-14 19:34:00
+ * @Last Modified time: 2020-04-14 20:05:58
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -38,15 +38,13 @@ export async function userLogout(params) {
 
 /** 获取验证码 */
 export async function getVerifyCode(reqId) {
-  return request.get(
-    `${SEIAUTHSERVICE}/auth/verifyCode?reqId=${reqId}`,
-    {},
-    {
-      headers: {
-        needToken: false,
-      },
+  return request({
+    method: 'GET',
+    url: `${SEIAUTHSERVICE}/auth/verifyCode?reqId=${reqId}`,
+    headers: {
+      needToken: false,
     },
-  );
+  });
 }
 
 /** 获取当前用户有权限的功能项集合 */
