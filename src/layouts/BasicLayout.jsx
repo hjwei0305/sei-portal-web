@@ -35,10 +35,18 @@ export default class BasicLayout extends React.Component {
     });
     if (userId) {
       dispatch({
-        type: 'menu/getMenus',
+        type: 'menu/updateState',
         payload: {
-          userId,
+          menuTrees: [],
+          currMenuTree: null,
         },
+      }).then(() => {
+        dispatch({
+          type: 'menu/getMenus',
+          payload: {
+            userId,
+          },
+        });
       });
       dispatch({
         type: 'user/getUserFeatures',
