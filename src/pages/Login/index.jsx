@@ -24,16 +24,6 @@ export default class Login extends Component {
     document.removeEventListener('keydown', this.onKeyDown);
   }
 
-  handleVertify = () => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'user/getVerifyCode',
-      payload: {
-        reqId: this.loginReqId,
-      },
-    });
-  };
-
   onKeyDown = e => {
     if (e.keyCode === 13) {
       this.login();
@@ -90,6 +80,7 @@ export default class Login extends Component {
         onRef={inst => {
           this.loginFormRef = inst;
         }}
+        loginReqId={this.loginReqId}
         verifyCode={verifyCode}
         loading={isLoading}
         showTenant={showTenant}

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input } from 'antd';
+import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './index.less';
 
 const FormItem = Form.Item;
 
+@connect(() => ({}))
 @Form.create()
 class LoginForm extends Component {
   componentDidMount() {
@@ -23,6 +25,16 @@ class LoginForm extends Component {
         }
         reject(err);
       });
+    });
+  };
+
+  handleVertify = () => {
+    const { dispatch, loginReqId } = this.props;
+    dispatch({
+      type: 'user/getVerifyCode',
+      payload: {
+        reqId: loginReqId,
+      },
     });
   };
 
@@ -99,7 +111,7 @@ class LoginForm extends Component {
             />,
           )}
         </FormItem>
-        {showVertifCode && verifyCode ? (
+        {showVertifCode ? (
           <FormItem>
             {getFieldDecorator('verifyCode', {
               initialValue: '',
