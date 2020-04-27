@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-13 14:42:01
+ * @Last Modified time: 2020-04-27 09:15:00
  */
 import { router } from 'umi';
 import { getMenu } from '@/services/menu';
@@ -182,6 +182,33 @@ export default {
         dispatch({
           type: 'timeoutLogin',
         });
+      });
+      /** 添加监听开页签 */
+      eventBus.addListener('openTab', tab => {
+        if (tab) {
+          const { id, title, url } = tab;
+          dispatch({
+            type: 'openTab',
+            payload: {
+              activedMenu: {
+                id,
+                title,
+                url,
+              },
+            },
+          });
+        }
+      });
+      /** 添加监听关闭页签 */
+      eventBus.addListener('closeTab', tabIds => {
+        if (tabIds && tabIds.length) {
+          dispatch({
+            type: 'closeTab',
+            payload: {
+              tabIds,
+            },
+          });
+        }
       });
     },
   },
