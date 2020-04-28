@@ -2,14 +2,16 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-07 16:27:06
+ * @Last Modified time: 2020-04-27 12:53:41
  */
+import { router } from 'umi';
 import { getMenu } from '@/services/menu';
-import { treeOperation, CONSTANTS } from '@/utils';
+import { treeOperation, CONSTANTS, eventBus, userInfoOperation } from '@/utils';
 import { cloneDeep } from 'lodash';
 
 const { NoMenuPages } = CONSTANTS;
 const { getTreeLeaf, traverseCopyTrees } = treeOperation;
+const { getCurrentUser } = userInfoOperation;
 
 /** 是否刷新页面的时候的第一次路由 */
 let init = true;
@@ -42,13 +44,14 @@ export default {
     mode: 'iframe',
     /** 所有菜单树的叶子菜单 */
     allLeafMenus: [],
+    /** 是否显示登录框 */
+    loginVisible: false,
   },
 
   effects: {
     *getMenus(_, { put, call }) {
       const result = yield call(getMenu);
       const { success, data } = result || {};
-      // const result = getCurrentLocale() === 'en-US' ? tempEnResult : tempResult;
       if (success) {
         const menuTrees = traverseCopyTrees(data, adapterMenus);
         const allLeafMenus = getTreeLeaf(menuTrees);
@@ -92,6 +95,19 @@ export default {
           type: '_updateState',
           payload,
         });
+      }
+    },
+    *timeoutLogin(_, { put }) {
+      const userInfo = getCurrentUser();
+      if (userInfo) {
+        yield put({
+          type: '_updateState',
+          payload: {
+            loginVisible: true,
+          },
+        });
+      } else {
+        router.replace('/user/login');
       }
     },
     *openTab({ payload }, { put, select }) {
@@ -148,7 +164,6 @@ export default {
         type: '_updateState',
         payload,
       });
-
       return payload;
     },
   },
@@ -162,10 +177,49 @@ export default {
         }
       });
     },
+    eventBusListenter({ dispatch }) {
+      eventBus.addListener('timeoutLogin', () => {
+        dispatch({
+          type: 'timeoutLogin',
+        });
+      });
+      /** 添加监听开页签 */
+      eventBus.addListener('openTab', tab => {
+        if (tab) {
+          const { id, title, url } = tab;
+          dispatch({
+            type: 'openTab',
+            payload: {
+              activedMenu: {
+                id,
+                title,
+                url,
+              },
+            },
+          });
+        }
+      });
+      /** 添加监听关闭页签 */
+      eventBus.addListener('closeTab', tabIds => {
+        if (tabIds && tabIds.length) {
+          dispatch({
+            type: 'closeTab',
+            payload: {
+              tabIds,
+            },
+          });
+        }
+      });
+    },
   },
 
   reducers: {
     _updateState(state, { payload }) {
+      const { activedMenu } = payload;
+      const { id, activedRefresh } = activedMenu || {};
+      if (activedMenu && activedRefresh) {
+        eventBus.emit(`${id}_refresh`);
+      }
       return {
         ...state,
         ...payload,

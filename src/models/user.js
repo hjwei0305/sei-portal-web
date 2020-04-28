@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-07 16:28:28
+ * @Last Modified time: 2020-04-13 14:13:09
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -68,6 +68,32 @@ export default {
         setCurrentLocale(adaptLocale(locale || 'zh_CN'));
         setLocale(adaptLocale(locale || 'zh_CN'));
         router.replace('/');
+      } else {
+        notification.error({
+          message: '请求错误',
+          description: msg,
+        });
+      }
+
+      return result;
+    },
+    *quickLogin({ payload }, { put }) {
+      const result = yield userLogin({ ...payload, locale: adaptLocale(getCurrentLocale()) });
+      const { success, data, message: msg } = result || {};
+      const { sessionId, locale, loginStatus, authorityPolicy } = data || {};
+      if (success && loginStatus === 'success') {
+        yield put({
+          type: 'updateState',
+          payload: {
+            sessionId,
+            userInfo: data,
+          },
+        });
+        setCurrentUser(data);
+        setSessionId(sessionId);
+        setCurrentPolicy(authorityPolicy);
+        setCurrentLocale(adaptLocale(locale || 'zh_CN'));
+        setLocale(adaptLocale(locale || 'zh_CN'));
       } else {
         notification.error({
           message: '请求错误',

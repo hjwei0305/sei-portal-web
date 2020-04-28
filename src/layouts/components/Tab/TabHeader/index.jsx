@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 import { debounce } from 'lodash';
 import { message } from 'antd';
 import { router } from 'umi';
+import ResizeObserver from 'rc-resize-observer';
 import TabOperateIcon from '../TabOperateIcon/index.jsx';
 import TabItem from '../TabItem/index.jsx';
 import styles from './index.less';
@@ -46,25 +47,26 @@ class Tabs extends Component {
     showCount: undefined,
   };
 
-  componentDidMount() {
-    this.computeShowCount();
-    window.addEventListener('resize', this.handleResize, false);
-  }
+  // componentDidMount() {
+  // this.computeShowCount();
+  // window.addEventListener('resize', this.handleResize, false);
+  // }
 
-  componentWillReceiveProps(nextProps) {
-    const { data } = this.props;
-    if (nextProps.data.length !== data.length) {
-      this.computeShowCount();
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   const { data } = this.props;
+  //   if (nextProps.data.length !== data.length) {
+  //     this.computeShowCount();
+  //   }
+  // }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize, false);
-  }
+  // componentWillUnmount() {
+  // window.removeEventListener('resize', this.handleResize, false);
+  // }
 
   /** 根据实际宽度计算可以显示的页签个数 */
   computeShowCount = () => {
-    const containerWidth = this.refContainer.offsetWidth;
+    // const containerWidth = this.refContainer.offsetWidth;
+    const containerWidth = this.parentWidth || 0;
     const tabsWidth = containerWidth - 60 - (this.firstWidth + 4);
     const showCount = Math.floor(tabsWidth / (this.tabItemWidth + 4)) + 1;
 
@@ -186,21 +188,28 @@ class Tabs extends Component {
   render() {
     const { data } = this.props;
     return (
-      <div
-        className={styles['custom-tabs']}
-        ref={ref => {
-          this.refContainer = ref;
+      <ResizeObserver
+        onResize={param => {
+          this.parentWidth = param.offsetWidth;
+          this.handleResize();
         }}
       >
-        {this.renderTabItems()}
-        {data.length ? (
-          <TabOperateIcon
-            onReloadCurrent={this.handleReload}
-            onCloseCurrent={this.handleCloseCurrent}
-            onCloseAll={this.handleCloseAll}
-          />
-        ) : null}
-      </div>
+        <div
+          className={styles['custom-tabs']}
+          ref={ref => {
+            this.refContainer = ref;
+          }}
+        >
+          {this.renderTabItems()}
+          {data.length ? (
+            <TabOperateIcon
+              onReloadCurrent={this.handleReload}
+              onCloseCurrent={this.handleCloseCurrent}
+              onCloseAll={this.handleCloseAll}
+            />
+          ) : null}
+        </div>
+      </ResizeObserver>
     );
   }
 }

@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: zp
- * @Last Modified time: 2020-03-31 16:48:18
+ * @Last Modified time: 2020-04-14 20:05:58
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -17,7 +17,11 @@ const { SEIAUTHSERVICE, BASICSERVICE } = CONSTANTS;
  * id {string} 唯一值
  */
 export async function userLogin(params) {
-  return request.post(`${SEIAUTHSERVICE}/auth/login`, params);
+  return request.post(`${SEIAUTHSERVICE}/auth/login`, params, {
+    headers: {
+      needToken: false,
+    },
+  });
 }
 
 /**
@@ -34,7 +38,13 @@ export async function userLogout(params) {
 
 /** 获取验证码 */
 export async function getVerifyCode(reqId) {
-  return request.get(`${SEIAUTHSERVICE}/auth/verifyCode?reqId=${reqId}`);
+  return request({
+    method: 'GET',
+    url: `${SEIAUTHSERVICE}/auth/verifyCode?reqId=${reqId}`,
+    headers: {
+      needToken: false,
+    },
+  });
 }
 
 /** 获取当前用户有权限的功能项集合 */
