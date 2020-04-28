@@ -47,7 +47,7 @@ export default class Header extends React.Component {
             className={cls({ trigger: true, trigger_active: !activedKey })}
             onClick={this.handleHomeClick}
           >
-            <Icon type="home" theme="filled" size="14" />
+            <Icon type="home" size="14" />
           </span>
         </div>
         <div className={cls('header-layout-right')}>
