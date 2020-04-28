@@ -2,18 +2,35 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-28 09:28:09
+ * @Last Modified time: 2020-04-28 12:55:47
  */
 import { request, CONSTANTS } from '@/utils';
 
 const { SEIAUTHSERVICE, BASICSERVICE } = CONSTANTS;
 
 /**
+ * 单点登录获取用户信息
+ * @param {object} data 参数
+ */
+export const getUserByXsid = params =>
+  request({
+    url: `${SEIAUTHSERVICE}/auth/getSessionUser?sid=${params.sid}`,
+    headers: {
+      needToken: false,
+      'x-sid': params.sid,
+    },
+  });
+
+/**
  * 绑定社交帐号
  * @param {object} data 参数
  */
 export const bindingSocialAccount = data =>
-  request.post(`${SEIAUTHSERVICE}/sso/binding/socialAccount`, data);
+  request.post(`${SEIAUTHSERVICE}/sso/binding/socialAccount`, data, {
+    headers: {
+      needToken: false,
+    },
+  });
 
 /**
  * 登录方法

@@ -8,6 +8,11 @@ const routes = [
         path: '/sso/socialAccount',
         component: './SocialAccount',
       },
+      {
+        name: 'ssoWrapperPage',
+        path: '/sso/ssoWrapperPage',
+        component: './Sso',
+      },
     ],
   },
   {

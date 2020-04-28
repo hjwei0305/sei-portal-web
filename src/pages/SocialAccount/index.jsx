@@ -3,17 +3,13 @@ import { Helmet } from 'react-helmet';
 import { Button } from 'antd';
 import { connect } from 'dva';
 import md5 from 'md5';
-import queryString from 'query-string';
+import withUrlQs from '@/components/withUrlQs';
+
 import BindForm from './Form';
 import styles from './index.less';
-
+@withUrlQs
 @connect(({ user, loading }) => ({ user, loading }))
 export default class SocialAccount extends Component {
-  constructor(props) {
-    super(props);
-    this.queryParams = queryString.parse(window.location.href.split('?')[1]);
-  }
-
   componentDidMount() {
     document.addEventListener('keydown', this.onKeyDown);
   }
@@ -42,8 +38,8 @@ export default class SocialAccount extends Component {
   };
 
   render() {
-    const { loading } = this.props;
-    const { tenant, openId } = this.queryParams;
+    const { loading, urlQsObj } = this.props;
+    const { tenant, openId } = urlQsObj;
     const isLoading = loading.effects['user/bindingSocialAccount'];
 
     return (

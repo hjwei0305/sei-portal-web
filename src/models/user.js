@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-28 09:30:47
+ * @Last Modified time: 2020-04-28 11:33:11
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -14,6 +14,7 @@ import {
   getAuthorizedFeatures,
   clearUserAuthCaches,
   getVerifyCode,
+  getUserByXsid,
 } from '@/services/user';
 import { userInfoOperation, eventBus, CONSTANTS } from '@/utils';
 
@@ -84,6 +85,26 @@ export default {
           description: msg,
         });
       }
+    },
+    *getUserByXsid({ payload }, { put, call }) {
+      const result = yield call(getUserByXsid, payload);
+      const { success, data, message: msg } = result || {};
+      if (success) {
+        yield put({
+          type: 'processUser',
+          payload: {
+            userInfo: data,
+          },
+        });
+        router.replace('/');
+      } else {
+        notification.error({
+          message: '请求错误',
+          description: msg,
+        });
+      }
+
+      return result;
     },
     *userLogin({ payload }, { put }) {
       const result = yield userLogin({ ...payload, locale: adaptLocale(getCurrentLocale()) });
