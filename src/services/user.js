@@ -2,11 +2,18 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-14 20:05:58
+ * @Last Modified time: 2020-04-28 09:28:09
  */
 import { request, CONSTANTS } from '@/utils';
 
 const { SEIAUTHSERVICE, BASICSERVICE } = CONSTANTS;
+
+/**
+ * 绑定社交帐号
+ * @param {object} data 参数
+ */
+export const bindingSocialAccount = data =>
+  request.post(`${SEIAUTHSERVICE}/sso/binding/socialAccount`, data);
 
 /**
  * 登录方法

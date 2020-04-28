@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-13 14:13:09
+ * @Last Modified time: 2020-04-28 09:30:47
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -10,6 +10,7 @@ import { setLocale } from 'umi-plugin-react/locale';
 import {
   userLogin,
   userLogout,
+  bindingSocialAccount,
   getAuthorizedFeatures,
   clearUserAuthCaches,
   getVerifyCode,
@@ -50,23 +51,51 @@ export default {
   },
 
   effects: {
-    *userLogin({ payload }, { put }) {
-      const result = yield userLogin({ ...payload, locale: adaptLocale(getCurrentLocale()) });
+    *processUser({ payload }, { put }) {
+      const { userInfo } = payload;
+      const { sessionId, locale, authorityPolicy } = userInfo || {};
+      yield put({
+        type: 'updateState',
+        payload: {
+          userInfo,
+          sessionId,
+        },
+      });
+      setCurrentUser(userInfo);
+      setSessionId(sessionId);
+      setCurrentPolicy(authorityPolicy);
+      setCurrentLocale(adaptLocale(locale || 'zh_CN'));
+      setLocale(adaptLocale(locale || 'zh_CN'));
+    },
+    *bindingSocialAccount({ payload }, { put, call }) {
+      const result = yield call(bindingSocialAccount, payload);
       const { success, data, message: msg } = result || {};
-      const { sessionId, locale, loginStatus, authorityPolicy } = data || {};
-      if (success && loginStatus === 'success') {
+      if (success) {
         yield put({
-          type: 'updateState',
+          type: 'processUser',
           payload: {
-            sessionId,
             userInfo: data,
           },
         });
-        setCurrentUser(data);
-        setSessionId(sessionId);
-        setCurrentPolicy(authorityPolicy);
-        setCurrentLocale(adaptLocale(locale || 'zh_CN'));
-        setLocale(adaptLocale(locale || 'zh_CN'));
+        router.replace('/');
+      } else {
+        notification.error({
+          message: '请求错误',
+          description: msg,
+        });
+      }
+    },
+    *userLogin({ payload }, { put }) {
+      const result = yield userLogin({ ...payload, locale: adaptLocale(getCurrentLocale()) });
+      const { success, data, message: msg } = result || {};
+      const { loginStatus } = data || {};
+      if (success && loginStatus === 'success') {
+        yield put({
+          type: 'processUser',
+          payload: {
+            userInfo: data,
+          },
+        });
         router.replace('/');
       } else {
         notification.error({

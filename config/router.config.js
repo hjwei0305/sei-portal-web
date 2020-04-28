@@ -1,5 +1,16 @@
 const routes = [
   {
+    path: '/sso',
+    // component: '../layouts/LoginLayout',
+    routes: [
+      {
+        name: 'socialAccount',
+        path: '/sso/socialAccount',
+        component: './SocialAccount',
+      },
+    ],
+  },
+  {
     path: '/user',
     component: '../layouts/LoginLayout',
     routes: [
