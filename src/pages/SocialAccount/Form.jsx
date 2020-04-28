@@ -88,7 +88,7 @@ class LoginForm extends Component {
         </FormItem>
         {/* openId */}
         <FormItem style={{ display: 'none' }}>
-          {getFieldDecorator('openId', {
+          {getFieldDecorator('reqId', {
             initialValue: openId,
           })(<Input />)}
         </FormItem>
