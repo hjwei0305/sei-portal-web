@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-27 12:53:41
+ * @Last Modified time: 2020-04-28 13:09:36
  */
 import { router } from 'umi';
 import { getMenu } from '@/services/menu';
@@ -171,7 +171,12 @@ export default {
   subscriptions: {
     setup({ history }) {
       return history.listen(async ({ pathname }) => {
-        if (!['/', '/DashBoard', '/user/login'].includes(pathname) && init) {
+        if (
+          !['/', '/DashBoard', '/user/login', '/sso/socialAccount', '/sso/ssoWrapperPage'].includes(
+            pathname,
+          ) &&
+          init
+        ) {
           init = false;
           initPathname = pathname;
         }
