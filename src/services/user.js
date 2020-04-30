@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-28 14:56:45
+ * @Last Modified time: 2020-04-30 13:06:10
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -73,6 +73,17 @@ export async function getVerifyCode(reqId) {
   return request({
     method: 'GET',
     url: `${SEIAUTHSERVICE}/auth/verifyCode?reqId=${reqId}`,
+    headers: {
+      needToken: false,
+    },
+  });
+}
+
+/** 获取生成二维码配置信息 */
+export async function authorizeData(authType = 'weChat') {
+  return request({
+    method: 'GET',
+    url: `${SEIAUTHSERVICE}/sso/authorizeData?authType=${authType}`,
     headers: {
       needToken: false,
     },

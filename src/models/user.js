@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-30 11:23:00
+ * @Last Modified time: 2020-04-30 13:14:25
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -16,6 +16,7 @@ import {
   getVerifyCode,
   getUserByXsid,
   updatePwd,
+  authorizeData,
 } from '@/services/user';
 import { userInfoOperation, eventBus, CONSTANTS } from '@/utils';
 
@@ -40,6 +41,7 @@ export default {
     userInfo: null,
     sessionId: null,
     verifyCode: null,
+    qrConfig: null,
   },
 
   subscriptions: {
@@ -135,6 +137,23 @@ export default {
       const result = yield call(updatePwd, payload);
       const { success, message: msg } = result || {};
       if (success) {
+        message.success(msg);
+      } else {
+        message.error(msg);
+      }
+
+      return result;
+    },
+    *authorizeData(_, { call, put }) {
+      const result = yield call(authorizeData);
+      const { success, message: msg, data } = result || {};
+      if (success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            qrConfig: data,
+          },
+        });
         message.success(msg);
       } else {
         message.error(msg);
