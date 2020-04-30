@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-30 09:03:49
+ * @Last Modified time: 2020-04-30 11:23:00
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -110,8 +110,7 @@ export default {
     *userLogin({ payload }, { put }) {
       const result = yield userLogin({ ...payload, locale: adaptLocale(getCurrentLocale()) });
       const { success, data, message: msg } = result || {};
-      let { loginStatus } = data || {};
-      loginStatus = 'passwordExpire';
+      const { loginStatus } = data || {};
       if (success && loginStatus === 'success') {
         yield put({
           type: 'processUser',
