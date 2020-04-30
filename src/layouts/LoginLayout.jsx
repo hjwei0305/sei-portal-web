@@ -24,12 +24,7 @@ const LoginLayout = props => {
           </div>
         </div>
         <div className="content-wrapper">
-          <div className="login-form">
-            <div className="login-form-title">
-              {formatMessage({ id: 'login.title', desc: 'SEI账号登录' })}
-            </div>
-            {children}
-          </div>
+          <div className="login-form">{children}</div>
         </div>
       </div>
     </>

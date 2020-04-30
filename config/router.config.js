@@ -1,7 +1,6 @@
 const routes = [
   {
     path: '/sso',
-    // component: '../layouts/LoginLayout',
     routes: [
       {
         name: 'socialAccount',
@@ -25,6 +24,11 @@ const routes = [
         component: './Login',
       },
     ],
+  },
+  {
+    name: 'updatePwd',
+    path: '/updatePwd',
+    component: './UpdatePassword',
   },
   {
     path: '/',

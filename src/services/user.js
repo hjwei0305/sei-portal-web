@@ -2,11 +2,19 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-28 12:55:47
+ * @Last Modified time: 2020-04-28 14:56:45
  */
 import { request, CONSTANTS } from '@/utils';
 
 const { SEIAUTHSERVICE, BASICSERVICE } = CONSTANTS;
+
+/** 更新密码 */
+export const updatePwd = data =>
+  request({
+    method: 'POST',
+    url: `${SEIAUTHSERVICE}/account/updatePassword`,
+    data,
+  });
 
 /**
  * 单点登录获取用户信息

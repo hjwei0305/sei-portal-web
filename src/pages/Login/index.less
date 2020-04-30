@@ -1,11 +1,31 @@
-.login-from-wrapper {
+.container-box {
   :global {
-    .ant-row.ant-form-item {
-      height: auto;
-      margin-bottom: 12px;
+    .login-form-title {
+      &_item {
+        cursor: pointer;
+        &:hover {
+          color: #1890ff;
+        }
+      }
+      &_item-actived {
+        color: #1890ff;
+      }
     }
-.login-form-button {
-      width: 100%;
+    .sei-qrcode-wrapper {
+      iframe {
+        width: 100% !important;
+        height: 280px;
+        border: none;
+      }
+    }
+    .login-from-wrapper {
+      .ant-row.ant-form-item {
+        height: auto;
+        margin-bottom: 12px;
+      }
+      .login-form-button {
+        width: 100%;
+      }
     }
   }
 }

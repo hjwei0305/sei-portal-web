@@ -1,5 +1,5 @@
 export default {
-  'login.title': 'SEI Account Login',
+  'login.title': 'Account Login',
   'login.userName': 'userName',
   'login.userName-invalid': 'please enter userName!',
   'login.password': 'password',

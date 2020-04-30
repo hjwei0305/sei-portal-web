@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'antd';
+import { Form, Button, Divider } from 'antd';
 import { connect } from 'dva';
+import cls from 'classnames';
 import { formatMessage } from 'umi-plugin-react/locale';
 import md5 from 'md5';
 import { utils } from 'suid';
 import LoginForm from './Form';
+import QrCode from './QrCode';
+import styles from './index.less';
 
 @connect(({ user, loading }) => ({ user, loading }))
 @Form.create()
@@ -12,6 +15,7 @@ export default class Login extends Component {
   state = {
     showTenant: false,
     showVertifCode: false,
+    loginType: 'account',
   };
 
   loginReqId = utils.getUUID();
@@ -72,31 +76,67 @@ export default class Login extends Component {
   render() {
     const { loading, user } = this.props;
     const { verifyCode } = user;
-    const { showTenant, showVertifCode } = this.state;
+    const { showTenant, showVertifCode, loginType } = this.state;
     const isLoading = loading.effects['user/userLogin'];
 
     return (
-      <LoginForm
-        onRef={inst => {
-          this.loginFormRef = inst;
-        }}
-        loginReqId={this.loginReqId}
-        verifyCode={verifyCode}
-        loading={isLoading}
-        showTenant={showTenant}
-        showVertifCode={showVertifCode}
-      >
-        <Button
-          loading={isLoading}
-          type="primary"
-          onClick={this.login}
-          className="login-form-button"
-        >
-          {!isLoading
-            ? formatMessage({ id: 'login.login', desc: '登录' })
-            : formatMessage({ id: 'login.loginning', desc: '登录中...' })}
-        </Button>
-      </LoginForm>
+      <div className={styles['container-box']}>
+        <div className="login-form-title">
+          <span
+            onClick={() => {
+              this.setState({
+                loginType: 'account',
+              });
+            }}
+            className={cls({
+              'login-form-title_item': true,
+              'login-form-title_item-actived': loginType === 'account',
+            })}
+          >
+            {formatMessage({ id: 'login.title', desc: '账号登录' })}
+          </span>
+          <Divider type="vertical" />
+          <span
+            onClick={() => {
+              this.setState({
+                loginType: 'qrcode',
+              });
+            }}
+            className={cls({
+              'login-form-title_item': true,
+              'login-form-title_item-actived': loginType === 'qrcode',
+            })}
+          >
+            扫码登录
+          </span>
+        </div>
+
+        {loginType === 'account' ? (
+          <LoginForm
+            onRef={inst => {
+              this.loginFormRef = inst;
+            }}
+            loginReqId={this.loginReqId}
+            verifyCode={verifyCode}
+            loading={isLoading}
+            showTenant={showTenant}
+            showVertifCode={showVertifCode}
+          >
+            <Button
+              loading={isLoading}
+              type="primary"
+              onClick={this.login}
+              className="login-form-button"
+            >
+              {!isLoading
+                ? formatMessage({ id: 'login.login', desc: '登录' })
+                : formatMessage({ id: 'login.loginning', desc: '登录中...' })}
+            </Button>
+          </LoginForm>
+        ) : (
+          <QrCode></QrCode>
+        )}
+      </div>
     );
   }
 }

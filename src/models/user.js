@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-28 11:33:11
+ * @Last Modified time: 2020-04-30 09:03:49
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -15,6 +15,7 @@ import {
   clearUserAuthCaches,
   getVerifyCode,
   getUserByXsid,
+  updatePwd,
 } from '@/services/user';
 import { userInfoOperation, eventBus, CONSTANTS } from '@/utils';
 
@@ -109,7 +110,8 @@ export default {
     *userLogin({ payload }, { put }) {
       const result = yield userLogin({ ...payload, locale: adaptLocale(getCurrentLocale()) });
       const { success, data, message: msg } = result || {};
-      const { loginStatus } = data || {};
+      let { loginStatus } = data || {};
+      loginStatus = 'passwordExpire';
       if (success && loginStatus === 'success') {
         yield put({
           type: 'processUser',
@@ -123,6 +125,20 @@ export default {
           message: '请求错误',
           description: msg,
         });
+        if (loginStatus === 'passwordExpire') {
+          router.replace(`/updatePwd?account=${data.account}&tenant=${data.tenantCode}`);
+        }
+      }
+
+      return result;
+    },
+    *updatePwd({ payload }, { call }) {
+      const result = yield call(updatePwd, payload);
+      const { success, message: msg } = result || {};
+      if (success) {
+        message.success(msg);
+      } else {
+        message.error(msg);
       }
 
       return result;
@@ -130,20 +146,14 @@ export default {
     *quickLogin({ payload }, { put }) {
       const result = yield userLogin({ ...payload, locale: adaptLocale(getCurrentLocale()) });
       const { success, data, message: msg } = result || {};
-      const { sessionId, locale, loginStatus, authorityPolicy } = data || {};
+      const { loginStatus } = data || {};
       if (success && loginStatus === 'success') {
         yield put({
-          type: 'updateState',
+          type: 'processUser',
           payload: {
-            sessionId,
             userInfo: data,
           },
         });
-        setCurrentUser(data);
-        setSessionId(sessionId);
-        setCurrentPolicy(authorityPolicy);
-        setCurrentLocale(adaptLocale(locale || 'zh_CN'));
-        setLocale(adaptLocale(locale || 'zh_CN'));
       } else {
         notification.error({
           message: '请求错误',

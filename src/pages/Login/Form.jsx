@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Form, Icon, Input } from 'antd';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
-import styles from './index.less';
 
 const FormItem = Form.Item;
 
@@ -55,7 +54,7 @@ class LoginForm extends Component {
     const FormItemStyle = { margin: 0, color: 'red' };
 
     return (
-      <Form className={styles['login-from-wrapper']}>
+      <Form className="login-from-wrapper">
         {errorMsg ? (
           <FormItem style={FormItemStyle}>
             {getFieldDecorator('errMessage')(<span className="errMessage">{errorMsg}</span>)}

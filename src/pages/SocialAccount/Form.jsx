@@ -55,7 +55,7 @@ class LoginForm extends Component {
             initialValue: account,
             rules: [
               {
-                required: true,
+                // required: true,
                 message: formatMessage({ id: 'login.userName-invalid', desc: '请输入用户名!' }),
               },
             ],
