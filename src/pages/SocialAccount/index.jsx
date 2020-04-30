@@ -39,7 +39,7 @@ export default class SocialAccount extends Component {
 
   render() {
     const { loading, urlQsObj } = this.props;
-    const { tenant, openId } = urlQsObj;
+    const { tenant, openId, authType } = urlQsObj;
     const isLoading = loading.effects['user/bindingSocialAccount'];
 
     return (
@@ -55,6 +55,7 @@ export default class SocialAccount extends Component {
             }}
             tenant={tenant}
             openId={openId}
+            authType={authType}
             loading={isLoading}
           >
             <Button

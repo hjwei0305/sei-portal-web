@@ -36,7 +36,16 @@ class LoginForm extends Component {
   };
 
   render() {
-    const { loading, form, formTitle = '帐号绑定', children, openId, tenant, account } = this.props;
+    const {
+      loading,
+      form,
+      formTitle = '帐号绑定',
+      children,
+      openId,
+      tenant,
+      account,
+      authType,
+    } = this.props;
     const { getFieldDecorator } = form;
     const colorStyle = { color: 'rgba(0,0,0,.25)' };
 
@@ -90,6 +99,12 @@ class LoginForm extends Component {
         <FormItem style={{ display: 'none' }}>
           {getFieldDecorator('reqId', {
             initialValue: openId,
+          })(<Input />)}
+        </FormItem>
+        {/* openId */}
+        <FormItem style={{ display: 'none' }}>
+          {getFieldDecorator('authType', {
+            initialValue: authType,
           })(<Input />)}
         </FormItem>
         <FormItem>{children}</FormItem>
