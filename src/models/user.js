@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-30 13:14:25
+ * @Last Modified time: 2020-04-30 14:42:09
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -154,7 +154,6 @@ export default {
             qrConfig: data,
           },
         });
-        message.success(msg);
       } else {
         message.error(msg);
       }
