@@ -34,7 +34,10 @@ class Iframe extends Component {
   };
 
   componentWillUnmount() {
+    // eslint-disable-next-line no-console
+    console.log(this.refIframe, 'this.refIframe');
     if (this.refIframe && this.refIframe.contentWindow) {
+      this.refIframe.src = 'about:blank';
       this.refIframe.contentWindow.document.write('');
       this.refIframe.contentWindow.document.clear();
     }
