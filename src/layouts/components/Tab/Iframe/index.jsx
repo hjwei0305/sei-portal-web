@@ -33,6 +33,14 @@ class Iframe extends Component {
     loading: true,
   };
 
+  componentWillUnmount() {
+    if (this.refIframe && this.refIframe.contentWindow) {
+      this.refIframe.contentWindow.document.write('');
+      this.refIframe.contentWindow.document.clear();
+    }
+    this.refIframe = null;
+  }
+
   setIframeRef = ref => {
     this.refIframe = ref;
   };
