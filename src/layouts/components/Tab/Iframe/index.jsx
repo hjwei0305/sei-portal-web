@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import classNames from 'classnames';
-import { Spin } from 'antd';
+// import { Spin } from 'antd';
+import { PageLoader } from 'suid';
 import { noop } from 'lodash';
 
 import styles from './index.less';
@@ -59,7 +60,7 @@ class Iframe extends Component {
 
     return (
       <div className={className}>
-        {loading && <Spin className="iframe-wrap-loading" size="large" tip="加载中..." />}
+        {loading && <PageLoader className="iframe-wrap-loading" size="large" tip="加载中..." />}
         <iframe
           ref={this.setIframeRef}
           title={title}
