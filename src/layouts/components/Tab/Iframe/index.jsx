@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import classNames from 'classnames';
+import NProgress from 'nprogress';
 // import { Spin } from 'antd';
 import { PageLoader } from 'suid';
 import { noop } from 'lodash';
-
 import styles from './index.less';
+
+import 'nprogress/nprogress.css';
 
 class Iframe extends Component {
   refIframe = null;
@@ -30,12 +32,18 @@ class Iframe extends Component {
   };
 
   state = {
-    loading: true,
+    loading: false,
   };
 
+  componentDidMount() {
+    const { id } = this.props;
+    // console.log('test')
+    NProgress.configure({ parent: `#np_${id}`, showSpinner: false });
+    // NProgress.set(0.0);
+    NProgress.start();
+  }
+
   componentWillUnmount() {
-    // eslint-disable-next-line no-console
-    console.log(this.refIframe, 'this.refIframe');
     if (this.refIframe && this.refIframe.contentWindow) {
       this.refIframe.src = 'about:blank';
       this.refIframe.contentWindow.document.write('');
@@ -54,6 +62,7 @@ class Iframe extends Component {
 
   handleLoaded = () => {
     const { onLoaded, url } = this.props;
+    NProgress.done();
     this.setState({ loading: false }, () => {
       onLoaded(url);
     });
@@ -70,7 +79,7 @@ class Iframe extends Component {
     });
 
     return (
-      <div className={className}>
+      <div className={className} id={`np_${id}`}>
         {loading && <PageLoader className="iframe-wrap-loading" size="large" tip="加载中..." />}
         <iframe
           ref={this.setIframeRef}

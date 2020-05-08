@@ -24,7 +24,7 @@ export const COPYRIGHTTEXT =
 /** 非菜单页面 */
 export const NoMenuPages = [
   {
-    id: '/sei-flow-web/flow-homepage',
+    id: 'flow-homepage',
     url: '/sei-flow-web/homepage',
     title: '我的任务',
     noClosable: true,
@@ -32,7 +32,7 @@ export const NoMenuPages = [
     activedRefresh: true,
   },
   {
-    id: '/sei-basic-web/userProfile',
+    id: 'userProfile',
     title: '个人设置',
     url: '/sei-basic-web/userProfile',
   },
