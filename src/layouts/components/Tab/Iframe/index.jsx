@@ -43,14 +43,14 @@ class Iframe extends Component {
     NProgress.start();
   }
 
-  componentWillUnmount() {
-    if (this.refIframe && this.refIframe.contentWindow) {
-      this.refIframe.src = 'about:blank';
-      this.refIframe.contentWindow.document.write('');
-      this.refIframe.contentWindow.document.clear();
-    }
-    this.refIframe = null;
-  }
+  // componentWillUnmount() {
+  //   if (this.refIframe && this.refIframe.contentWindow) {
+  //     this.refIframe.src = 'about:blank';
+  //     this.refIframe.contentWindow.document.write('');
+  //     this.refIframe.contentWindow.document.clear();
+  //   }
+  //   this.refIframe = null;
+  // }
 
   setIframeRef = ref => {
     this.refIframe = ref;
