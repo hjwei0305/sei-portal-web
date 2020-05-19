@@ -7,6 +7,7 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { userInfoOperation } from '@/utils';
 // import { userInfoOperation,  } from '@/utils';
 import ConfirmLoginModal from '@/pages/Login/ConfirmLoginModal';
+import { getWeChatCfg } from '@/services/user';
 import Header from './components/Header';
 import NavLeft from './components/NavLeft';
 import Tab from './components/Tab';
@@ -133,6 +134,55 @@ export default class BasicLayout extends React.Component {
     });
   };
 
+  handleLogoClick = () => {
+    getWeChatCfg().then(result => {
+      const { success, data } = result || {};
+      if (success) {
+        const { appId, signature, nonceStr, timestamp } = data;
+        window.wx.config({
+          debug: false,
+          beta: true,
+          appId,
+          timestamp,
+          nonceStr,
+          signature,
+          jsApiList: ['openDefaultBrowser'],
+        });
+      }
+    });
+    const { sessionId: sid } = getCurrentUser() || {};
+    window.wx.invoke(
+      'openDefaultBrowser',
+      {
+        url: `${window.location.orgin}/sei-portal-web/#/sso/ssoWrapperPage?sid=${sid}`, // 在默认浏览器打开redirect_uri，并附加code参数；也可以直接指定要打开的url，此时不会附带上code参数。
+      },
+      res => {
+        // eslint-disable-next-line no-console
+        console.log('BasicLayout -> handleLogoClick -> res', res);
+        if (res.err_msg === 'openDefaultBrowser:ok') {
+          window.wx.closeWindow();
+          window.close();
+        }
+      },
+    );
+    // console.log(window.wx.invoke);
+    // window.wx.ready(function() {
+
+    //   window.wx.invoke('openDefaultBrowser', {
+    //       'url': window.location.href // 在默认浏览器打开redirect_uri，并附加code参数；也可以直接指定要打开的url，此时不会附带上code参数。
+    //   }, function(res){
+    //   console.log("BasicLayout -> handleLogoClick -> res", res)
+    //       if(res.err_msg === "openDefaultBrowser:ok"){
+    //         window.wx.closeWindow();
+    //         window.close();
+    //       }
+    //   });
+    // });
+    // window.wx.error(function(err) {
+    //   console.log(err);
+    // })
+  };
+
   /** 判断是否是子应用路由 */
   isSubAppRouter = () => {
     const { base, history } = this.props;
@@ -185,6 +235,7 @@ export default class BasicLayout extends React.Component {
           })}
         >
           <NavLeft
+            onLogoClick={this.handleLogoClick}
             menuConfig={currMenuTree ? currMenuTree.children || [] : []}
             onMenuClick={currMenu => {
               this.handleTabs('open', {

@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-30 13:06:10
+ * @Last Modified time: 2020-05-19 12:37:00
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -87,6 +87,19 @@ export async function authorizeData(authType = 'weChat') {
     headers: {
       needToken: false,
     },
+  });
+}
+
+/** 获取wechat, sdk,配置信息 */
+export async function getWeChatCfg(params = { authType: 'weChat' }) {
+  return request({
+    method: 'POST',
+    url: `${SEIAUTHSERVICE}/sso/js/sdk`,
+    params,
+    // headers: {
+    //   needToken: false,
+    //   'content-type': 'application/json',
+    // },
   });
 }
 

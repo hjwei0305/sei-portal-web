@@ -49,6 +49,13 @@ class NavLeft extends React.Component {
     }
   };
 
+  handleLogoClick = () => {
+    const { onLogoClick } = this.props;
+    if (onLogoClick) {
+      onLogoClick();
+    }
+  };
+
   updateCurrentSelected = key => {
     this.setState({
       currentSelectedKeys: [key],
@@ -114,7 +121,7 @@ class NavLeft extends React.Component {
           [styles['nav-left-wrapper-collapsed']]: collapsed,
         })}
       >
-        <div className="layout-logo">
+        <div className="layout-logo" onClick={this.handleLogoClick}>
           <img src={collapsed ? collapsedLogo : logo} alt="logo" />
         </div>
         <div className="layout-menu">
