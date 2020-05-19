@@ -140,7 +140,7 @@ export default class BasicLayout extends React.Component {
       if (success) {
         const { appId, signature, nonceStr, timestamp } = data;
         window.wx.config({
-          debug: false,
+          debug: true,
           beta: true,
           appId,
           timestamp,
