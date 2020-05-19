@@ -139,10 +139,10 @@ export default class BasicLayout extends React.Component {
     getWeChatCfg().then(result => {
       const { success, data } = result || {};
       if (success) {
-        const { corpid, signature, nonceStr, timestamp } = data;
+        const { corpid, signature, nonceStr, timestamp, url } = data;
         window.wx.config({
           beta: true, // 必须这么写，否则wx.invoke调用形式的jsapi会有问题
-          debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId: corpid, // 必填，企业微信的corpID
           timestamp, // 必填，生成签名的时间戳
           nonceStr, // 必填，生成签名的随机串
@@ -154,7 +154,7 @@ export default class BasicLayout extends React.Component {
           window.wx.invoke(
             'openDefaultBrowser',
             {
-              url: `${window.location.orgin}/sei-portal-web/#/sso/ssoWrapperPage?sid=${sid}`, // 在默认浏览器打开redirect_uri，并附加code参数；也可以直接指定要打开的url，此时不会附带上code参数。
+              url: `${url}#/sso/ssoWrapperPage?sid=${sid}`, // 在默认浏览器打开redirect_uri，并附加code参数；也可以直接指定要打开的url，此时不会附带上code参数。
             },
             res => {
               // eslint-disable-next-line no-console
