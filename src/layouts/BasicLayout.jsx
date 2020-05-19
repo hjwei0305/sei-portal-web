@@ -148,31 +148,30 @@ export default class BasicLayout extends React.Component {
           signature,
           jsApiList: ['openDefaultBrowser'],
         });
+        const { sessionId: sid } = getCurrentUser() || {};
+        window.wx.ready(() => {
+          window.wx.invoke(
+            'openDefaultBrowser',
+            {
+              url: `${window.location.orgin}/sei-portal-web/#/sso/ssoWrapperPage?sid=${sid}`, // 在默认浏览器打开redirect_uri，并附加code参数；也可以直接指定要打开的url，此时不会附带上code参数。
+            },
+            res => {
+              // eslint-disable-next-line no-console
+              console.log('BasicLayout -> handleLogoClick -> res', res);
+              if (res.err_msg === 'openDefaultBrowser:ok') {
+                window.wx.closeWindow();
+                window.close();
+              }
+            },
+          );
+        });
+
+        window.wx.error(err => {
+          // eslint-disable-next-line no-console
+          console.log(err);
+        });
       }
     });
-    const { sessionId: sid } = getCurrentUser() || {};
-    window.wx.ready(() => {
-      window.wx.invoke(
-        'openDefaultBrowser',
-        {
-          url: `${window.location.orgin}/sei-portal-web/#/sso/ssoWrapperPage?sid=${sid}`, // 在默认浏览器打开redirect_uri，并附加code参数；也可以直接指定要打开的url，此时不会附带上code参数。
-        },
-        res => {
-          // eslint-disable-next-line no-console
-          console.log('BasicLayout -> handleLogoClick -> res', res);
-          if (res.err_msg === 'openDefaultBrowser:ok') {
-            window.wx.closeWindow();
-            window.close();
-          }
-        },
-      );
-    });
-
-    window.wx.error(err => {
-      // eslint-disable-next-line no-console
-      console.log(err);
-    });
-
     // window.wx.ready(function() {
 
     //   window.wx.invoke('openDefaultBrowser', {
