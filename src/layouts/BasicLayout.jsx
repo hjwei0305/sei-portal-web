@@ -59,6 +59,7 @@ export default class BasicLayout extends React.Component {
       });
     }
     window.addEventListener('message', this.delegateTab, false);
+    message.success(window.navigator.userAgent);
     if (weiXinUtils.isWeiXin()) {
       this.showOpenDefaultBrowserConfirm();
     }
