@@ -3,9 +3,9 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { router } from 'umi';
 import { Helmet } from 'react-helmet';
-// import { message } from 'antd';
+import { Modal, message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { userInfoOperation } from '@/utils';
+import { userInfoOperation, weiXinUtils } from '@/utils';
 // import { userInfoOperation,  } from '@/utils';
 import ConfirmLoginModal from '@/pages/Login/ConfirmLoginModal';
 import { getWeChatCfg } from '@/services/user';
@@ -15,6 +15,7 @@ import Tab from './components/Tab';
 
 import styles from './BasicLayout.less';
 
+const { confirm } = Modal;
 const { TabPane, TabHeader } = Tab;
 const { getCurrentUser } = userInfoOperation;
 
@@ -58,6 +59,9 @@ export default class BasicLayout extends React.Component {
       });
     }
     window.addEventListener('message', this.delegateTab, false);
+    if (weiXinUtils.isWeiXin()) {
+      this.showOpenDefaultBrowserConfirm();
+    }
   }
 
   componentWillUnmount() {
@@ -135,6 +139,57 @@ export default class BasicLayout extends React.Component {
     });
   };
 
+  showOpenDefaultBrowserConfirm = () => {
+    confirm({
+      title: '是否需要使用系统默认浏览器打开该应用?',
+      onOk() {
+        return new Promise((resolve, reject) => {
+          getWeChatCfg()
+            .then(result => {
+              const { success, data, message: msg } = result || {};
+              if (success) {
+                const { corpid, signature, nonceStr, timestamp, url } = data;
+                window.wx.config({
+                  beta: true, // 必须这么写，否则wx.invoke调用形式的jsapi会有问题
+                  debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                  appId: corpid, // 必填，企业微信的corpID
+                  timestamp, // 必填，生成签名的时间戳
+                  nonceStr, // 必填，生成签名的随机串
+                  signature, // 必填，签名，见 附录-JS-SDK使用权限签名算法
+                  jsApiList: ['openDefaultBrowser'], // 必填，需要使用的JS接口列表，凡是要调用的接口都需要传进来
+                });
+                window.wx.ready(() => {
+                  const { sessionId: sid } = getCurrentUser() || {};
+                  window.wx.invoke(
+                    'openDefaultBrowser',
+                    {
+                      url: `${url}#/sso/ssoWrapperPage?sid=${sid}`, // 在默认浏览器打开redirect_uri，并附加code参数；也可以直接指定要打开的url，此时不会附带上code参数。
+                    },
+                    res => {
+                      // eslint-disable-next-line no-console
+                      if (res.err_msg === 'openDefaultBrowser:ok') {
+                        window.wx.closeWindow();
+                        window.close();
+                      }
+                      resolve();
+                    },
+                  );
+                });
+              } else {
+                message.warn(msg);
+                reject();
+              }
+            })
+            .catch(err => {
+              reject(err);
+            });
+        });
+      },
+      okText: '确定',
+      cancelText: '取消',
+    });
+  };
+
   handleLogoClick = () => {
     getWeChatCfg().then(result => {
       const { success, data } = result || {};
@@ -165,80 +220,9 @@ export default class BasicLayout extends React.Component {
               }
             },
           );
-
-          // window.wx.agentConfig({
-          //   debug: true,
-          //   beta: true,
-          //   corpid,
-          //   agentid,
-          //   timestamp,
-          //   nonceStr: agentSignature,
-          //   signature,
-          //   jsApiList: ['openDefaultBrowser'],
-          //   success() {
-          //     const { sessionId: sid } = getCurrentUser() || {};
-          //     window.wx.invoke(
-          //       'openDefaultBrowser',
-          //       {
-          //         url: `${window.location.orgin}/sei-portal-web/#/sso/ssoWrapperPage?sid=${sid}`, // 在默认浏览器打开redirect_uri，并附加code参数；也可以直接指定要打开的url，此时不会附带上code参数。
-          //       },
-          //       res => {
-          //         // eslint-disable-next-line no-console
-          //         console.log('BasicLayout -> handleLogoClick -> res', res);
-          //         if (res.err_msg === 'openDefaultBrowser:ok') {
-          //           window.wx.closeWindow();
-          //           window.close();
-          //         }
-          //       },
-          //     );
-          //   },
-          //   fail(res) {
-          //     if (res.errMsg.indexOf('function not exist') > -1) {
-          //       message.warn('版本过低请升级');
-          //     }
-          //   },
-          // });
         });
-
-        // const { sessionId: sid } = getCurrentUser() || {};
-        // window.wx.ready(() => {
-        //   window.wx.invoke(
-        //     'openDefaultBrowser',
-        //     {
-        //       url: `${window.location.orgin}/sei-portal-web/#/sso/ssoWrapperPage?sid=${sid}`, // 在默认浏览器打开redirect_uri，并附加code参数；也可以直接指定要打开的url，此时不会附带上code参数。
-        //     },
-        //     res => {
-        //       // eslint-disable-next-line no-console
-        //       console.log('BasicLayout -> handleLogoClick -> res', res);
-        //       if (res.err_msg === 'openDefaultBrowser:ok') {
-        //         window.wx.closeWindow();
-        //         window.close();
-        //       }
-        //     },
-        //   );
-        // });
-
-        // window.wx.error(err => {
-        //   // eslint-disable-next-line no-console
-        //   console.log(err);
-        // });
       }
     });
-    // window.wx.ready(function() {
-
-    //   window.wx.invoke('openDefaultBrowser', {
-    //       'url': window.location.href // 在默认浏览器打开redirect_uri，并附加code参数；也可以直接指定要打开的url，此时不会附带上code参数。
-    //   }, function(res){
-    //   console.log("BasicLayout -> handleLogoClick -> res", res)
-    //       if(res.err_msg === "openDefaultBrowser:ok"){
-    //         window.wx.closeWindow();
-    //         window.close();
-    //       }
-    //   });
-    // });
-    // window.wx.error(function(err) {
-    //   console.log(err);
-    // })
   };
 
   /** 判断是否是子应用路由 */
