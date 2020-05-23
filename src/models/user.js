@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-05-23 16:42:33
+ * @Last Modified time: 2020-05-23 17:32:13
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -73,9 +73,11 @@ export default {
     },
     *bindingSocialAccount({ payload }, { call }) {
       const result = yield call(bindingSocialAccount, payload);
-      const { success, redirectUrl, message: msg } = result || {};
+      const { success, data, message: msg } = result || {};
       if (success) {
-        window.open(redirectUrl, '_self');
+        if (data && data.redirectUrl) {
+          window.open(data.redirectUrl, '_self');
+        }
         // yield put({
         //   type: 'processUser',
         //   payload: {
