@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tooltip, Badge, Icon, Dropdown, Card, List, Avatar, Tabs, Skeleton, Empty } from 'antd';
 import cls from 'classnames';
-// import { eventBus, } from '@/utils';
+import { eventBus } from '@/utils';
 import {
   getMessageList,
   getMessageCount,
@@ -166,9 +166,11 @@ export default class index extends React.Component {
             url: '/notify-web/userBulletin',
           });
         } else {
-          // eventBus.emit('openTab', {
-          //   id: 'userMessageView', title: '通告', url: '/notify-web/userBulletin'
-          // })
+          eventBus.emit('openTab', {
+            id: 'userMessageView',
+            title: '通告',
+            url: '/sei-notify-web/metaData/userBulletin',
+          });
         }
         this.setState({
           visible: false,

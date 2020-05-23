@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-30 14:42:09
+ * @Last Modified time: 2020-05-23 16:42:33
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -71,17 +71,18 @@ export default {
       setCurrentLocale(adaptLocale(locale || 'zh_CN'));
       setLocale(adaptLocale(locale || 'zh_CN'));
     },
-    *bindingSocialAccount({ payload }, { put, call }) {
+    *bindingSocialAccount({ payload }, { call }) {
       const result = yield call(bindingSocialAccount, payload);
-      const { success, data, message: msg } = result || {};
+      const { success, redirectUrl, message: msg } = result || {};
       if (success) {
-        yield put({
-          type: 'processUser',
-          payload: {
-            userInfo: data,
-          },
-        });
-        router.replace('/');
+        window.open(redirectUrl, '_self');
+        // yield put({
+        //   type: 'processUser',
+        //   payload: {
+        //     userInfo: data,
+        //   },
+        // });
+        // router.replace('/');
       } else {
         notification.error({
           message: '请求错误',
