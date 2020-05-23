@@ -8,6 +8,7 @@ import FullScreen from '@/components/FullScreen';
 import MenuSearch from '@/components/MenuSearch';
 import SelectModule from './components/SelectModule';
 import UserIcon from './components/UserIcon';
+import Notify from './components/Notify';
 
 import styles from './index.less';
 
@@ -68,6 +69,7 @@ export default class Header extends React.Component {
               }).then(() => router.push(currMenu.url));
             }}
           />
+          <Notify className={cls('trigger')} />
           <UserIcon />
           <FullScreen className={cls('trigger')} />
         </div>
