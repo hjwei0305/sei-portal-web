@@ -65,7 +65,7 @@ export default class index extends React.Component {
     return (
       <Modal {...this.getModalProps()}>
         <Skeleton loading={loading} active></Skeleton>
-        <div style={{ display: loading ? 'none' : '' }}>
+        <div style={{ display: loading ? 'none' : '', height: '100%' }}>
           <Iframe
             visible
             title="message-detail"
