@@ -1,49 +1,33 @@
 import React from 'react';
-import { Skeleton, message, Divider, Empty, Row, Col, Button, Modal } from 'antd';
-import { getDetailByIdAndCategory, hasKonwn } from '@/services/message';
+import { Skeleton, Button, Modal } from 'antd';
+import Iframe from '@/layouts/components/Tab/Iframe';
+import { hasKonwn } from '@/services/message';
 
 export default class index extends React.Component {
   state = {
-    detail: null,
-    loading: false,
+    loading: true,
   };
 
-  componentDidMount() {
-    const { id, msgCategory } = this.props;
-    if (id) {
-      this.setState({
-        loading: true,
-      });
-      getDetailByIdAndCategory({ id, category: msgCategory })
-        .then(result => {
-          const { success, data } = result || {};
-          if (success) {
-            this.setState({
-              detail: data,
-            });
-          }
-          this.setState({
-            loading: false,
-          });
-        })
-        .catch(err => {
-          this.setState(
-            {
-              loading: false,
-            },
-            () => {
-              message.error(err.message);
-            },
-          );
-        });
-    }
-  }
+  // componentDidMount() {
+  //   const { id, } = this.props;
+  //   if (id) {
+  //     this.setState({
+  //       loading: true,
+  //     });
+  //   }
+  // }
 
   handleBtn = () => {
     const { toggleView } = this.props;
     if (toggleView) {
       toggleView();
     }
+  };
+
+  handleLoaded = () => {
+    this.setState({
+      loading: false,
+    });
   };
 
   handleHaveKnown = () => {
@@ -75,71 +59,19 @@ export default class index extends React.Component {
   };
 
   render() {
-    const { loading, detail } = this.state;
+    const { loading } = this.state;
+    const { id, msgCategory } = this.props;
+
     return (
       <Modal {...this.getModalProps()}>
         <Skeleton loading={loading} active>
-          {detail ? (
-            <React.Fragment>
-              <h1 style={{ padding: 0, textAlign: 'center', fontSize: 20 }}>{detail.subject}</h1>
-              <h5 style={{ display: 'inline-block', marginRight: 5 }}>
-                有效期：{`${detail.effectiveDate}~${detail.invalidDate}`}
-              </h5>
-              <h5 style={{ display: 'inline-block' }}>优先级：{`${detail.priorityRemark}`}</h5>
-              <Divider
-                style={{
-                  marginTop: 5,
-                }}
-              />
-
-              <div
-                style={{
-                  backgroundColor: 'rgba(208, 205, 205, 0.2)',
-                  padding: '12px',
-                  color: 'rgba(0, 0, 0, 0.65)',
-                }}
-              >
-                <div dangerouslySetInnerHTML={{ __html: detail.content }}></div>
-              </div>
-              {/* <Divider style={{
-                  marginBottom: -20
-                }} dashed={true}>附件{`【${attachNum}】`}</Divider>
-                <OrderFileUpload
-                  viewType="card"
-                  disabled
-                  domain={check_host}
-                  entityId = {detail.id}
-                  onChange = { (docIds) => {
-                    this.setState({
-                      attachNum: docIds.length
-                    });
-                  } }
-                /> */}
-              <Row
-                type="flex"
-                style={{
-                  justifyContent: 'flex-end',
-                }}
-              >
-                <Col
-                  style={{
-                    textAlign: 'center',
-                  }}
-                >
-                  <div
-                    style={{
-                      marginBottom: 5,
-                    }}
-                  >
-                    {detail.createName}
-                  </div>
-                  <div>{detail.createTime}</div>
-                </Col>
-              </Row>
-            </React.Fragment>
-          ) : (
-            <Empty />
-          )}
+          <Iframe
+            visible
+            title="message-detail"
+            url={`/sei-notify-web/#/sei-notify-web/message/msgDetail?detailId=${id}&category=${msgCategory}`}
+            id="message-detail"
+            onLoaded={this.handleLoaded}
+          />
         </Skeleton>
       </Modal>
     );
