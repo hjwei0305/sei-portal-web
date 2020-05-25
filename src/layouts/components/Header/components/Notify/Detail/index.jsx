@@ -43,7 +43,7 @@ export default class index extends React.Component {
       visible: true,
       width: '80%',
       bodyStyle: {
-        // height: 400,
+        height: 400,
         overflow: 'auto',
       },
       okText: '知道了',
