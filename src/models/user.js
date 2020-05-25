@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-05-23 17:32:13
+ * @Last Modified time: 2020-05-25 12:34:21
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -117,6 +117,12 @@ export default {
       const { success, data, message: msg } = result || {};
       const { loginStatus } = data || {};
       if (success && loginStatus === 'success') {
+        yield put({
+          type: 'menu/updateState',
+          payload: {
+            loginVisible: false,
+          },
+        });
         yield put({
           type: 'processUser',
           payload: {
