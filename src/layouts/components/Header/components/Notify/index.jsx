@@ -36,7 +36,7 @@ export default class index extends React.Component {
     getCurrenOnetBulletin().then(result => {
       const { data, success } = result;
       if (success && data) {
-        this.msg = data.id;
+        this.msg = data;
         this.setState({
           isDetail: true,
         });
@@ -168,7 +168,7 @@ export default class index extends React.Component {
         } else {
           eventBus.emit('openTab', {
             id: 'userMessageView',
-            title: '通告',
+            title: '用户消息',
             url: '/sei-notify-web/metaData/userBulletin',
           });
         }
