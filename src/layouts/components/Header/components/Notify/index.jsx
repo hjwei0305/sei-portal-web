@@ -8,7 +8,7 @@ import {
   getCurrenOnetBulletin,
   getCategory,
 } from '@/services/message';
-import NotifyDetail from './Detail';
+import MsgDetail from './Detail';
 import msgLogo from './imgs/msg.png';
 import styles from './index.less';
 
@@ -36,7 +36,7 @@ export default class index extends React.Component {
     getCurrenOnetBulletin().then(result => {
       const { data, success } = result;
       if (success && data) {
-        this.notifyId = data.id;
+        this.msg = data.id;
         this.setState({
           isDetail: true,
         });
@@ -79,7 +79,7 @@ export default class index extends React.Component {
 
   handleViewDetail = (item, e) => {
     const { onViewDetail } = this.props;
-    this.notifyId = item.id;
+    this.msg = item;
     this.setState(
       {
         isDetail: true,
@@ -230,8 +230,9 @@ export default class index extends React.Component {
           </Tooltip>
         </Dropdown>
         {isDetail ? (
-          <NotifyDetail
-            id={this.notifyId}
+          <MsgDetail
+            id={this.msg.id}
+            msgCategory={this.msg.category}
             toggleView={() => {
               this.toggleViewNotify();
             }}

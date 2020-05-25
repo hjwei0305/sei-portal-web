@@ -1,6 +1,6 @@
 import React from 'react';
 import { Skeleton, message, Divider, Empty, Row, Col, Button, Modal } from 'antd';
-import { getById, hasKonwn } from '@/services/message';
+import { getDetailByIdAndCategory, hasKonwn } from '@/services/message';
 
 export default class index extends React.Component {
   state = {
@@ -9,12 +9,12 @@ export default class index extends React.Component {
   };
 
   componentDidMount() {
-    const { id } = this.props;
+    const { id, msgCategory } = this.props;
     if (id) {
       this.setState({
         loading: true,
       });
-      getById({ id })
+      getDetailByIdAndCategory({ id, category: msgCategory })
         .then(result => {
           const { success, data } = result || {};
           if (success) {
@@ -47,29 +47,32 @@ export default class index extends React.Component {
   };
 
   handleHaveKnown = () => {
-    const { id } = this.props;
+    const { id, msgCategory } = this.props;
     this.handleBtn();
-    hasKonwn({ id, category: 'SEI_BULLETIN' });
+    hasKonwn({ id, category: msgCategory });
   };
 
-  getModalProps = () => ({
-    title: '通告详情',
-    visible: true,
-    width: '80%',
-    bodyStyle: {
-      // height: 400,
-      overflow: 'auto',
-    },
-    okText: '知道了',
-    onCancel: () => {
-      this.handleBtn();
-    },
-    footer: [
-      <Button key="submit" type="primary" onClick={this.handleHaveKnown}>
-        知道了
-      </Button>,
-    ],
-  });
+  getModalProps = () => {
+    const { title = '消息明细' } = this.props;
+    return {
+      title,
+      visible: true,
+      width: '80%',
+      bodyStyle: {
+        // height: 400,
+        overflow: 'auto',
+      },
+      okText: '知道了',
+      onCancel: () => {
+        this.handleBtn();
+      },
+      footer: [
+        <Button key="submit" type="primary" onClick={this.handleHaveKnown}>
+          知道了
+        </Button>,
+      ],
+    };
+  };
 
   render() {
     const { loading, detail } = this.state;
