@@ -21,6 +21,7 @@ export default class index extends React.Component {
     super(props);
     this.state = {
       isDetail: false,
+      isFirst: false,
       messageTypeData: {},
       visible: false,
       loading: false,
@@ -39,6 +40,7 @@ export default class index extends React.Component {
         this.msg = data;
         this.setState({
           isDetail: true,
+          isFirst: true,
         });
       }
     });
@@ -83,6 +85,7 @@ export default class index extends React.Component {
     this.setState(
       {
         isDetail: true,
+        isFirst: false,
         visible: false,
       },
       () => {
@@ -184,6 +187,7 @@ export default class index extends React.Component {
   toggleViewNotify = () => {
     this.setState({
       isDetail: false,
+      isFirst: false,
     });
   };
 
@@ -215,7 +219,7 @@ export default class index extends React.Component {
   };
 
   render() {
-    const { messageCount, isDetail } = this.state;
+    const { messageCount, isDetail, isFirst } = this.state;
     const { className } = this.props;
     // seiIntl.get({key: "app.help-online", desc: "用户服务中心"})
     return (
@@ -232,6 +236,7 @@ export default class index extends React.Component {
         {isDetail ? (
           <MsgDetail
             id={this.msg.id}
+            isFisrt={isFirst}
             msgCategory={this.msg.category}
             toggleView={() => {
               this.toggleViewNotify();
