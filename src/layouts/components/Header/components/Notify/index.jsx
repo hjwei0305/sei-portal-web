@@ -237,7 +237,7 @@ export default class index extends React.Component {
           <MsgDetail
             key={Math.random()}
             id={this.msg.id}
-            isFisrt={isFirst}
+            isFirst={isFirst}
             msgCategory={this.msg.category}
             toggleView={() => {
               this.toggleViewNotify();

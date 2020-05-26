@@ -39,7 +39,7 @@ export default class index extends React.Component {
   getModalProps = () => {
     const { loading } = this.state;
     const { title = '消息明细', isFirst } = this.props;
-    console.log('index -> getModalProps -> isFirst', isFirst, loading);
+
     return {
       title,
       forceRender: isFirst,
