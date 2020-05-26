@@ -235,6 +235,7 @@ export default class index extends React.Component {
         </Dropdown>
         {isDetail ? (
           <MsgDetail
+            key={Math.random()}
             id={this.msg.id}
             isFisrt={isFirst}
             msgCategory={this.msg.category}
