@@ -37,10 +37,13 @@ export default class index extends React.Component {
   };
 
   getModalProps = () => {
+    const { loading } = this.state;
     const { title = '消息明细' } = this.props;
     return {
       title,
-      visible: true,
+      forceRender: true,
+      visible: !loading,
+      // style: { display: loading ? 'none':'', },
       width: '80%',
       bodyStyle: {
         height: 400,
