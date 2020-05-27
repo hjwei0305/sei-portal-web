@@ -17,6 +17,8 @@ const { TabPane } = Tabs;
 export default class index extends React.Component {
   cateGoryMap = {};
 
+  TabKey = '';
+
   constructor(props) {
     super(props);
     this.state = {
@@ -111,7 +113,12 @@ export default class index extends React.Component {
               this.TabKey = key;
             }}
           >
-            {Object.entries(messageTypeData).map(item => this.getTabPane(item))}
+            {Object.entries(messageTypeData).map((item, idx) => {
+              if (idx === 0) {
+                [this.TabKey] = item;
+              }
+              return this.getTabPane(item);
+            })}
           </Tabs>
         ) : (
           <>
