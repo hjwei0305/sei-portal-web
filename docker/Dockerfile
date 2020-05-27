@@ -13,5 +13,3 @@ ENV   TZ='Asia/Shanghai' APP_NAME="sei-portal-web"
 
 # 添加应用
 COPY dist /usr/share/nginx/html/$APP_NAME
-# 添加伊品企业微信验证文件
-COPY WW_verify_jMXh9QVgYKRzabZt.txt /usr/share/nginx/html/
