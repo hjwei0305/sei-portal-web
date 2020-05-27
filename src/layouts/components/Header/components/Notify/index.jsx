@@ -245,6 +245,7 @@ export default class index extends React.Component {
             toggleView={() => {
               this.toggleViewNotify();
             }}
+            afterHasKnown={this.getMessageCount}
           />
         ) : null}
       </React.Fragment>
