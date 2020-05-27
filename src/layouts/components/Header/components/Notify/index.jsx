@@ -106,7 +106,13 @@ export default class index extends React.Component {
         }}
       >
         {Object.entries(messageTypeData).length ? (
-          <Tabs>{Object.entries(messageTypeData).map(item => this.getTabPane(item))}</Tabs>
+          <Tabs
+            onChange={key => {
+              this.TabKey = key;
+            }}
+          >
+            {Object.entries(messageTypeData).map(item => this.getTabPane(item))}
+          </Tabs>
         ) : (
           <>
             <Empty description="暂无消息" />
@@ -160,21 +166,11 @@ export default class index extends React.Component {
         cursor: 'pointer',
       }}
       onClick={() => {
-        const { tabAction } = this.props;
-
-        if (tabAction) {
-          tabAction.add({
-            id: 'userMessageView',
-            title: '通告',
-            url: '/notify-web/userBulletin',
-          });
-        } else {
-          eventBus.emit('openTab', {
-            id: 'userMessageView',
-            title: '用户消息',
-            url: '/sei-notify-web/metaData/userBulletin',
-          });
-        }
+        eventBus.emit('openTab', {
+          id: 'userMessageView',
+          title: '用户消息',
+          url: `/sei-notify-web/metaData/userBulletin?category=${this.TabKey}`,
+        });
         this.setState({
           visible: false,
         });
