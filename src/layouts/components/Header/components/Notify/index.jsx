@@ -17,6 +17,8 @@ const { TabPane } = Tabs;
 export default class index extends React.Component {
   cateGoryMap = {};
 
+  TabKey = '';
+
   constructor(props) {
     super(props);
     this.state = {
