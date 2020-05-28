@@ -255,7 +255,7 @@ export default class BasicLayout extends React.Component {
   render() {
     const { collapsed } = this.state;
     const { children, history, menu } = this.props;
-    const { tabData, mode, currMenuTree, activedMenu, loginVisible } = menu;
+    const { tabData, mode, currMenuTree, activedMenu, loginVisible, allLeafMenus } = menu;
     const isSubAppRouter = this.isSubAppRouter();
     let activedKey = '';
     let title = formatMessage({ id: 'app.dashboard', desc: '平台首页' });
@@ -277,6 +277,16 @@ export default class BasicLayout extends React.Component {
           })}
         >
           <NavLeft
+            onSelectSearchMenu={currMenu => {
+              const { dispatch } = this.props;
+              dispatch({
+                type: 'menu/openTab',
+                payload: {
+                  activedMenu: currMenu,
+                },
+              }).then(() => router.push(currMenu.url));
+            }}
+            allLeafMenus={allLeafMenus}
             onLogoClick={this.handleLogoClick}
             menuConfig={currMenuTree ? currMenuTree.children || [] : []}
             onMenuClick={currMenu => {
@@ -287,13 +297,14 @@ export default class BasicLayout extends React.Component {
             collapsed={collapsed}
             activedMenuKey={activedKey}
             mode={mode}
+            onCollapse={this.handleTogCollapsed}
           />
         </nav>
         <section className={cls('layout-center')}>
           <header className={cls('layout-center-header')}>
             <Header
-              onCollapse={this.handleTogCollapsed}
-              collapsed={collapsed}
+              // onCollapse={this.handleTogCollapsed}
+              // collapsed={collapsed}
               onHomeClick={this.handleHomeClick}
             >
               {mode === 'spa' ? (

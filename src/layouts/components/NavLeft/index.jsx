@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Menu, Icon } from 'antd';
 import { Link } from 'umi';
 import { ScrollBar } from 'suid';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
+import MenuSearch from '@/components/MenuSearch';
 import logo from '../../../assets/logo.svg';
 import collapsedLogo from '../../../assets/logo_notxt@2x.png';
 
@@ -113,7 +114,7 @@ class NavLeft extends React.Component {
 
   render() {
     const { currentSelectedKeys, openKeys } = this.state;
-    const { collapsed, menuConfig = [] } = this.props;
+    const { collapsed, menuConfig = [], allLeafMenus, onCollapse, onSelectSearchMenu } = this.props;
     return (
       <div
         className={cls({
@@ -123,6 +124,13 @@ class NavLeft extends React.Component {
       >
         <div className="layout-logo" onClick={this.handleLogoClick}>
           <img src={collapsed ? collapsedLogo : logo} alt="logo" />
+        </div>
+        <div className="layout-menu-search">
+          {!collapsed ? (
+            <MenuSearch onSelect={onSelectSearchMenu} data={allLeafMenus} />
+          ) : (
+            <Icon className="collapsed-search-icon" type="search" onClick={onCollapse} />
+          )}
         </div>
         <div className="layout-menu">
           {openKeys ? (
@@ -138,6 +146,16 @@ class NavLeft extends React.Component {
               </Menu>
             </ScrollBar>
           ) : null}
+        </div>
+        <div className="layout-menu-collapse" onClick={onCollapse}>
+          {!collapsed ? (
+            <Fragment>
+              <Icon className="collapse-icon" type="double-left" />
+              <span>收起菜单</span>
+            </Fragment>
+          ) : (
+            <Icon type="double-right" />
+          )}
         </div>
       </div>
     );

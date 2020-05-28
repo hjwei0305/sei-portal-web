@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import { noop } from 'lodash';
-import { Icon, Modal, Input } from 'antd';
+import { Input, Popover, Empty } from 'antd';
 import { ScrollBar } from 'suid';
 import styles from './index.less';
 
@@ -10,7 +10,7 @@ const { Search } = Input;
 export default class MenuSearch extends React.Component {
   static propTypes = {
     /** 外部样式 */
-    className: propTypes.string,
+    // className: propTypes.string,
     /** 菜单数据 */
     data: propTypes.array,
     /** 选中后回调事件 */
@@ -22,7 +22,7 @@ export default class MenuSearch extends React.Component {
   };
 
   static defaultProps = {
-    className: '',
+    // className: '',
     data: [],
     showField: 'title',
     onSelect: noop,
@@ -38,24 +38,10 @@ export default class MenuSearch extends React.Component {
     };
   }
 
-  /** 获取弹框属性 */
-  getModalProps = () => {
-    const { visible } = this.state;
-
-    return {
-      visible,
-      style: {
-        top: 0,
-      },
-      closable: false,
-      footer: null,
-      wrapClassName: styles['menu-search-wrapper-modal'],
-      onCancel: () => {
-        this.setState({
-          visible: false,
-        });
-      },
-    };
+  handleVisibleChange = visible => {
+    if (!visible) {
+      this.setState({ visible });
+    }
   };
 
   handleClick = () => {
@@ -82,35 +68,47 @@ export default class MenuSearch extends React.Component {
 
     this.setState({
       filterData: data.filter(item => item[showField].includes(value)),
+      visible: true,
     });
   };
 
   getFilterDataCmp = () => {
     const { filterData } = this.state;
     const { showField } = this.props;
+    if (filterData && filterData.length) {
+      return filterData.map(item => (
+        <li key={item.id} onClick={() => this.handleSelect(item)}>
+          {item[showField]}
+          <p>{item.urlPath.slice(1)}</p>
+        </li>
+      ));
+    }
 
-    return filterData.map(item => (
-      <li key={item.id} onClick={() => this.handleSelect(item)}>
-        {item[showField]}
-        <p>{item.urlPath.slice(1)}</p>
-      </li>
-    ));
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
   };
 
   render() {
-    const { className, placeholder } = this.props;
+    const { placeholder } = this.props;
 
     return (
       <React.Fragment>
-        <span onClick={this.handleClick} className={className}>
-          <Icon type="search" />
-        </span>
-        <Modal {...this.getModalProps()}>
-          <Search placeholder={placeholder} onSearch={this.handleSearch} enterButton />
-          <ul style={{ maxHeight: 400, overflow: 'auto' }}>
-            <ScrollBar>{this.getFilterDataCmp()}</ScrollBar>
-          </ul>
-        </Modal>
+        <Popover
+          overlayClassName={styles['popver-wrapper']}
+          placement="bottomLeft"
+          content={
+            <ul
+              className={styles['menu-search-popver-content']}
+              style={{ maxHeight: 400, overflow: 'auto' }}
+            >
+              <ScrollBar>{this.getFilterDataCmp()}</ScrollBar>
+            </ul>
+          }
+          trigger="click"
+          visible={this.state.visible}
+          onVisibleChange={this.handleVisibleChange}
+        >
+          <Search placeholder={placeholder} onSearch={this.handleSearch} />
+        </Popover>
       </React.Fragment>
     );
   }

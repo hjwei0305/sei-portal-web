@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 import { message } from 'antd';
 import { router } from 'umi';
 import ResizeObserver from 'rc-resize-observer';
-import TabOperateIcon from '../TabOperateIcon/index.jsx';
+// import TabOperateIcon from '../TabOperateIcon/index.jsx';
 import TabItem from '../TabItem/index.jsx';
 import styles from './index.less';
 
@@ -139,6 +139,13 @@ class Tabs extends Component {
     onReload(activedKey);
   };
 
+  handleCloseOther = () => {
+    const { onCloseOther, activedKey } = this.props;
+    if (onCloseOther) {
+      onCloseOther(activedKey);
+    }
+  };
+
   renderTabItem = (data, index) => {
     const { activedKey, mode } = this.props;
 
@@ -162,6 +169,12 @@ class Tabs extends Component {
         activedKey={activedKey}
         actived={actived}
         mode={mode}
+        menuContextAction={{
+          close: this.handleCloseCurrent,
+          reload: this.handleReload,
+          closeOther: this.handleCloseOther,
+          closeAll: this.handleCloseAll,
+        }}
       />
     );
   };
@@ -201,13 +214,13 @@ class Tabs extends Component {
           }}
         >
           {this.renderTabItems()}
-          {data.length ? (
+          {/* {data.length ? (
             <TabOperateIcon
               onReloadCurrent={this.handleReload}
               onCloseCurrent={this.handleCloseCurrent}
               onCloseAll={this.handleCloseAll}
             />
-          ) : null}
+          ) : null} */}
         </div>
       </ResizeObserver>
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Trigger from 'rc-trigger';
 import classNames from 'classnames';
-import { Icon } from 'antd';
+import { Icon, Dropdown, Menu } from 'antd';
 import { Link, router } from 'umi';
 
 import styles from './index.less';
@@ -78,7 +78,7 @@ export default class TabItem extends React.Component {
 
     return (
       <Trigger
-        action={['hover']}
+        action={['contextMenu']}
         popup={
           <div className="tabs-more-wrap" onClick={this.handlePopupClick}>
             {dropdownData.map(({ title, url, id }) => (
@@ -145,34 +145,55 @@ export default class TabItem extends React.Component {
     return <a>{showItem.title}</a>;
   };
 
+  getDropdonwnMenu = () => {
+    const { menuContextAction = {} } = this.props;
+
+    return (
+      <Menu
+        onClick={({ key }) => {
+          if (menuContextAction[key]) {
+            menuContextAction[key]();
+          }
+        }}
+      >
+        <Menu.Item key="reload">刷新当前</Menu.Item>
+        <Menu.Item key="close">关闭当前</Menu.Item>
+        <Menu.Item key="closeOther">关闭其他</Menu.Item>
+        <Menu.Item key="closeAll">关闭所有</Menu.Item>
+      </Menu>
+    );
+  };
+
   render() {
     const { data, width, onClick, closable, actived } = this.props;
     const isMore = data && data.length > 1;
     const showItem = this.getShowTabItem();
 
     return (
-      <div
-        className={classNames({
-          [styles['custom-tabs-item']]: true,
-          [styles['custom-tabs-item_active']]: actived,
-        })}
-        title={showItem.title}
-        onClick={() => onClick(showItem)}
-        style={{ width }}
-      >
-        <div className="tab-top-line"></div>
-        <div className="tab-title">{this.getMenuNavItemByMode(showItem)}</div>
-        <div className="tab-operate-wrapper">
-          {closable && !isMore && (
-            <Icon
-              className="icon"
-              type="close"
-              onClick={e => this.handleClose(e, showItem.id, showItem.url)}
-            />
-          )}
-          {isMore && this.getDropdownComponent()}
+      <Dropdown overlay={this.getDropdonwnMenu()} trigger={['contextMenu']}>
+        <div
+          className={classNames({
+            [styles['custom-tabs-item']]: true,
+            [styles['custom-tabs-item_active']]: actived,
+          })}
+          title={showItem.title}
+          onClick={() => onClick(showItem)}
+          style={{ width }}
+        >
+          <div className="tab-top-line"></div>
+          <div className="tab-title">{this.getMenuNavItemByMode(showItem)}</div>
+          <div className="tab-operate-wrapper">
+            {closable && !isMore && (
+              <Icon
+                className="icon"
+                type="close"
+                onClick={e => this.handleClose(e, showItem.id, showItem.url)}
+              />
+            )}
+            {isMore && this.getDropdownComponent()}
+          </div>
         </div>
-      </div>
+      </Dropdown>
     );
   }
 }
