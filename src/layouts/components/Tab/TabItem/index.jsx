@@ -146,7 +146,8 @@ export default class TabItem extends React.Component {
   };
 
   getDropdonwnMenu = () => {
-    const { menuContextAction = {} } = this.props;
+    const { menuContextAction = {}, data } = this.props;
+    const { noClosable } = data[0];
 
     return (
       <Menu
@@ -157,7 +158,7 @@ export default class TabItem extends React.Component {
         }}
       >
         <Menu.Item key="reload">刷新当前</Menu.Item>
-        <Menu.Item key="close">关闭当前</Menu.Item>
+        {!noClosable ? <Menu.Item key="close">关闭当前</Menu.Item> : null}
         <Menu.Item key="closeOther">关闭其他</Menu.Item>
         <Menu.Item key="closeAll">关闭所有</Menu.Item>
       </Menu>

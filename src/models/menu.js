@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-28 13:09:36
+ * @Last Modified time: 2020-05-28 16:59:15
  */
 import { router } from 'umi';
 import { getMenu } from '@/services/menu';
@@ -24,8 +24,16 @@ let initPathname = '';
  * @return {Object}        适配后的菜单树
  */
 function adapterMenus(tree) {
-  const { id, name: title, menuUrl: url, namePath: urlPath, iconCls: iconType, children } = tree;
-  return { id, title, url, urlPath, children, iconType: iconType || 'profile' };
+  const {
+    id,
+    name: title,
+    menuUrl: url,
+    namePath: urlPath,
+    iconCls: iconType,
+    children,
+    rootId,
+  } = tree;
+  return { id, title, url, urlPath, children, iconType: iconType || 'profile', rootId };
 }
 
 export default {
@@ -220,10 +228,17 @@ export default {
 
   reducers: {
     _updateState(state, { payload }) {
+      const { currMenuTree, menuTrees } = state;
       const { activedMenu } = payload;
-      const { id, activedRefresh } = activedMenu || {};
+      const { id, activedRefresh, rootId } = activedMenu || {};
       if (activedMenu && activedRefresh) {
         eventBus.emit(`${id}_refresh`);
+      }
+      if (currMenuTree && rootId && currMenuTree.id !== rootId) {
+        const tempArr = menuTrees.filter(item => item.id === rootId);
+        const [tempCurrMenuTree] = tempArr;
+        // eslint-disable-next-line no-param-reassign
+        payload.currMenuTree = tempCurrMenuTree;
       }
       return {
         ...state,
