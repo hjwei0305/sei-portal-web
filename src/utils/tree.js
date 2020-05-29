@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-29 20:03:21
  * @Last Modified by: zp
- * @Last Modified time: 2020-05-28 16:43:35
+ * @Last Modified time: 2020-05-29 07:25:59
  */
 import { cloneDeep } from 'lodash';
 
@@ -27,7 +27,13 @@ export const getTreeLeaf = (trees = [], result = []) => {
  * @param  {Array}  result 结果数组
  * @return {Array}        复制后的树
  */
-export const traverseCopyTrees = (trees = [], callback, result = [], rootId = '') => {
+export const traverseCopyTrees = (
+  trees = [],
+  callback,
+  result = [],
+  rootId = '',
+  rootName = '',
+) => {
   /** 没有回调函数，直接深copy一个树 */
   if (!callback) {
     return cloneDeep(trees);
@@ -40,10 +46,21 @@ export const traverseCopyTrees = (trees = [], callback, result = [], rootId = ''
     } else {
       tree.rootId = rootId;
     }
+    if (!rootName) {
+      tree.rootName = tree.name;
+    } else {
+      tree.rootName = rootName;
+    }
     const menuTree = callback(tree) || tree;
     const { children } = menuTree;
     if (children && children.length) {
-      menuTree.children = traverseCopyTrees(children, callback, [], menuTree.rootId);
+      menuTree.children = traverseCopyTrees(
+        children,
+        callback,
+        [],
+        menuTree.rootId,
+        menuTree.rootName,
+      );
     }
     result.push(menuTree);
   }

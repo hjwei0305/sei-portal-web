@@ -153,7 +153,7 @@ export default class TabItem extends React.Component {
       <Menu
         onClick={({ key }) => {
           if (menuContextAction[key]) {
-            menuContextAction[key]();
+            menuContextAction[key](data[0]);
           }
         }}
       >

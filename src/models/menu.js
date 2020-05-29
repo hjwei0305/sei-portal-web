@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-05-28 16:59:15
+ * @Last Modified time: 2020-05-29 08:55:32
  */
 import { router } from 'umi';
 import { getMenu } from '@/services/menu';
@@ -32,8 +32,9 @@ function adapterMenus(tree) {
     iconCls: iconType,
     children,
     rootId,
+    rootName,
   } = tree;
-  return { id, title, url, urlPath, children, iconType: iconType || 'profile', rootId };
+  return { id, title, url, urlPath, children, iconType, rootId, rootName };
 }
 
 export default {
