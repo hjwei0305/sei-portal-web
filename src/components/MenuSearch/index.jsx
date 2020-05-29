@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import propTypes from 'prop-types';
-import { noop } from 'lodash';
-import { Input, Popover, Empty } from 'antd';
+import { noop, groupBy } from 'lodash';
+import { Input, Popover, Empty, Divider } from 'antd';
 import { ScrollBar } from 'suid';
+import cls from 'classnames';
 import styles from './index.less';
 
 const { Search } = Input;
@@ -32,6 +33,7 @@ export default class MenuSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchValue: '',
       visible: false,
       /** 过滤后数据 */
       filterData: [],
@@ -69,18 +71,48 @@ export default class MenuSearch extends React.Component {
     this.setState({
       filterData: data.filter(item => item[showField].includes(value)),
       visible: true,
+      searchValue: value,
     });
   };
 
   getFilterDataCmp = () => {
-    const { filterData } = this.state;
+    const { filterData, searchValue } = this.state;
     const { showField } = this.props;
     if (filterData && filterData.length) {
-      return filterData.map(item => (
-        <li key={item.id} onClick={() => this.handleSelect(item)}>
-          {item[showField]}
-          <p>{item.urlPath.slice(1)}</p>
-        </li>
+      const menuMaps = groupBy(filterData, 'rootName');
+      const mapKeys = Object.keys(menuMaps);
+      return mapKeys.map(mapKey => (
+        <Fragment>
+          <Divider>{mapKey}</Divider>
+          <ul key={mapKey}>
+            {menuMaps[mapKey].map((item, idx) => {
+              const index = item[showField].indexOf(searchValue);
+              const beforeStr = item[showField].substr(0, index);
+              const afterStr = item[showField].substr(index + searchValue.length);
+              const namePath = item.urlPath.slice(1);
+              const title =
+                index > -1 ? (
+                  <span>
+                    {beforeStr}
+                    <span className="menu-search-value">{searchValue}</span>
+                    {afterStr}
+                  </span>
+                ) : (
+                  <span>{item[showField]}</span>
+                );
+              return (
+                <li
+                  key={item.id}
+                  className={cls({ un_bottom: idx === menuMaps[mapKey].length - 1 })}
+                  onClick={() => this.handleSelect(item)}
+                >
+                  {title}
+                  <p title={namePath}>{namePath}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </Fragment>
       ));
     }
 
@@ -96,12 +128,12 @@ export default class MenuSearch extends React.Component {
           overlayClassName={styles['popver-wrapper']}
           placement="bottomLeft"
           content={
-            <ul
+            <div
               className={styles['menu-search-popver-content']}
               style={{ maxHeight: 400, overflow: 'auto' }}
             >
               <ScrollBar>{this.getFilterDataCmp()}</ScrollBar>
-            </ul>
+            </div>
           }
           trigger="click"
           visible={this.state.visible}

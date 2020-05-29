@@ -1,25 +1,44 @@
+@import '../../layouts/vars.less';
+
 .popver-wrapper {
   width: 212px;
 }
 
 .menu-search-popver-content {
-  margin-bottom: 0;
-  padding-left: 0;
-  list-style: none;
+  // margin-bottom: 0;
+  // padding-left: 0;
+  // list-style: none;
   :global {
-    li {
-      padding: 5px 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.09);
-      transition: background-color 0.5s;
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.02);
-        cursor: pointer;
+    .menu-search-value {
+      color: @primary-color;
+    }
+    .ant-divider {
+      margin: 8px 0;
+    }
+    ul {
+      margin-bottom: 0;
+      padding-left: 0;
+      list-style: none;
+      .un_bottom {
+        border-bottom: none;
       }
-      p {
-        margin-bottom: 0;
-        color: rgba(0, 0, 0, 0.45);
-        font-weight: 400;
-        font-size: 12px;
+      li {
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+        transition: background-color 0.5s;
+        &:hover {
+          background-color: rgba(230, 247, 255, 1);
+          cursor: pointer;
+        }
+        p {
+          margin-bottom: 0;
+          overflow: hidden;
+          color: rgba(0, 0, 0, 0.45);
+          font-weight: 400;
+          font-size: 12px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
       }
     }
   }
