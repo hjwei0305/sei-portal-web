@@ -78,7 +78,7 @@ export default class TabItem extends React.Component {
 
     return (
       <Trigger
-        action={['contextMenu']}
+        action={['click']}
         popup={
           <div className="tabs-more-wrap" onClick={this.handlePopupClick}>
             {dropdownData.map(({ title, url, id }) => (

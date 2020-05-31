@@ -87,7 +87,7 @@ class NavLeft extends React.Component {
       if (item.children && item.children.length) {
         const title = (
           <span>
-            {item.iconType ? <Icon type={item.iconType} /> : null}
+            {item.iconType ? <Icon type={item.iconType} /> : <Icon type="profile" />}
             <span>{item.title}</span>
           </span>
         );
