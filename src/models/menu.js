@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-05-29 08:55:32
+ * @Last Modified time: 2020-05-31 21:06:32
  */
 import { router } from 'umi';
 import { getMenu } from '@/services/menu';
@@ -26,15 +26,16 @@ let initPathname = '';
 function adapterMenus(tree) {
   const {
     id,
+    children,
+    rootId,
+    rootName,
     name: title,
     menuUrl: url,
     namePath: urlPath,
     iconCls: iconType,
-    children,
-    rootId,
-    rootName,
+    iconFileData: appBase64ImgStr,
   } = tree;
-  return { id, title, url, urlPath, children, iconType, rootId, rootName };
+  return { id, title, url, urlPath, children, iconType, rootId, rootName, appBase64ImgStr };
 }
 
 export default {

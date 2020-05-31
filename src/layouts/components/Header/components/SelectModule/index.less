@@ -1,0 +1,36 @@
+.select-module-wrapper {
+  width: 300px;
+  :global {
+    .dropdown-wrapper {
+      height: 550px;
+      text-align: center;
+      .app-item-wrapper {
+        box-sizing: border-box;
+        margin: auto 0 !important;
+        padding: 16px;
+        .app-item {
+          padding: 8px 4px;
+          cursor: pointer;
+          .app-logo {
+            width: 44px;
+            height: 44px;
+            margin: 0 auto;
+            transition: all 0.3s;
+            &-actived {
+              transform: translateY(-8px);
+            }
+            &:hover {
+              transform: translateY(-8px);
+            }
+          }
+          .desc {
+            margin-top: 5px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+}

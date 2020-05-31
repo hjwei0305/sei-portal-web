@@ -68,14 +68,14 @@ class NavLeft extends React.Component {
     if (mode !== 'iframe') {
       return (
         <Link to={item.url}>
-          <Icon type={item.iconType} />
+          {item.iconType ? <Icon type={item.iconType} /> : null}
           <span>{item.title}</span>
         </Link>
       );
     }
     return (
       <span>
-        <Icon type={item.iconType} />
+        {item.iconType ? <Icon type={item.iconType} /> : null}
         <span>{item.title}</span>
       </span>
     );
@@ -87,7 +87,7 @@ class NavLeft extends React.Component {
       if (item.children && item.children.length) {
         const title = (
           <span>
-            <Icon type={item.iconType} />
+            {item.iconType ? <Icon type={item.iconType} /> : null}
             <span>{item.title}</span>
           </span>
         );
