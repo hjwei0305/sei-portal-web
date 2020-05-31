@@ -73,7 +73,7 @@ class TabPane extends React.Component {
           ...style,
         }}
       >
-        {/* {this.renderIframes()} */}
+        {this.renderIframes()}
       </div>
     );
   }
