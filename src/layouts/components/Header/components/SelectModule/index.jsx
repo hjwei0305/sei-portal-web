@@ -104,7 +104,7 @@ export default class SelectModule extends PureComponent {
       <ExtIcon
         type="app"
         onClick={this.handlerClose}
-        style={{ fontSize: '16px', marginRight: '24px', color: '#a6a6a6' }}
+        style={{ fontSize: '16px', marginRight: '24px', color: 'rgba(0,0,0,0.85)' }}
       />
       我的应用
     </>
@@ -121,7 +121,10 @@ export default class SelectModule extends PureComponent {
       <>
         <span className={cls('trigger', { 'trigger-open': visible })} onClick={this.showDrawer}>
           <span className="title">{currMenuTree ? currMenuTree.title : '加载中...'}</span>
-          <ExtIcon type="app" style={{ fontSize: '16px', marginLeft: '6px', color: '#a6a6a6' }} />
+          <ExtIcon
+            type="app"
+            style={{ fontSize: '16px', marginLeft: '6px', color: 'rgba(0,0,0,0.85)' }}
+          />
         </span>
         <Drawer
           headerStyle={headerStyle}
