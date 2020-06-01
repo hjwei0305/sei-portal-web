@@ -52,6 +52,7 @@ class Iframe extends Component {
   onIframeLoad = () => {
     const click = new Event('click');
     window.dispatchEvent(click);
+    console.log(1111);
   };
 
   setIframeRef = ref => {
