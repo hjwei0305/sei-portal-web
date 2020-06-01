@@ -24,17 +24,17 @@ class TabPane extends React.Component {
 
   ref = {};
 
-  reload = id => {
-    if (this.ref[id]) {
-      this.ref[id].reload();
-    }
-  };
-
   componentDidMount() {
     eventBus.addListener('refresh', id => {
       this.reload(id);
     });
   }
+
+  reload = id => {
+    if (this.ref[id]) {
+      this.ref[id].reload();
+    }
+  };
 
   renderIframes() {
     const { data = [], activedKey } = this.props;

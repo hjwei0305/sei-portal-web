@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import ReactDOM from 'react-dom';
 import { Tooltip, Badge, Icon, Dropdown, Card, List, Avatar, Tabs, Skeleton, Empty } from 'antd';
 import cls from 'classnames';
+import * as focus from 'focus-outside';
 import { eventBus } from '@/utils';
 import {
   getMessageList,
@@ -14,7 +16,11 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-export default class index extends React.Component {
+export default class index extends PureComponent {
+  static dropdownElm;
+
+  static msgElm = null;
+
   cateGoryMap = {};
 
   TabKey = '';
@@ -32,6 +38,12 @@ export default class index extends React.Component {
   }
 
   componentDidMount() {
+    if (this.dropdownElm) {
+      focus.bind(ReactDOM.findDOMNode(this.dropdownElm), this.handleOutside);
+    }
+    if (this.msgElm) {
+      focus.bind(this.msgElm, this.handleOutside);
+    }
     this.getMessageCount();
     this.messageCountInterval = setInterval(() => {
       this.getMessageCount();
@@ -56,7 +68,17 @@ export default class index extends React.Component {
 
   componentWillUnmount() {
     window.clearInterval(this.messageCountInterval);
+    if (this.dropdownElm) {
+      focus.unbind(ReactDOM.findDOMNode(this.dropdownElm), this.handleOutside);
+    }
+    if (this.msgElm) {
+      focus.unbind(this.msgElm, this.handleOutside);
+    }
   }
+
+  handleOutside = () => {
+    this.setState({ visible: false });
+  };
 
   getMessageCount = () => {
     getMessageCount().then(result => {
@@ -194,11 +216,25 @@ export default class index extends React.Component {
     });
   };
 
+  handleVisibleChange = visible => {
+    this.setState({
+      visible,
+      loading: visible,
+    });
+    if (visible) {
+      this.getMessageList();
+    }
+  };
+
   getDropdownProps = () => {
     const { visible, loading } = this.state;
     return {
       overlay: (
-        <div>
+        <div
+          ref={ref => {
+            this.msgElm = ref;
+          }}
+        >
           <Card bodyStyle={{ width: 350, padding: 0 }}>
             <Skeleton loading={loading} active>
               {this.getTab()}
@@ -209,15 +245,7 @@ export default class index extends React.Component {
       visible,
       placement: 'bottomLeft',
       trigger: ['click'],
-      onVisibleChange: show => {
-        this.setState({
-          visible: show,
-          loading: show,
-        });
-        if (show) {
-          this.getMessageList();
-        }
-      },
+      onVisibleChange: this.handleVisibleChange,
     };
   };
 
@@ -226,8 +254,8 @@ export default class index extends React.Component {
     const { className } = this.props;
     // seiIntl.get({key: "app.help-online", desc: "用户服务中心"})
     return (
-      <React.Fragment>
-        <Dropdown {...this.getDropdownProps()}>
+      <>
+        <Dropdown ref={node => (this.dropdownElm = node)} {...this.getDropdownProps()}>
           <Tooltip title="用户消息">
             <span className={className}>
               <Badge count={messageCount}>
@@ -247,7 +275,7 @@ export default class index extends React.Component {
             afterHasKnown={this.getMessageCount}
           />
         ) : null}
-      </React.Fragment>
+      </>
     );
   }
 }
