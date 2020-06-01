@@ -1,33 +1,69 @@
 .select-module-wrapper {
-  width: 300px;
   :global {
-    .dropdown-wrapper {
-      height: 550px;
-      text-align: center;
-      .app-item-wrapper {
+    .ant-drawer-header {
+      z-index: 1;
+    }
+    .ant-drawer-title {
+      font-weight: 700;
+    }
+    .ant-drawer-content,
+    .ant-drawer-wrapper-body {
+      overflow: hidden;
+    }
+    .ant-drawer-body {
+      height: calc(100% - 56px);
+      padding: 0;
+      .app-box-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
         box-sizing: border-box;
-        margin: auto 0 !important;
-        padding: 16px;
-        .app-item {
-          padding: 8px 4px;
-          cursor: pointer;
-          .app-logo {
-            width: 44px;
-            height: 44px;
-            margin: 0 auto;
-            transition: all 0.3s;
-            &-actived {
-              transform: translateY(-8px);
+        height: 100%;
+        padding: 0;
+        text-align: center;
+        background-color: #fff;
+        .app-box {
+          padding: 16px 5px 0 24px;
+          .app-item-wrap {
+            width: 92px;
+            height: 92px;
+            margin-bottom: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            .logo-wrap {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 60px;
+              transition: all 0.3s ease;
+              &:hover {
+                transform: translateY(-4px);
+              }
+              .app-logo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 60px;
+                height: 60px;
+                border-radius: 4px;
+                &.actived {
+                  box-shadow: 0 4px 16px 0 rgba(38, 38, 38, 0.12);
+                }
+              }
+              img {
+                position: relative;
+                display: inline-block;
+                box-sizing: border-box;
+                width: 44px;
+                height: 44px;
+              }
             }
-            &:hover {
-              transform: translateY(-8px);
+            .desc {
+              margin-top: 5px;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
             }
-          }
-          .desc {
-            margin-top: 5px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
           }
         }
       }

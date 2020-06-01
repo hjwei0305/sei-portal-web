@@ -4,23 +4,16 @@ import TabHeader from './TabHeader';
 import styles from './index.less';
 
 export default class Tab extends React.Component {
-
   handleReload = () => {
     const { activedKey } = this.props;
     this.tabPaneRef.reload(activedKey);
-  }
+  };
 
   render() {
-    const {
-      tabData,
-      activedKey,
-      onCloseTab,
-      onToggleTab,
-      children,
-    } = this.props;
+    const { tabData, activedKey, onCloseTab, onToggleTab, children } = this.props;
 
     return (
-      <div className={styles["content-layout-wrapper"]}>
+      <div className={styles['content-layout-wrapper']}>
         <header className="content-tabs-wrapper">
           <TabHeader
             data={tabData}
@@ -31,13 +24,13 @@ export default class Tab extends React.Component {
           />
         </header>
         <content className="content-tabpane-warpper">
-          { children ? children : (
+          {children || (
             <TabPane
               data={tabData}
               activedKey={activedKey}
-              ref={ inst => this.tabPaneRef = inst }
+              ref={inst => (this.tabPaneRef = inst)}
             />
-          ) }
+          )}
         </content>
       </div>
     );
