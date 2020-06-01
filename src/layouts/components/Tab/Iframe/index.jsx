@@ -45,15 +45,12 @@ class Iframe extends Component {
 
   componentWillUnmount() {
     if (this.refIframe && this.refIframe.contentWindow) {
-      this.refIframe.contentWindow.removeEventListener('click', this.onIframeLoad, false);
+      this.refIframe.src = 'about:blank';
+      this.refIframe.contentWindow.document.write('');
+      this.refIframe.contentWindow.document.clear();
     }
+    this.refIframe = null;
   }
-
-  onIframeLoad = () => {
-    const click = new Event('click');
-    window.dispatchEvent(click);
-    console.log(1111);
-  };
 
   setIframeRef = ref => {
     this.refIframe = ref;
