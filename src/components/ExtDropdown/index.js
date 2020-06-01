@@ -29,7 +29,9 @@ export default class HeaderDropdown extends PureComponent {
   }
 
   handleOutside = () => {
-    this.setState({ visible: false });
+    setTimeout(() => {
+      this.setState({ visible: false });
+    }, 80);
   };
 
   handleVisibleChange = visible => {
@@ -45,7 +47,6 @@ export default class HeaderDropdown extends PureComponent {
         ref={node => (this.dropdownElm = node)}
         visible={visible}
         overlayClassName={cls(styles.container, overlayClassName)}
-        outside={this.handleOutside}
         {...props}
       />
     );

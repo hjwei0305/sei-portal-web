@@ -77,7 +77,9 @@ export default class index extends PureComponent {
   }
 
   handleOutside = () => {
-    this.setState({ visible: false });
+    setTimeout(() => {
+      this.setState({ visible: false });
+    }, 80);
   };
 
   getMessageCount = () => {
