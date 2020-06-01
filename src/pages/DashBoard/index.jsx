@@ -7,7 +7,8 @@ const DashBoard = () => (
     <Iframe
       visible
       title="dashboard"
-      url="/sei-dashboard-web/#/sei-dashboard-web/scene/sei/home"
+      // url="/sei-dashboard-web/#/sei-dashboard-web/scene/sei/home"
+      url="http://www.baidu.com"
       id="portal-dashboard"
     />
   </section>

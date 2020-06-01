@@ -43,14 +43,16 @@ class Iframe extends Component {
     NProgress.start();
   }
 
-  // componentWillUnmount() {
-  //   if (this.refIframe && this.refIframe.contentWindow) {
-  //     this.refIframe.src = 'about:blank';
-  //     this.refIframe.contentWindow.document.write('');
-  //     this.refIframe.contentWindow.document.clear();
-  //   }
-  //   this.refIframe = null;
-  // }
+  componentWillUnmount() {
+    if (this.refIframe && this.refIframe.contentWindow) {
+      this.refIframe.contentWindow.removeEventListener('click', this.onIframeLoad, false);
+    }
+  }
+
+  onIframeLoad = () => {
+    const click = new Event('click');
+    window.dispatchEvent(click);
+  };
 
   setIframeRef = ref => {
     this.refIframe = ref;
@@ -65,6 +67,7 @@ class Iframe extends Component {
     NProgress.done();
     this.setState({ loading: false }, () => {
       onLoaded(url);
+      this.refIframe.contentWindow.addEventListener('click', this.onIframeLoad);
     });
   };
 
