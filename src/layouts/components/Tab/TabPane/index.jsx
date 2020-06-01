@@ -1,7 +1,9 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { eventBus } from '@/utils';
+import { eventBus, CONSTANTS } from '@/utils';
 import Iframe from '../Iframe';
+
+const { IS_DEVELOPMENT } = CONSTANTS;
 
 class TabPane extends React.Component {
   static propTypes = {
@@ -73,7 +75,7 @@ class TabPane extends React.Component {
           ...style,
         }}
       >
-        {this.renderIframes()}
+        {!IS_DEVELOPMENT ? this.renderIframes() : null}
       </div>
     );
   }

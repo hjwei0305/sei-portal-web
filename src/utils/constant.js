@@ -10,6 +10,8 @@ export const HOST = '';
 
 export const CONTEXTPATH = NODE_ENV === 'development' ? '/api-gateway' : '/api-gateway'; // '/api-gateway';
 
+export const IS_DEVELOPMENT = NODE_ENV === 'development';
+
 export const BASEURL = `${HOST}${CONTEXTPATH}`;
 
 export const PORTALSERVICE = `/portal-service`;
