@@ -40,3 +40,5 @@ export const NoMenuPages = [
     url: '/sei-basic-web/userProfile',
   },
 ];
+
+export const RECENT_MENUS_KEY = 'recent_menus_by';

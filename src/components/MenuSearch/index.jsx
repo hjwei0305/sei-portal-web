@@ -1,10 +1,16 @@
 import React, { PureComponent } from 'react';
 import propTypes from 'prop-types';
-import { noop, groupBy, debounce, trim } from 'lodash';
+import { noop, groupBy, debounce, trim, orderBy, take } from 'lodash';
 import { Input, Popover, Empty } from 'antd';
-import { ScrollBar } from 'suid';
+import { ScrollBar, utils } from 'suid';
+import { CONSTANTS, userInfoOperation } from '@/utils';
 import SearchResult from './SearchResult';
 import styles from './index.less';
+
+const { storage } = utils;
+
+const { RECENT_MENUS_KEY } = CONSTANTS;
+const { getCurrentUser } = userInfoOperation;
 
 const { Search } = Input;
 
@@ -75,6 +81,24 @@ export default class MenuSearch extends PureComponent {
     });
   };
 
+  // 获取用户使用过的菜单
+  getUserRecentMeuns = () => {
+    const userInfo = getCurrentUser();
+    let menus = [];
+    if (userInfo && userInfo.userId) {
+      const tempMenus = [];
+      const key = `${RECENT_MENUS_KEY}_${userInfo.userId}`;
+      const recentMenus = storage.localStorage.get(key) || {};
+      Object.keys(recentMenus).forEach(menyKey => {
+        const tmpMenu = recentMenus[menyKey];
+        tempMenus.push(tmpMenu);
+      });
+      const orderMenus = orderBy(tempMenus, ['date'], 'desc');
+      menus = take(orderMenus, 10);
+    }
+    return menus;
+  };
+
   renderEmptyText = () => {
     const text = '暂时没有数据';
     if (this.searchValue) {
@@ -104,14 +128,22 @@ export default class MenuSearch extends PureComponent {
         return <SearchResult key={mapKey} {...searchResultProps} />;
       });
     }
-
-    return (
-      <Empty
-        image={null}
-        imageStyle={{ color: 'rgba(255, 255, 255, 0.65)' }}
-        description={this.renderEmptyText()}
-      />
-    );
+    const menus = this.getUserRecentMeuns();
+    if (this.searchValue || menus.length === 0) {
+      return (
+        <Empty
+          image={null}
+          imageStyle={{ color: 'rgba(255, 255, 255, 0.65)' }}
+          description={this.renderEmptyText()}
+        />
+      );
+    }
+    const searchResultProps = {
+      title: '最近使用',
+      dataSource: menus,
+      onSelect: this.handlerSelect,
+    };
+    return <SearchResult {...searchResultProps} />;
   };
 
   render() {

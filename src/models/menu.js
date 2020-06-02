@@ -1,15 +1,18 @@
 /*
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
- * @Last Modified by: zp
- * @Last Modified time: 2020-05-31 21:06:32
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-06-02 16:09:18
  */
 import { router } from 'umi';
+import { utils } from 'suid';
+import { cloneDeep, set } from 'lodash';
 import { getMenu } from '@/services/menu';
 import { treeOperation, CONSTANTS, eventBus, userInfoOperation } from '@/utils';
-import { cloneDeep } from 'lodash';
 
-const { NoMenuPages } = CONSTANTS;
+const { storage } = utils;
+
+const { NoMenuPages, RECENT_MENUS_KEY } = CONSTANTS;
 const { getTreeLeaf, traverseCopyTrees } = treeOperation;
 const { getCurrentUser } = userInfoOperation;
 
@@ -135,10 +138,22 @@ export default {
             tabData: tabData.concat(activedMenu),
           };
         }
+        const originMenus = NoMenuPages.filter(m => m.id === activedMenu.id);
+        if (originMenus.length === 0) {
+          // 按用户记录打开的菜单
+          const userInfo = getCurrentUser();
+          if (userInfo && userInfo.userId) {
+            const key = `${RECENT_MENUS_KEY}_${userInfo.userId}`;
+            const recentMenus = storage.localStorage.get(key) || {};
+            const tmpMenu = cloneDeep(activedMenu);
+            tmpMenu.date = Date.now();
+            set(recentMenus, tmpMenu.id, tmpMenu);
+            storage.localStorage.set(key, recentMenus);
+          }
+        }
       } else {
         tempPayload = payload;
       }
-
       yield put({
         type: '_updateState',
         payload: tempPayload,
