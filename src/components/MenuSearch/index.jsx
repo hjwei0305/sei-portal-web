@@ -164,6 +164,7 @@ export default class MenuSearch extends PureComponent {
           onVisibleChange={this.handleVisibleChange}
         >
           <Search
+            allowClear
             placeholder={placeholder}
             onSearch={this.handlerSearch}
             onChange={e => this.handlerSearchChange(e.target.value)}
