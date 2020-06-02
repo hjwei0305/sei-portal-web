@@ -15,8 +15,6 @@ const { getCurrentUser } = userInfoOperation;
 const { Search } = Input;
 
 export default class MenuSearch extends PureComponent {
-  static searchValue = '';
-
   static quickSearch;
 
   static propTypes = {
@@ -47,6 +45,7 @@ export default class MenuSearch extends PureComponent {
       visible: false,
       /** 过滤后数据 */
       filterData: [],
+      searchValue: '',
     };
   }
 
@@ -55,8 +54,7 @@ export default class MenuSearch extends PureComponent {
   };
 
   handlerSearchChange = v => {
-    this.searchValue = trim(v);
-    this.handlerSearch();
+    this.setState({ searchValue: trim(v) }, this.handlerSearch);
   };
 
   handlerSelect = item => {
@@ -64,6 +62,8 @@ export default class MenuSearch extends PureComponent {
     this.setState(
       {
         visible: false,
+        searchValue: '',
+        filterData: [],
       },
       () => {
         onSelect(item);
@@ -72,9 +72,11 @@ export default class MenuSearch extends PureComponent {
   };
 
   handlerSearch = () => {
+    const { searchValue } = this.state;
     const { showField, data } = this.props;
-    const value = this.searchValue;
-    const filterData = value ? data.filter(item => item[showField].includes(value)) : [];
+    const filterData = searchValue
+      ? data.filter(item => item[showField].includes(searchValue))
+      : [];
     this.setState({
       filterData,
       visible: true,
@@ -101,7 +103,8 @@ export default class MenuSearch extends PureComponent {
 
   renderEmptyText = () => {
     const text = '暂时没有数据';
-    if (this.searchValue) {
+    const { searchValue } = this.state;
+    if (searchValue) {
       return text;
     }
     return (
@@ -114,7 +117,7 @@ export default class MenuSearch extends PureComponent {
   };
 
   renderDataList = () => {
-    const { filterData } = this.state;
+    const { filterData, searchValue } = this.state;
     if (filterData && filterData.length) {
       const menuMaps = groupBy(filterData, 'rootName');
       const mapKeys = Object.keys(menuMaps);
@@ -123,13 +126,13 @@ export default class MenuSearch extends PureComponent {
           title: mapKey,
           dataSource: menuMaps[mapKey],
           onSelect: this.handlerSelect,
-          searchKeyValue: this.searchValue,
+          searchKeyValue: searchValue,
         };
         return <SearchResult key={mapKey} {...searchResultProps} />;
       });
     }
     const menus = this.getUserRecentMeuns();
-    if (this.searchValue || menus.length === 0) {
+    if (searchValue || menus.length === 0) {
       return (
         <Empty
           image={null}
@@ -148,7 +151,7 @@ export default class MenuSearch extends PureComponent {
 
   render() {
     const { placeholder } = this.props;
-    const { visible } = this.state;
+    const { visible, searchValue } = this.state;
     return (
       <React.Fragment>
         <Popover
@@ -165,6 +168,7 @@ export default class MenuSearch extends PureComponent {
         >
           <Search
             allowClear
+            value={searchValue}
             placeholder={placeholder}
             onSearch={this.handlerSearch}
             onChange={e => this.handlerSearchChange(e.target.value)}
