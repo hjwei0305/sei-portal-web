@@ -27,7 +27,7 @@ export default class MenuSearch extends React.Component {
     data: [],
     showField: 'title',
     onSelect: noop,
-    placeholder: '输入关键字搜索',
+    placeholder: '',
   };
 
   constructor(props) {
