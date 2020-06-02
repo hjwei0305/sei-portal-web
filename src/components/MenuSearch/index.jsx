@@ -1,14 +1,18 @@
-import React, { Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import propTypes from 'prop-types';
-import { noop, groupBy } from 'lodash';
-import { Input, Popover, Empty, Divider } from 'antd';
+import { noop, groupBy, debounce, trim } from 'lodash';
+import { Input, Popover, Empty } from 'antd';
 import { ScrollBar } from 'suid';
-import cls from 'classnames';
+import SearchResult from './SearchResult';
 import styles from './index.less';
 
 const { Search } = Input;
 
-export default class MenuSearch extends React.Component {
+export default class MenuSearch extends PureComponent {
+  static searchValue = '';
+
+  static quickSearch;
+
   static propTypes = {
     /** 外部样式 */
     // className: propTypes.string,
@@ -32,8 +36,8 @@ export default class MenuSearch extends React.Component {
 
   constructor(props) {
     super(props);
+    this.quickSearch = debounce(this.handlerSearch, 500);
     this.state = {
-      searchValue: '',
       visible: false,
       /** 过滤后数据 */
       filterData: [],
@@ -41,20 +45,16 @@ export default class MenuSearch extends React.Component {
   }
 
   handleVisibleChange = visible => {
-    if (!visible) {
-      this.setState({ visible });
-    }
+    this.setState({ visible });
   };
 
-  handleClick = () => {
-    this.setState({
-      visible: true,
-    });
+  handlerSearchChange = v => {
+    this.searchValue = trim(v);
+    this.handlerSearch();
   };
 
-  handleSelect = item => {
+  handlerSelect = item => {
     const { onSelect } = this.props;
-
     this.setState(
       {
         visible: false,
@@ -65,81 +65,78 @@ export default class MenuSearch extends React.Component {
     );
   };
 
-  handleSearch = value => {
+  handlerSearch = () => {
     const { showField, data } = this.props;
-
+    const value = this.searchValue;
+    const filterData = value ? data.filter(item => item[showField].includes(value)) : [];
     this.setState({
-      filterData: data.filter(item => item[showField].includes(value)),
+      filterData,
       visible: true,
-      searchValue: value,
     });
   };
 
-  getFilterDataCmp = () => {
-    const { filterData, searchValue } = this.state;
-    const { showField } = this.props;
+  renderEmptyText = () => {
+    const text = '暂时没有数据';
+    if (this.searchValue) {
+      return text;
+    }
+    return (
+      <>
+        <span style={{ color: '#ccc' }}>提示: 输入菜单关键字</span>
+        <br />
+        {text}
+      </>
+    );
+  };
+
+  renderDataList = () => {
+    const { filterData } = this.state;
     if (filterData && filterData.length) {
       const menuMaps = groupBy(filterData, 'rootName');
       const mapKeys = Object.keys(menuMaps);
-      return mapKeys.map(mapKey => (
-        <Fragment>
-          <Divider>{mapKey}</Divider>
-          <ul key={mapKey}>
-            {menuMaps[mapKey].map((item, idx) => {
-              const index = item[showField].indexOf(searchValue);
-              const beforeStr = item[showField].substr(0, index);
-              const afterStr = item[showField].substr(index + searchValue.length);
-              const namePath = item.urlPath.slice(1);
-              const title =
-                index > -1 ? (
-                  <span>
-                    {beforeStr}
-                    <span className="menu-search-value">{searchValue}</span>
-                    {afterStr}
-                  </span>
-                ) : (
-                  <span>{item[showField]}</span>
-                );
-              return (
-                <li
-                  key={item.id}
-                  className={cls({ un_bottom: idx === menuMaps[mapKey].length - 1 })}
-                  onClick={() => this.handleSelect(item)}
-                >
-                  {title}
-                  <p title={namePath}>{namePath}</p>
-                </li>
-              );
-            })}
-          </ul>
-        </Fragment>
-      ));
+      return mapKeys.map(mapKey => {
+        const searchResultProps = {
+          title: mapKey,
+          dataSource: menuMaps[mapKey],
+          onSelect: this.handlerSelect,
+          searchKeyValue: this.searchValue,
+        };
+        return <SearchResult key={mapKey} {...searchResultProps} />;
+      });
     }
 
-    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+    return (
+      <Empty
+        image={null}
+        imageStyle={{ color: 'rgba(255, 255, 255, 0.65)' }}
+        description={this.renderEmptyText()}
+      />
+    );
   };
 
   render() {
     const { placeholder } = this.props;
-
+    const { visible } = this.state;
     return (
       <React.Fragment>
         <Popover
           overlayClassName={styles['popver-wrapper']}
-          placement="bottomLeft"
+          placement="bottom"
           content={
-            <div
-              className={styles['menu-search-popver-content']}
-              style={{ maxHeight: 400, overflow: 'auto' }}
-            >
-              <ScrollBar>{this.getFilterDataCmp()}</ScrollBar>
+            <div className="menu-search-popver-content">
+              <ScrollBar>{this.renderDataList()}</ScrollBar>
             </div>
           }
           trigger="click"
-          visible={this.state.visible}
+          visible={visible}
           onVisibleChange={this.handleVisibleChange}
         >
-          <Search placeholder={placeholder} onSearch={this.handleSearch} />
+          <Search
+            placeholder={placeholder}
+            onSearch={this.handlerSearch}
+            onChange={e => this.handlerSearchChange(e.target.value)}
+            onPressEnter={this.handlerSearch}
+          />
         </Popover>
       </React.Fragment>
     );

@@ -3,7 +3,7 @@ import routes from './router.config';
 import proxy from './proxy.config';
 import { webpackPlugin as chainWebpack } from './chain.webpack.config';
 import plugins from './plugin.config';
-import theme from './theme.config.js';
+import themeConfig from './theme.config.js';
 
 export default {
   history: 'hash',
@@ -17,7 +17,7 @@ export default {
   treeShaking: true,
   plugins,
   routes,
-  theme,
+  theme: themeConfig(),
   devtool: 'source-map',
   extraBabelPlugins: [
     [

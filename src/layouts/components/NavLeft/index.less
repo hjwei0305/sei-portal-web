@@ -1,4 +1,4 @@
-@import url('../../vars.less');
+@import '../../../themes/default.less';
 
 .nav-left-wrapper {
   box-sizing: border-box;
@@ -26,12 +26,15 @@
         }
       }
       .ant-input {
-        color: #ccc;
-        background-color: #2c3747;
-        border-color: #2c3747;
+        color: @menu-search-input-text;
+        background-color: @menu-search-input-bg;
+        border-color: @menu-search-input-border;
         &:focus,
         &:hover {
           border-color: #8b9aa3;
+        }
+        &:focus {
+          box-shadow: 0 0 0 2px @menu-search-input-border-shadow;
         }
       }
       .ant-input-search-icon {

@@ -1,6 +1,10 @@
-export default {
-  // 菜单背景色
-  '@menu-dark-bg': 'rgba(31, 43, 59, 1)',
-  // 子菜单背景色
-  '@menu-dark-submenu-bg': 'rgba(22, 29, 38, 1)',
+import fs from 'fs';
+import path from 'path';
+import lessToJs from 'less-vars-to-js';
+
+const themeConfig = () => {
+  const themePath = path.join(__dirname, '../src/themes/default.less');
+  return lessToJs(fs.readFileSync(themePath, 'utf8'));
 };
+
+export default themeConfig;
