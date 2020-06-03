@@ -84,11 +84,13 @@ export default class MenuSearch extends PureComponent {
   };
 
   handlerBlur = () => {
-    this.setState({
-      visible: false,
-      searchValue: '',
-      filterData: [],
-    });
+    setTimeout(() => {
+      this.setState({
+        visible: false,
+        searchValue: '',
+        filterData: [],
+      });
+    }, 150);
   };
 
   // 获取用户使用过的菜单
