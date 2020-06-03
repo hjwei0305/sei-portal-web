@@ -150,9 +150,8 @@ export default class SelectModule extends PureComponent {
           placement="left"
           maskClosable
           width={325}
-          maskStyle={{ backgroundColor: 'rgba(0,0,0,0.1)' }}
           onClose={this.handlerClose}
-          className={cls(styles['select-module-wrapper'])}
+          className={cls(styles['select-module-wrapper'], 'app-module-select')}
           afterVisibleChange={this.handlerVisibleChange}
         >
           {this.renderAppList()}
