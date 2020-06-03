@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: Eason
- * @Last Modified time: 2020-06-02 16:09:18
+ * @Last Modified time: 2020-06-03 10:34:28
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -12,7 +12,7 @@ import { treeOperation, CONSTANTS, eventBus, userInfoOperation } from '@/utils';
 
 const { storage } = utils;
 
-const { NoMenuPages, RECENT_MENUS_KEY } = CONSTANTS;
+const { NoMenuPages, RECENT_MENUS_KEY, RECENT_APP_EKY } = CONSTANTS;
 const { getTreeLeaf, traverseCopyTrees } = treeOperation;
 const { getCurrentUser } = userInfoOperation;
 
@@ -67,11 +67,24 @@ export default {
       const { success, data } = result || {};
       if (success) {
         const menuTrees = traverseCopyTrees(data, adapterMenus);
+        let tmpCurrMenuTree = menuTrees[0];
+        // 获取用户最后一次使用的应用如果有就默认作为当前应用
+        const userInfo = getCurrentUser();
+        if (userInfo && userInfo.userId) {
+          const key = `${RECENT_APP_EKY}_${userInfo.userId}`;
+          const recentApp = storage.localStorage.get(key);
+          if (recentApp) {
+            const recentMenuTree = menuTrees.filter(m => m.id === recentApp.id);
+            if (recentMenuTree.length === 1) {
+              [tmpCurrMenuTree] = recentMenuTree;
+            }
+          }
+        }
         const allLeafMenus = getTreeLeaf(menuTrees);
         const payload = {
           menuTrees,
           allLeafMenus,
-          currMenuTree: menuTrees[0],
+          currMenuTree: tmpCurrMenuTree,
         };
         if (initPathname) {
           const temp = allLeafMenus.concat(NoMenuPages).filter(item => item.url === initPathname);

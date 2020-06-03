@@ -42,3 +42,5 @@ export const NoMenuPages = [
 ];
 
 export const RECENT_MENUS_KEY = 'recent_menus_by';
+
+export const RECENT_APP_EKY = 'recent_app_by';

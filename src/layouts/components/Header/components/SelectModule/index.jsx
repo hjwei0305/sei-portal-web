@@ -1,10 +1,17 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
+import { omit } from 'lodash';
 import { Row, Col, Drawer } from 'antd';
-import { ExtIcon, ScrollBar } from 'suid';
-
+import { ExtIcon, ScrollBar, utils } from 'suid';
+import { CONSTANTS, userInfoOperation } from '@/utils';
 import styles from './index.less';
+
+const { storage } = utils;
+
+const { RECENT_APP_EKY } = CONSTANTS;
+
+const { getCurrentUser } = userInfoOperation;
 
 const tempImgHolder =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAdFJREFUeNrsl91xgkAUhSVjATz7ZDqADqCDdBCoIFpBYgVqBWoFSQfSgelAnnymA3POzCHDJEZY3NU4s3fmDiPC7neX+xscj8fBPcnD4M7EA3tgD+yBPfBtZdj1wSAIWp85HA5jXF6hT7q1hC5Go1HV9m7Xiht0fvAMMEBDgU5O/E3YJaDfbg4sUEK+QMOWJUroDODrqwMbgnYCdwYMWPrnHDq+MH4K6BTgnybAfbLEuwVYSiLDnae1maUMxWDcmL7U14fr9JX1BP2V7qy7BCAz6BbK9FRhsxzXR+jaAHbBd+oUh7XmWjNy4RLP8jue7I4GYONS4KmC6C9ZC3QqUALvlWmSRqFxVprpEitsvIcmACmg6QnwGjSncTSSxsrosM/GwwsDh+D8pHWKKk6dNI1SRogujVRbzU8iN1mpqHwHJ32URtmAtXHCPyUTWCzwXd9Pfy1gSqSoD23DuuyHQ0fr+onjXwFX9wa8ccRQmZT3zsAoCh9MVy0l2FTqSli67tbaKleq6/ZM8543QV028AP1DjztXCNPV+F0kbLvMDlVa1lCc1mspr46E6ClTjRWv9FbrIz5jcE0kyEL3Zs0f191zPeFwwN7YA/sgT0w5UuAAQCqb9STix6pkwAAAABJRU5ErkJggg==';
@@ -27,7 +34,18 @@ export default class SelectModule extends PureComponent {
         currMenuTree,
       },
     });
+    this.recordRecentApp(currMenuTree);
     this.handlerClose();
+  };
+
+  // 记录最后一次使用的应用
+  recordRecentApp = currMenuTree => {
+    const userInfo = getCurrentUser();
+    if (currMenuTree && userInfo && userInfo.userId) {
+      const key = `${RECENT_APP_EKY}_${userInfo.userId}`;
+      const recentApp = omit(currMenuTree, ['children', 'appBase64ImgStr']);
+      storage.localStorage.set(key, recentApp);
+    }
   };
 
   handlerVisibleChange = visible => {
