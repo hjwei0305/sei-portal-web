@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import propTypes from 'prop-types';
+import * as focus from 'focus-outside';
 import { noop, groupBy, debounce, trim, orderBy, take } from 'lodash';
 import { Input, Popover, Empty } from 'antd';
 import { ScrollBar, utils } from 'suid';
@@ -15,6 +16,8 @@ const { getCurrentUser } = userInfoOperation;
 const { Search } = Input;
 
 export default class MenuSearch extends PureComponent {
+  static resultElm = null;
+
   static quickSearch;
 
   static propTypes = {
@@ -47,6 +50,18 @@ export default class MenuSearch extends PureComponent {
       filterData: [],
       searchValue: '',
     };
+  }
+
+  componentDidMount() {
+    if (this.resultElm) {
+      focus.bind(this.resultElm, this.handlerBlur);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.resultElm) {
+      focus.unbind(this.resultElm, this.handlerBlur);
+    }
   }
 
   handleVisibleChange = visible => {
@@ -168,7 +183,12 @@ export default class MenuSearch extends PureComponent {
           overlayClassName={styles['popver-wrapper']}
           placement="bottom"
           content={
-            <div className="menu-search-popver-content">
+            <div
+              className="menu-search-popver-content"
+              ref={ref => {
+                this.resultElm = ref;
+              }}
+            >
               <ScrollBar>{this.renderDataList()}</ScrollBar>
             </div>
           }
@@ -183,7 +203,6 @@ export default class MenuSearch extends PureComponent {
             onSearch={this.handlerSearch}
             onChange={e => this.handlerSearchChange(e.target.value)}
             onPressEnter={this.handlerSearch}
-            onBlur={this.handlerBlur}
           />
         </Popover>
       </React.Fragment>
