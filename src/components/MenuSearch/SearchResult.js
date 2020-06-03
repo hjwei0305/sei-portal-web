@@ -60,7 +60,7 @@ class SearchResult extends PureComponent {
             <List.Item key={item.id} onClick={() => this.handlerSelect(item)}>
               <List.Item.Meta
                 title={this.renderItemTitle(item)}
-                description={item.urlPath.slice(1)}
+                description={get(item, 'urlPath', '').slice(1)}
               />
             </List.Item>
           )}
