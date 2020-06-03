@@ -90,7 +90,7 @@ export default class MenuSearch extends PureComponent {
         searchValue: '',
         filterData: [],
       });
-    }, 150);
+    }, 80);
   };
 
   // 获取用户使用过的菜单
