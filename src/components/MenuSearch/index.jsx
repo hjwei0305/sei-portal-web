@@ -83,6 +83,14 @@ export default class MenuSearch extends PureComponent {
     });
   };
 
+  handlerBlur = () => {
+    this.setState({
+      visible: false,
+      searchValue: '',
+      filterData: [],
+    });
+  };
+
   // 获取用户使用过的菜单
   getUserRecentMeuns = () => {
     const userInfo = getCurrentUser();
@@ -173,6 +181,7 @@ export default class MenuSearch extends PureComponent {
             onSearch={this.handlerSearch}
             onChange={e => this.handlerSearchChange(e.target.value)}
             onPressEnter={this.handlerSearch}
+            onBlur={this.handlerBlur}
           />
         </Popover>
       </React.Fragment>
