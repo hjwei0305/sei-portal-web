@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import propTypes from 'prop-types';
+import ReactDOM from 'react-dom';
 import * as focus from 'focus-outside';
 import { noop, groupBy, debounce, trim, orderBy, take } from 'lodash';
 import { Input, Popover, Empty } from 'antd';
@@ -54,13 +55,13 @@ export default class MenuSearch extends PureComponent {
 
   componentDidMount() {
     if (this.resultElm) {
-      focus.bind(this.resultElm, this.handlerBlur);
+      focus.bind(ReactDOM.findDOMNode(this.resultElm), this.handlerCloseResult);
     }
   }
 
   componentWillUnmount() {
     if (this.resultElm) {
-      focus.unbind(this.resultElm, this.handlerBlur);
+      focus.unbind(ReactDOM.findDOMNode(this.resultElm), this.handlerCloseResult);
     }
   }
 
@@ -98,14 +99,14 @@ export default class MenuSearch extends PureComponent {
     });
   };
 
-  handlerBlur = () => {
+  handlerCloseResult = () => {
     setTimeout(() => {
       this.setState({
         visible: false,
         searchValue: '',
         filterData: [],
       });
-    }, 500);
+    }, 300);
   };
 
   // 获取用户使用过的菜单
@@ -178,17 +179,13 @@ export default class MenuSearch extends PureComponent {
     const { placeholder } = this.props;
     const { visible, searchValue } = this.state;
     return (
-      <React.Fragment>
+      <>
         <Popover
+          ref={node => (this.resultElm = node)}
           overlayClassName={styles['popver-wrapper']}
           placement="bottom"
           content={
-            <div
-              className="menu-search-popver-content"
-              ref={ref => {
-                this.resultElm = ref;
-              }}
-            >
+            <div className="menu-search-popver-content">
               <ScrollBar>{this.renderDataList()}</ScrollBar>
             </div>
           }
@@ -205,7 +202,7 @@ export default class MenuSearch extends PureComponent {
             onPressEnter={this.handlerSearch}
           />
         </Popover>
-      </React.Fragment>
+      </>
     );
   }
 }
