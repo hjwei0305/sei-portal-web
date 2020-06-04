@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
 import propTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import * as focus from 'focus-outside';
 import { noop, groupBy, debounce, trim, orderBy, take } from 'lodash';
 import { Input, Popover, Empty } from 'antd';
 import { ScrollBar, utils } from 'suid';
@@ -17,8 +15,6 @@ const { getCurrentUser } = userInfoOperation;
 const { Search } = Input;
 
 export default class MenuSearch extends PureComponent {
-  static resultElm = null;
-
   static quickSearch;
 
   static propTypes = {
@@ -51,18 +47,6 @@ export default class MenuSearch extends PureComponent {
       filterData: [],
       searchValue: '',
     };
-  }
-
-  componentDidMount() {
-    if (this.resultElm) {
-      focus.bind(ReactDOM.findDOMNode(this.resultElm), this.handlerCloseResult);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.resultElm) {
-      focus.unbind(ReactDOM.findDOMNode(this.resultElm), this.handlerCloseResult);
-    }
   }
 
   handleVisibleChange = visible => {
@@ -106,7 +90,7 @@ export default class MenuSearch extends PureComponent {
         searchValue: '',
         filterData: [],
       });
-    }, 300);
+    }, 200);
   };
 
   // 获取用户使用过的菜单
@@ -200,6 +184,7 @@ export default class MenuSearch extends PureComponent {
             onSearch={this.handlerSearch}
             onChange={e => this.handlerSearchChange(e.target.value)}
             onPressEnter={this.handlerSearch}
+            onBlur={this.handlerCloseResult}
           />
         </Popover>
       </>
