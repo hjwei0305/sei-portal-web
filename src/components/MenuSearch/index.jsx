@@ -165,7 +165,6 @@ export default class MenuSearch extends PureComponent {
     return (
       <>
         <Popover
-          ref={node => (this.resultElm = node)}
           overlayClassName={styles['popver-wrapper']}
           placement="bottom"
           content={
