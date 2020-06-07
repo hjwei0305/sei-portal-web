@@ -95,7 +95,8 @@ class Tabs extends Component {
 
   /** 关闭所有页签 */
   handleCloseAll = () => {
-    const { data, onClose } = this.props;
+    const { onClose, visibleTabData, moreTabData } = this.props;
+    const data = visibleTabData.concat(moreTabData);
     if (data.length >= 1) {
       onClose(
         data.map(({ id }) => id),
@@ -110,7 +111,6 @@ class Tabs extends Component {
     if (activedKey === id) {
       this.handleCloseCurrent();
     } else {
-      console.log(id);
       onClose([id], data.length === 1);
     }
   };
@@ -129,9 +129,13 @@ class Tabs extends Component {
   };
 
   handleCloseOther = () => {
-    const { onCloseOther, activedKey } = this.props;
-    if (onCloseOther) {
-      onCloseOther(activedKey);
+    const { onClose, visibleTabData, moreTabData, activedKey } = this.props;
+    const data = visibleTabData.concat(moreTabData);
+    if (onClose) {
+      onClose(
+        data.map(item => item.id).filter(id => id !== activedKey),
+        false,
+      );
     }
   };
 
@@ -159,7 +163,6 @@ class Tabs extends Component {
         actived={actived}
         mode={mode}
         menuContextAction={{
-          close: this.handleCloseCurrent,
           reload: this.handleReload,
           closeOther: this.handleCloseOther,
           closeAll: this.handleCloseAll,
