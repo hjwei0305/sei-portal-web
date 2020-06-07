@@ -4,9 +4,9 @@ import cls from 'classnames';
 import { router } from 'umi';
 import { Helmet } from 'react-helmet';
 import { Modal, message } from 'antd';
+import { ScrollBar } from 'suid';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { userInfoOperation, weiXinUtils } from '@/utils';
-// import { userInfoOperation,  } from '@/utils';
 import ConfirmLoginModal from '@/pages/Login/ConfirmLoginModal';
 import { getWeChatCfg } from '@/services/user';
 import Header from './components/Header';
@@ -284,98 +284,100 @@ export default class BasicLayout extends React.Component {
       title = `${currMenuTree && currMenuTree.title}-${tempTitle}`;
     }
     return (
-      <section className={cls(styles['portal-layout'])}>
-        <Helmet>
-          <title>{title}</title>
-          <meta name="description" content={title} />
-        </Helmet>
-        <nav
-          className={cls({
-            'layout-sidebar': true,
-            'layout-sidebar-collapsed': collapsed,
-          })}
-        >
-          <NavLeft
-            onSelectSearchMenu={currMenu => {
-              const { dispatch } = this.props;
-              dispatch({
-                type: 'menu/openTab',
-                payload: {
+      <ScrollBar>
+        <section className={cls(styles['portal-layout'])}>
+          <Helmet>
+            <title>{title}</title>
+            <meta name="description" content={title} />
+          </Helmet>
+          <nav
+            className={cls({
+              'layout-sidebar': true,
+              'layout-sidebar-collapsed': collapsed,
+            })}
+          >
+            <NavLeft
+              onSelectSearchMenu={currMenu => {
+                const { dispatch } = this.props;
+                dispatch({
+                  type: 'menu/openTab',
+                  payload: {
+                    activedMenu: currMenu,
+                  },
+                });
+                // .then(() => router.push(currMenu.url));
+              }}
+              allLeafMenus={allLeafMenus}
+              onLogoClick={this.handleLogoClick}
+              menuConfig={currMenuTree ? currMenuTree.children || [] : []}
+              onMenuClick={currMenu => {
+                this.handleTabs('open', {
                   activedMenu: currMenu,
-                },
-              });
-              // .then(() => router.push(currMenu.url))
-            }}
-            allLeafMenus={allLeafMenus}
-            onLogoClick={this.handleLogoClick}
-            menuConfig={currMenuTree ? currMenuTree.children || [] : []}
-            onMenuClick={currMenu => {
-              this.handleTabs('open', {
-                activedMenu: currMenu,
-              });
-            }}
-            collapsed={collapsed}
-            activedMenuKey={activedKey}
-            mode={mode}
-            onCollapse={this.handleTogCollapsed}
-          />
-        </nav>
-        <section className={cls('layout-center')}>
-          <header className={cls('layout-center-header')}>
-            <Header
-              // onCollapse={this.handleTogCollapsed}
-              // collapsed={collapsed}
-              onHomeClick={this.handleHomeClick}
-            >
-              {mode === 'spa' ? (
-                this.getBreadCrumb()
-              ) : (
-                <TabHeader
+                });
+              }}
+              collapsed={collapsed}
+              activedMenuKey={activedKey}
+              mode={mode}
+              onCollapse={this.handleTogCollapsed}
+            />
+          </nav>
+          <section className={cls('layout-center')}>
+            <header className={cls('layout-center-header')}>
+              <Header
+                // onCollapse={this.handleTogCollapsed}
+                // collapsed={collapsed}
+                onHomeClick={this.handleHomeClick}
+              >
+                {mode === 'spa' ? (
+                  this.getBreadCrumb()
+                ) : (
+                  <TabHeader
+                    data={tabData}
+                    activedKey={activedKey}
+                    activedMenu={activedMenu}
+                    onClose={this.handleCloseTab}
+                    onChange={this.handleToggleTab}
+                    onReload={this.handleReload}
+                    onResize={this.handleResize}
+                    visibleTabData={visibleTabData}
+                    moreTabData={moreTabData}
+                    showTabCounts={showTabCounts}
+                    mode={mode}
+                  />
+                )}
+              </Header>
+            </header>
+            <content className={cls('layout-center-content')}>
+              {!isSubAppRouter && !activedKey ? children : null}
+              {mode === 'iframe' ? (
+                <TabPane
+                  style={activedKey === '' ? { visibility: 'hidden', height: 0 } : {}}
                   data={tabData}
                   activedKey={activedKey}
-                  activedMenu={activedMenu}
-                  onClose={this.handleCloseTab}
-                  onChange={this.handleToggleTab}
-                  onReload={this.handleReload}
-                  onResize={this.handleResize}
-                  visibleTabData={visibleTabData}
-                  moreTabData={moreTabData}
-                  showTabCounts={showTabCounts}
-                  mode={mode}
+                  ref={inst => {
+                    this.tabPaneRef = inst;
+                  }}
                 />
+              ) : (
+                <div
+                  id="root-subapp"
+                  style={{
+                    display: isSubAppRouter ? 'block' : 'none',
+                  }}
+                ></div>
               )}
-            </Header>
-          </header>
-          <content className={cls('layout-center-content')}>
-            {!isSubAppRouter && !activedKey ? children : null}
-            {mode === 'iframe' ? (
-              <TabPane
-                style={activedKey === '' ? { visibility: 'hidden', height: 0 } : {}}
-                data={tabData}
-                activedKey={activedKey}
-                ref={inst => {
-                  this.tabPaneRef = inst;
-                }}
-              />
-            ) : (
-              <div
-                id="root-subapp"
-                style={{
-                  display: isSubAppRouter ? 'block' : 'none',
-                }}
-              ></div>
-            )}
-          </content>
+            </content>
+          </section>
+          {loginVisible ? (
+            <ConfirmLoginModal
+              title="用户登录"
+              visible={loginVisible}
+              footer={null}
+              afterSuccess={this.handleAfterSuccess}
+            />
+          ) : null}
         </section>
-        {loginVisible ? (
-          <ConfirmLoginModal
-            title="用户登录"
-            visible={loginVisible}
-            footer={null}
-            afterSuccess={this.handleAfterSuccess}
-          />
-        ) : null}
-      </section>
+      </ScrollBar>
     );
   }
 }

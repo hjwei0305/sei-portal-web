@@ -2,11 +2,11 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-07 21:27:39
+ * @Last Modified time: 2020-06-07 21:42:55
  */
 import { router } from 'umi';
 import { utils } from 'suid';
-import { cloneDeep, set } from 'lodash';
+import { cloneDeep, set, has } from 'lodash';
 import { getMenu } from '@/services/menu';
 import { treeOperation, CONSTANTS, eventBus, userInfoOperation } from '@/utils';
 
@@ -265,7 +265,7 @@ export default {
       const { activedMenu } = payload;
       if (activedMenu) {
         const originMenus = NoMenuPages.filter(m => m.id === activedMenu.id);
-        if (originMenus.length === 0) {
+        if (originMenus.length === 0 && has(activedMenu, 'urlPath')) {
           // 按用户记录打开的菜单
           const userInfo = getCurrentUser();
           if (userInfo && userInfo.userId) {

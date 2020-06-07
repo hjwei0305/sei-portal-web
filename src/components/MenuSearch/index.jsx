@@ -83,14 +83,14 @@ export default class MenuSearch extends PureComponent {
     });
   };
 
-  handlerBlur = () => {
+  handlerCloseResult = () => {
     setTimeout(() => {
       this.setState({
         visible: false,
         searchValue: '',
         filterData: [],
       });
-    }, 500);
+    }, 200);
   };
 
   // 获取用户使用过的菜单
@@ -163,7 +163,7 @@ export default class MenuSearch extends PureComponent {
     const { placeholder } = this.props;
     const { visible, searchValue } = this.state;
     return (
-      <React.Fragment>
+      <>
         <Popover
           overlayClassName={styles['popver-wrapper']}
           placement="bottom"
@@ -183,10 +183,10 @@ export default class MenuSearch extends PureComponent {
             onSearch={this.handlerSearch}
             onChange={e => this.handlerSearchChange(e.target.value)}
             onPressEnter={this.handlerSearch}
-            onBlur={this.handlerBlur}
+            onBlur={this.handlerCloseResult}
           />
         </Popover>
-      </React.Fragment>
+      </>
     );
   }
 }

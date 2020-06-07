@@ -3,6 +3,7 @@
 html,
 body,
 #root-master {
+  width: 100%;
   height: 100%;
   overflow: hidden;
   .fade {
@@ -29,6 +30,11 @@ body,
       width: 0 !important;
       transform: translateY(56px);
       transition: all 500ms ease-in;
+    }
+  }
+  :global {
+    .scrollbar-container {
+      width: 100%;
     }
   }
 }
