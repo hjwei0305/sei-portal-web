@@ -43,37 +43,22 @@ class Tabs extends Component {
     mode: 'iframe',
   };
 
-  state = {
-    showCount: 0,
-  };
-
   showStartIndex = 0;
 
-  // componentDidMount() {
-  // this.computeShowCount();
-  // window.addEventListener('resize', this.handleResize, false);
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   const { data } = this.props;
-  //   if (nextProps.data.length !== data.length) {
-  //     this.computeShowCount();
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  // window.removeEventListener('resize', this.handleResize, false);
-  // }
+  componentDidMount() {
+    this.computeShowCount();
+  }
 
   /** 根据实际宽度计算可以显示的页签个数 */
   computeShowCount = () => {
+    const { onResize } = this.props;
     // const containerWidth = this.refContainer.offsetWidth;
     const containerWidth = this.parentWidth || 0;
     const tabsWidth = containerWidth - 60 - (this.firstWidth + 4);
-    console.log('Tabs -> computeShowCount -> tabsWidth', tabsWidth);
     const showCount = Math.floor(tabsWidth / (this.tabItemWidth + 4)) + 1;
-
-    this.setState({ showCount });
+    if (onResize) {
+      onResize(showCount);
+    }
   };
 
   /* eslint-disable */
@@ -82,7 +67,7 @@ class Tabs extends Component {
 
   /** 关闭当前激活的页签 */
   handleCloseCurrent = () => {
-    const { data, onChange, activedKey, onClose, mode } = this.props;
+    const { visibleTabData: data, onChange, activedKey, onClose, mode } = this.props;
     if (data.length >= 1) {
       const i = data.findIndex(({ id }) => id === activedKey);
       const currActivedMenu = data[i];
@@ -96,7 +81,7 @@ class Tabs extends Component {
           activingItem = data[i - 1];
         }
         if (activingItem) {
-          onChange(activingItem.id, activingItem);
+          // onChange(activingItem.id, activingItem);
           /** 安全考虑，防止复制地址，访问没有权限的地址，切换页签的时候禁止地址变化 */
           if (mode !== 'iframe') {
             /** 导航  */
@@ -125,6 +110,7 @@ class Tabs extends Component {
     if (activedKey === id) {
       this.handleCloseCurrent();
     } else {
+      console.log(id);
       onClose([id], data.length === 1);
     }
   };
@@ -183,42 +169,13 @@ class Tabs extends Component {
   };
 
   renderTabItems = () => {
-    const { data, activedKey } = this.props;
-    const { showCount } = this.state;
-    let activedMenuIndex = 0;
-    data.forEach((item, index) => {
-      if (activedKey === item.id) {
-        activedMenuIndex = index;
-      }
-    });
+    const { data, visibleTabData = [] } = this.props;
 
-    if (activedMenuIndex < this.showStartIndex) {
-      this.showStartIndex = activedMenuIndex;
-    }
-
-    if (activedMenuIndex >= this.showStartIndex + showCount) {
-      this.showStartIndex = activedMenuIndex - showCount + 1;
-    }
-
-    /** 可以显示的页签 */
-    const visibleTabs = data.slice(this.showStartIndex, this.showStartIndex + showCount);
-    // let tabsMore = null;
-    // if (showCount && showCount < data.length) {
-    //   visibleTabs = data.slice(0, showCount - 1);
-    //   tabsMore = data.slice(showCount - 1);
-    // } else {
-    //   visibleTabs = data;
-    // }
-
-    return [
-      ...visibleTabs.map((tab, index) => this.renderTabItem([tab], index, data.length)),
-      // this.renderTabItem(tabsMore, showCount - 1, data.length),
-    ];
+    return [...visibleTabData.map((tab, index) => this.renderTabItem([tab], index, data.length))];
   };
 
   render() {
-    const { data, activedKey, mode } = this.props;
-    const { showCount } = this.state;
+    const { data, activedKey, mode, moreTabData, visibleTabData, showTabCounts = 0 } = this.props;
 
     return (
       <ResizeObserver
@@ -235,23 +192,23 @@ class Tabs extends Component {
         >
           <div
             style={{
-              width: showCount * (this.tabItemWidth + 4),
+              width: showTabCounts * (this.tabItemWidth + 4),
               overflow: 'hidden',
               whiteSpace: 'nowrap',
               height: 56,
             }}
           >
-            <div style={{ width: data.length * (this.tabItemWidth + 4) }}>
+            <div style={{ width: visibleTabData.length * (this.tabItemWidth + 4) }}>
               {this.renderTabItems()}
             </div>
           </div>
-          {showCount && showCount < data.length ? (
+          {moreTabData.length ? (
             <DropDwonTabItems
               onClose={this.handleClose}
               onClick={this.handleClick}
               activedKey={activedKey}
               mode={mode}
-              data={data}
+              data={moreTabData || []}
             />
           ) : null}
         </div>

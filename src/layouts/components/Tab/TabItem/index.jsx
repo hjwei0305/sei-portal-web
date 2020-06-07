@@ -4,6 +4,7 @@ import Trigger from 'rc-trigger';
 import classNames from 'classnames';
 import { Icon, Dropdown, Menu } from 'antd';
 import { Link, router } from 'umi';
+import { CSSTransition } from 'react-transition-group';
 
 import styles from './index.less';
 
@@ -59,11 +60,11 @@ export default class TabItem extends React.Component {
   };
 
   handleClose = (e, id) => {
+    e.stopPropagation();
     const { onClose } = this.props;
     if (onClose) {
       onClose(id);
     }
-    e.stopPropagation();
   };
 
   getDropdownComponent = () => {
@@ -171,30 +172,32 @@ export default class TabItem extends React.Component {
     const showItem = this.getShowTabItem();
 
     return (
-      <Dropdown overlay={this.getDropdonwnMenu()} trigger={['contextMenu']}>
-        <div
-          className={classNames({
-            [styles['custom-tabs-item']]: true,
-            [styles['custom-tabs-item_active']]: actived,
-          })}
-          title={showItem.title}
-          onClick={() => onClick(showItem)}
-          style={{ width }}
-        >
-          <div className="tab-top-line"></div>
-          <div className="tab-title">{this.getMenuNavItemByMode(showItem)}</div>
-          <div className="tab-operate-wrapper">
-            {closable && !isMore && (
-              <Icon
-                className="icon"
-                type="close"
-                onClick={e => this.handleClose(e, showItem.id, showItem.url)}
-              />
-            )}
-            {isMore && this.getDropdownComponent()}
+      <CSSTransition in appear timeout={100} unMountOnExit classNames={classNames('fade')}>
+        <Dropdown overlay={this.getDropdonwnMenu()} trigger={['contextMenu']}>
+          <div
+            className={classNames({
+              [styles['custom-tabs-item']]: true,
+              [styles['custom-tabs-item_active']]: actived,
+            })}
+            title={showItem.title}
+            onClick={() => onClick(showItem)}
+            style={{ width }}
+          >
+            <div className="tab-top-line"></div>
+            <div className="tab-title">{this.getMenuNavItemByMode(showItem)}</div>
+            <div className="tab-operate-wrapper">
+              {closable && !isMore && (
+                <Icon
+                  className="icon"
+                  type="close"
+                  onClick={e => this.handleClose(e, showItem.id, showItem.url)}
+                />
+              )}
+              {isMore && this.getDropdownComponent()}
+            </div>
           </div>
-        </div>
-      </Dropdown>
+        </Dropdown>
+      </CSSTransition>
     );
   }
 }

@@ -5,4 +5,30 @@ body,
 #root-master {
   height: 100%;
   overflow: hidden;
+  .fade {
+    &-enter,
+    &-appear {
+      width: 0 !important;
+      transform: translateY(56px);
+    }
+
+    &-enter-active,
+    &-appear-active {
+      transition: all 500ms ease-in;
+    }
+
+    &-enter-done,
+    &-appear-done {
+      transition: all 500ms ease-in;
+    }
+
+    &-exit {
+      width: 56px !important;
+    }
+    &-exit-active {
+      width: 0 !important;
+      transform: translateY(56px);
+      transition: all 500ms ease-in;
+    }
+  }
 }

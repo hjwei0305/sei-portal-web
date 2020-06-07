@@ -122,6 +122,16 @@ export default class BasicLayout extends React.Component {
     });
   };
 
+  handleResize = showTabCounts => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'menu/updateShowTabCounts',
+      payload: {
+        showTabCounts,
+      },
+    });
+  };
+
   /** 页签操作 */
   handleTabs = (type, payload) => {
     const { dispatch } = this.props;
@@ -213,7 +223,6 @@ export default class BasicLayout extends React.Component {
             },
             res => {
               // eslint-disable-next-line no-console
-              console.log('BasicLayout -> handleLogoClick -> res', res);
               if (res.err_msg === 'openDefaultBrowser:ok') {
                 window.wx.closeWindow();
                 window.close();
@@ -254,8 +263,18 @@ export default class BasicLayout extends React.Component {
 
   render() {
     const { collapsed } = this.state;
-    const { children, history, menu } = this.props;
-    const { tabData, mode, currMenuTree, activedMenu, loginVisible, allLeafMenus } = menu;
+    const { children, menu } = this.props;
+    const {
+      tabData,
+      mode,
+      currMenuTree,
+      activedMenu,
+      loginVisible,
+      allLeafMenus,
+      showTabCounts,
+      visibleTabData,
+      moreTabData,
+    } = menu;
     const isSubAppRouter = this.isSubAppRouter();
     let activedKey = '';
     let title = formatMessage({ id: 'app.dashboard', desc: '平台首页' });
@@ -284,7 +303,8 @@ export default class BasicLayout extends React.Component {
                 payload: {
                   activedMenu: currMenu,
                 },
-              }).then(() => router.push(currMenu.url));
+              });
+              // .then(() => router.push(currMenu.url))
             }}
             allLeafMenus={allLeafMenus}
             onLogoClick={this.handleLogoClick}
@@ -313,11 +333,15 @@ export default class BasicLayout extends React.Component {
                 <TabHeader
                   data={tabData}
                   activedKey={activedKey}
+                  activedMenu={activedMenu}
                   onClose={this.handleCloseTab}
                   onChange={this.handleToggleTab}
                   onReload={this.handleReload}
+                  onResize={this.handleResize}
+                  visibleTabData={visibleTabData}
+                  moreTabData={moreTabData}
+                  showTabCounts={showTabCounts}
                   mode={mode}
-                  history={history}
                 />
               )}
             </Header>

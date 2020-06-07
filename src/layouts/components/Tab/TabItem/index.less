@@ -1,5 +1,24 @@
 @import '../../../../themes/default.less';
 
+.fade {
+  &-enter,
+  &-appear {
+    display: none;
+  }
+
+  &-enter-active,
+  &-appear-active {
+    display: inline-block;
+    transition: all 1s ease-in;
+  }
+
+  &-enter-done,
+  &-appear-done {
+    display: inline-block;
+    transition: all 1s ease-in;
+  }
+}
+
 .custom-tabs-item {
   position: relative;
   z-index: 0;

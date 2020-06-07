@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
- * @Last Modified by: Eason
- * @Last Modified time: 2020-06-03 10:34:28
+ * @Last Modified by: zp
+ * @Last Modified time: 2020-06-07 21:27:39
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -41,6 +41,27 @@ function adapterMenus(tree) {
   return { id, title, url, urlPath, children, iconType, rootId, rootName, appBase64ImgStr };
 }
 
+function processTabs(visibleTabs, moreTabs, showCount) {
+  let visibleTabData = [].concat(visibleTabs);
+  let moreTabData = [].concat(moreTabs);
+  const tempLen = showCount - visibleTabs.length;
+  /** 页签没有填满可视区域 */
+  if (tempLen > 0) {
+    visibleTabData = visibleTabData.concat(moreTabData.slice(0, tempLen));
+    moreTabData = moreTabData.slice(tempLen);
+  }
+  /** 可见页签超过了可见页签数量 */
+  if (tempLen < 0) {
+    moreTabData = visibleTabData.slice(tempLen).concat(moreTabData);
+    visibleTabData = visibleTabData.slice(0, showCount);
+  }
+
+  return {
+    visibleTabData,
+    moreTabData,
+  };
+}
+
 export default {
   namespace: 'menu',
 
@@ -51,6 +72,12 @@ export default {
     currMenuTree: null,
     /** 页签数据 */
     tabData: [NoMenuPages[0]],
+    /** 可视页签 */
+    visibleTabData: [NoMenuPages[0]],
+    /** 页签可视区域，下拉中的页签数据 */
+    moreTabData: [],
+    /** 可视区域能够显示页签的数量 */
+    showTabCounts: undefined,
     /** 被激活的菜单项 */
     activedMenu: null,
     /** 页签打开模式 spa spa-tab iframe */
@@ -123,6 +150,104 @@ export default {
         });
       }
     },
+    *updateShowTabCounts({ payload }, { put }) {
+      /** 更新页签状态 */
+      yield put({
+        type: 'updateTabs',
+        payload,
+      });
+    },
+    *updateTabs({ payload }, { select, put }) {
+      const menu = yield select(state => state.menu);
+      const { closeTabIds, showTabCounts: newShowCounts, activedMenu: newActivedMenu } = payload;
+
+      let { visibleTabData, moreTabData, activedMenu, showTabCounts } = menu;
+
+      if (newActivedMenu) {
+        const newTabHasInMore = moreTabData.some(item => item.id === newActivedMenu.id);
+        const newTabHasInVisile = visibleTabData.some(item => item.id === newActivedMenu.id);
+        /** 被激活的页签在更多页签数据里面 */
+        if (newTabHasInMore) {
+          visibleTabData = moreTabData
+            .filter(item => item.id === newActivedMenu.id)
+            .concat(visibleTabData);
+          moreTabData = [visibleTabData.pop()].concat(
+            moreTabData.filter(item => item.id !== newActivedMenu.id),
+          );
+        }
+
+        /** 被激活的页签是新开的页签 */
+        if (!newTabHasInVisile && !newTabHasInMore) {
+          visibleTabData.unshift(newActivedMenu);
+          ({ visibleTabData, moreTabData } = processTabs(
+            visibleTabData,
+            moreTabData,
+            showTabCounts,
+          ));
+        }
+
+        activedMenu = newActivedMenu;
+      }
+
+      /** 可显示页签数变化时处理页签逻辑 */
+      if (newShowCounts) {
+        const tempLen = newShowCounts - visibleTabData.length;
+        /** 页签没有填满可视区域 */
+        if (tempLen > 0) {
+          visibleTabData = visibleTabData.concat(moreTabData.slice(0, tempLen));
+          moreTabData = moreTabData.slice(tempLen);
+        }
+        /** 可见页签超过了可见页签数量 */
+        if (tempLen < 0) {
+          moreTabData = visibleTabData.slice(tempLen).concat(moreTabData);
+          visibleTabData = visibleTabData.slice(0, newShowCounts);
+          if (activedMenu && moreTabData.some(item => item.id === activedMenu.id)) {
+            moreTabData = visibleTabData.slice(-1).concat(moreTabData);
+            moreTabData = moreTabData.filter(item => item.id !== activedMenu.id);
+            visibleTabData.unshift(activedMenu);
+            visibleTabData.pop();
+          }
+        }
+
+        showTabCounts = newShowCounts;
+      }
+
+      /** 关闭页签 */
+      if (closeTabIds && closeTabIds.length) {
+        const hasActivedTabInDelTabs = closeTabIds.some(id => activedMenu.id === id);
+        /** 删除的页签中包含激活的页签 */
+        if (hasActivedTabInDelTabs) {
+          const tempVisibleTabs = visibleTabData.filter(
+            item => item.id === activedMenu.id || !closeTabIds.includes(item.id),
+          );
+          const tempMoreTabs = moreTabData.filter(item => !closeTabIds.includes(item.id));
+          const addVisibleTabs = tempMoreTabs.slice(0, showTabCounts - tempVisibleTabs.length + 1);
+          moreTabData = tempMoreTabs.slice(showTabCounts + 1 - tempVisibleTabs.length);
+          visibleTabData = tempVisibleTabs.concat(addVisibleTabs);
+          const activedIndex = visibleTabData.findIndex(item => item.id === activedMenu.id);
+          const temepActivedMenu =
+            visibleTabData[activedIndex - 1] || visibleTabData[activedIndex + 1];
+          visibleTabData = visibleTabData.filter(item => item.id !== activedMenu.id);
+          activedMenu = temepActivedMenu;
+        } else {
+          const tempVisibleTabs = visibleTabData.filter(item => !closeTabIds.includes(item.id));
+          const tempMoreTabs = moreTabData.filter(item => !closeTabIds.includes(item.id));
+          const addVisibleTabs = tempMoreTabs.slice(tempVisibleTabs.length - showTabCounts);
+          moreTabData = tempMoreTabs.slice(showTabCounts - tempVisibleTabs.length);
+          visibleTabData = tempVisibleTabs.concat(addVisibleTabs);
+        }
+      }
+
+      yield put({
+        type: '_updateState',
+        payload: {
+          moreTabData,
+          visibleTabData,
+          activedMenu,
+          showTabCounts,
+        },
+      });
+    },
     *timeoutLogin(_, { put }) {
       const userInfo = getCurrentUser();
       if (userInfo) {
@@ -136,21 +261,9 @@ export default {
         router.replace('/user/login');
       }
     },
-    *openTab({ payload }, { put, select }) {
-      const menu = yield select(state => state.menu);
-      const { tabData } = menu;
+    *openTab({ payload }, { put }) {
       const { activedMenu } = payload;
-      let tempPayload = {};
       if (activedMenu) {
-        const isExist = tabData.some(item => item.id === activedMenu.id);
-        if (isExist) {
-          tempPayload.activedMenu = activedMenu;
-        } else {
-          tempPayload = {
-            activedMenu,
-            tabData: tabData.concat(activedMenu),
-          };
-        }
         const originMenus = NoMenuPages.filter(m => m.id === activedMenu.id);
         if (originMenus.length === 0) {
           // 按用户记录打开的菜单
@@ -164,38 +277,27 @@ export default {
             storage.localStorage.set(key, recentMenus);
           }
         }
-      } else {
-        tempPayload = payload;
-      }
-      yield put({
-        type: '_updateState',
-        payload: tempPayload,
-      });
-      return tempPayload;
-    },
-    *closeTab({ payload }, { put, select }) {
-      const menu = yield select(state => state.menu);
-      const { tabData, activedMenu } = menu;
-      const { tabIds } = payload;
-      const tempTabData = tabData.filter(item => !tabIds.includes(item.id) || item.noClosable);
-      if (!activedMenu || !tabIds.includes(activedMenu.id)) {
+        /** 更新页签状态 */
         yield put({
-          type: '_updateState',
+          type: 'updateTabs',
           payload: {
-            tabData: tempTabData,
-          },
-        });
-      } else {
-        yield put({
-          type: '_updateState',
-          payload: {
-            tabData: tempTabData,
-            activedMenu: cloneDeep(tempTabData).pop(),
+            activedMenu,
           },
         });
       }
 
-      return tempTabData;
+      return payload;
+    },
+    *closeTab({ payload }, { put }) {
+      const { tabIds } = payload;
+      /** 更新页签状态 */
+      yield put({
+        type: 'updateTabs',
+        payload: {
+          closeTabIds: tabIds,
+        },
+      });
+      return tabIds;
     },
     *updateState({ payload }, { put }) {
       yield put({
