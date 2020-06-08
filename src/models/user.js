@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-05-25 12:34:21
+ * @Last Modified time: 2020-06-08 14:28:10
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -205,7 +205,8 @@ export default {
       yield put({
         type: 'menu/updateState',
         payload: {
-          tabData: [NoMenuPages[0]],
+          visibleTabData: [NoMenuPages[0]],
+          moreTabData: [],
           activedMenu: null,
         },
       });
@@ -216,7 +217,8 @@ export default {
       yield put({
         type: 'menu/updateState',
         payload: {
-          tabData: [NoMenuPages[0]],
+          visibleTabData: [NoMenuPages[0]],
+          moreTabData: [],
           activedMenu: null,
         },
       });
