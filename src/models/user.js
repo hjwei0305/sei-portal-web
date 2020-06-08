@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-08 14:28:10
+ * @Last Modified time: 2020-06-08 15:24:06
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -127,6 +127,15 @@ export default {
           type: 'processUser',
           payload: {
             userInfo: data,
+          },
+        });
+        /** 更新菜单相关状态 */
+        yield put({
+          type: 'menu/updateState',
+          payload: {
+            visibleTabData: [NoMenuPages[0]],
+            moreTabData: [],
+            activedMenu: null,
           },
         });
         router.replace('/');
