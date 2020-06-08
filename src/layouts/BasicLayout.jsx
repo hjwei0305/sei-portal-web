@@ -142,11 +142,21 @@ export default class BasicLayout extends React.Component {
   };
 
   handleHomeClick = () => {
-    this.handleTabs('open', {
-      activedMenu: null,
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'menu/updateState',
+      payload: {
+        activedMenu: null,
+      },
     }).then(() => {
       router.push('/DashBoard');
     });
+
+    // this.handleTabs('open', {
+    //   activedMenu: null,
+    // }).then(() => {
+    //   router.push('/DashBoard');
+    // });
   };
 
   showOpenDefaultBrowserConfirm = () => {
