@@ -99,7 +99,7 @@ class Tabs extends Component {
     const data = visibleTabData.concat(moreTabData);
     if (data.length >= 1) {
       onClose(
-        data.map(({ id }) => id),
+        data.filter(item => !item.noClosable).map(({ id }) => id),
         true,
       );
     }
@@ -133,7 +133,10 @@ class Tabs extends Component {
     const data = visibleTabData.concat(moreTabData);
     if (onClose) {
       onClose(
-        data.map(item => item.id).filter(id => id !== activedKey),
+        data
+          .filter(item => !item.noClosable)
+          .map(item => item.id)
+          .filter(id => id !== activedKey),
         false,
       );
     }
