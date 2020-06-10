@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-07 21:42:55
+ * @Last Modified time: 2020-06-10 15:42:02
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -366,6 +366,7 @@ export default {
       if (activedMenu && activedRefresh) {
         eventBus.emit(`${id}_refresh`);
       }
+
       if (currMenuTree && rootId && currMenuTree.id !== rootId) {
         const tempArr = menuTrees.filter(item => item.id === rootId);
         const [tempCurrMenuTree] = tempArr;

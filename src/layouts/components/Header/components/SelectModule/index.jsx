@@ -32,6 +32,7 @@ export default class SelectModule extends PureComponent {
       type: 'menu/updateState',
       payload: {
         currMenuTree,
+        activedMenu: null,
       },
     });
     this.recordRecentApp(currMenuTree);
