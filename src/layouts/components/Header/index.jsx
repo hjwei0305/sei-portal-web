@@ -6,6 +6,7 @@ import FullScreen from '@/components/FullScreen';
 import SelectModule from './components/SelectModule';
 import UserIcon from './components/UserIcon';
 import Notify from './components/Notify';
+import Help from './components/Help';
 
 import styles from './index.less';
 
@@ -39,6 +40,7 @@ export default class Header extends React.Component {
           </span>
         </div>
         <div className={cls('header-layout-right')}>
+          <Help className={cls('trigger')} />
           <Notify className={cls('trigger')} />
           <UserIcon />
           <FullScreen className={cls('trigger')} />
