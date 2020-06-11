@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Tooltip, Badge, Icon, Dropdown, Card, List, Avatar, Tabs, Skeleton, Empty } from 'antd';
 import cls from 'classnames';
 import * as focus from 'focus-outside';
-import { eventBus } from '@/utils';
+import { eventBus, speech } from '@/utils';
 import {
   getMessageList,
   getMessageCount,
@@ -86,9 +86,14 @@ export default class index extends PureComponent {
     getMessageCount().then(result => {
       const { success, data: messageCount } = result || {};
       if (success) {
-        this.setState({
-          messageCount,
-        });
+        this.setState(
+          {
+            messageCount,
+          },
+          () => {
+            speech(`您有${messageCount}条未处理的消息`);
+          },
+        );
       }
     });
   };
