@@ -86,12 +86,15 @@ export default class index extends PureComponent {
     getMessageCount().then(result => {
       const { success, data: messageCount } = result || {};
       if (success) {
+        const { messageCount: oldMessageCount } = this.state;
         this.setState(
           {
             messageCount,
           },
           () => {
-            speech(`您有${messageCount}条未处理的消息`);
+            if (messageCount > oldMessageCount) {
+              speech(`您有新的未处理的消息`);
+            }
           },
         );
       }
