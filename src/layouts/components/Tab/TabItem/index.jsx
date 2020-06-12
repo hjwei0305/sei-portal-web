@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Trigger from 'rc-trigger';
 import classNames from 'classnames';
 import { Icon, Dropdown, Menu } from 'antd';
 import { Link, router } from 'umi';
 import { CSSTransition } from 'react-transition-group';
+import { eventBus } from '@/utils';
 
 import styles from './index.less';
 
@@ -64,6 +65,26 @@ export default class TabItem extends React.Component {
     const { onClose } = this.props;
     if (onClose) {
       onClose(id);
+    }
+  };
+
+  handleCollect = (e, id) => {
+    e.stopPropagation();
+    const { onCollect } = this.props;
+    if (onCollect) {
+      onCollect(id);
+    } else {
+      eventBus.emit('collectTab', id);
+    }
+  };
+
+  handleRefresh = (e, id) => {
+    e.stopPropagation();
+    const { onRefresh } = this.props;
+    if (onRefresh) {
+      onRefresh(id);
+    } else {
+      eventBus.emit('refresh', id);
     }
   };
 
@@ -191,6 +212,20 @@ export default class TabItem extends React.Component {
                 />
               )}
               {isMore && this.getDropdownComponent()}
+              {actived ? (
+                <Fragment>
+                  {/* <Icon
+                    className="icon"
+                    type="star"
+                    onClick={e => this.handleCollect(e, showItem.id, showItem.url)}
+                  /> */}
+                  <Icon
+                    className="icon"
+                    type="sync"
+                    onClick={e => this.handleRefresh(e, showItem.id, showItem.url)}
+                  />
+                </Fragment>
+              ) : null}
             </div>
           </div>
         </Dropdown>

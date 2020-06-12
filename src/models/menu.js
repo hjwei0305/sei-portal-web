@@ -2,12 +2,12 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-10 15:42:02
+ * @Last Modified time: 2020-06-12 16:12:05
  */
 import { router } from 'umi';
 import { utils } from 'suid';
 import { cloneDeep, set, has } from 'lodash';
-import { getMenu } from '@/services/menu';
+import { getMenu, collectMenu } from '@/services/menu';
 import { treeOperation, CONSTANTS, eventBus, userInfoOperation } from '@/utils';
 
 const { storage } = utils;
@@ -149,6 +149,20 @@ export default {
           payload,
         });
       }
+    },
+    *collectTab({ payload }, { call }) {
+      // const { id: menuId, } = payload;
+      // const { visibleTabData, } = yield select(state => state.menu)
+      const result = yield call(collectMenu, payload);
+      const { success } = result || {};
+      if (success) {
+        // yield put({
+        //   type: '_updateState',
+        //   payload: {
+        //   }
+        // })
+      }
+      return result;
     },
     *updateShowTabCounts({ payload }, { put }) {
       /** 更新页签状态 */
@@ -355,6 +369,28 @@ export default {
           });
         }
       });
+      /** 添加监听收藏页签 */
+      eventBus.addListener('collectTab', tabId => {
+        if (tabId) {
+          dispatch({
+            type: 'collectTab',
+            payload: {
+              id: tabId,
+            },
+          });
+        }
+      });
+      // /** 添加监听收藏页签 */
+      // eventBus.addListener('refreshTab', tabId => {
+      //   if (tabId) {
+      //     dispatch({
+      //       type: 'collectTab',
+      //       payload: {
+      //         id: tabId,
+      //       },
+      //     });
+      //   }
+      // });
     },
   },
 
