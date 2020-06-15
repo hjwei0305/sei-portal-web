@@ -36,5 +36,28 @@ body,
     .scrollbar-container {
       width: 100%;
     }
+    .ant-menu-item {
+      .collect-icon {
+        display: none;
+      }
+      .collect-icon-actived {
+        display: block;
+        float: right;
+        margin-top: 12px;
+        &:hover {
+          transform: scale(1.5);
+        }
+      }
+      &:hover {
+        .collect-icon {
+          display: block;
+          float: right;
+          margin-top: 12px;
+          &:hover {
+            transform: scale(1.5);
+          }
+        }
+      }
+    }
   }
 }

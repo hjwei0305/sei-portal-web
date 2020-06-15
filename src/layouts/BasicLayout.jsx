@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { Modal, message } from 'antd';
 import { ScrollBar } from 'suid';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { userInfoOperation, weiXinUtils, waterMark } from '@/utils';
+import { userInfoOperation, weiXinUtils } from '@/utils';
 import ConfirmLoginModal from '@/pages/Login/ConfirmLoginModal';
 import { getWeChatCfg } from '@/services/user';
 import Header from './components/Header';
@@ -63,7 +63,7 @@ export default class BasicLayout extends React.Component {
       this.showOpenDefaultBrowserConfirm();
     }
 
-    waterMark({ content: '虹信软件股份有限公司' });
+    // waterMark({ content: '虹信软件股份有限公司' });
   }
 
   componentWillUnmount() {

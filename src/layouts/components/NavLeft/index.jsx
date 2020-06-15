@@ -77,11 +77,7 @@ class NavLeft extends React.Component {
         <Link to={item.url}>
           {item.iconType ? <Icon type={item.iconType} /> : null}
           <span>{item.title}</span>
-          <Icon
-            className={styles['collect-icon']}
-            type="star"
-            onClick={e => this.handleCollect(e, item)}
-          />
+          <Icon className="collect-icon" type="star" onClick={e => this.handleCollect(e, item)} />
         </Link>
       );
     }
@@ -92,7 +88,10 @@ class NavLeft extends React.Component {
           <span>{item.title}</span>
         </span>
         <Icon
-          className={styles['collect-icon']}
+          className={cls({
+            'collect-icon-actived': item.favorite,
+            'collect-icon': true,
+          })}
           type="star"
           theme={item.favorite ? 'twoTone' : ''}
           onClick={e => this.handleCollect(e, item)}
