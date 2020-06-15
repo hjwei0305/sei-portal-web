@@ -4,6 +4,7 @@ import { Link } from 'umi';
 import { ScrollBar } from 'suid';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
+import { eventBus } from '@/utils';
 import MenuSearch from '@/components/MenuSearch';
 import logo from '../../../assets/logo.svg';
 import collapsedLogo from '../../../assets/logo_notxt@2x.png';
@@ -57,6 +58,12 @@ class NavLeft extends React.Component {
     }
   };
 
+  handleCollect = (e, item) => {
+    e.stopPropagation();
+    const { id, favorite } = item;
+    eventBus.emit(favorite ? 'deCollectMenu' : 'collectMenu', id);
+  };
+
   updateCurrentSelected = key => {
     this.setState({
       currentSelectedKeys: [key],
@@ -70,14 +77,27 @@ class NavLeft extends React.Component {
         <Link to={item.url}>
           {item.iconType ? <Icon type={item.iconType} /> : null}
           <span>{item.title}</span>
+          <Icon
+            className={styles['collect-icon']}
+            type="star"
+            onClick={e => this.handleCollect(e, item)}
+          />
         </Link>
       );
     }
     return (
-      <span>
-        {item.iconType ? <Icon type={item.iconType} /> : null}
-        <span>{item.title}</span>
-      </span>
+      <Fragment>
+        <span>
+          {item.iconType ? <Icon type={item.iconType} /> : null}
+          <span>{item.title}</span>
+        </span>
+        <Icon
+          className={styles['collect-icon']}
+          type="star"
+          theme={item.favorite ? 'twoTone' : ''}
+          onClick={e => this.handleCollect(e, item)}
+        />
+      </Fragment>
     );
   };
 

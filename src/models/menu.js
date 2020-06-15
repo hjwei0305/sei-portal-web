@@ -2,13 +2,14 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-12 16:12:05
+ * @Last Modified time: 2020-06-15 10:24:41
  */
 import { router } from 'umi';
 import { utils } from 'suid';
 import { cloneDeep, set, has } from 'lodash';
-import { getMenu, collectMenu } from '@/services/menu';
+import { getMenu, collectMenu, deCollectMenu } from '@/services/menu';
 import { treeOperation, CONSTANTS, eventBus, userInfoOperation } from '@/utils';
+import { traverseTrees } from '@/utils/tree';
 
 const { storage } = utils;
 
@@ -32,13 +33,25 @@ function adapterMenus(tree) {
     children,
     rootId,
     rootName,
+    favorite,
     name: title,
     menuUrl: url,
     namePath: urlPath,
     iconCls: iconType,
     iconFileData: appBase64ImgStr,
   } = tree;
-  return { id, title, url, urlPath, children, iconType, rootId, rootName, appBase64ImgStr };
+  return {
+    id,
+    title,
+    url,
+    urlPath,
+    children,
+    iconType,
+    rootId,
+    rootName,
+    appBase64ImgStr,
+    favorite,
+  };
 }
 
 function processTabs(visibleTabs, moreTabs, showCount) {
@@ -150,18 +163,58 @@ export default {
         });
       }
     },
-    *collectTab({ payload }, { call }) {
+    *collectMenu({ payload }, { call, select, put }) {
       // const { id: menuId, } = payload;
-      // const { visibleTabData, } = yield select(state => state.menu)
+      const { currMenuTree, menuTrees } = yield select(state => state.menu);
+      traverseTrees([currMenuTree], item => {
+        if (item.id === payload.id) {
+          item.favorite = true;
+        }
+      });
+
+      traverseTrees([menuTrees], item => {
+        if (item.id === payload.id) {
+          item.favorite = true;
+        }
+      });
       const result = yield call(collectMenu, payload);
       const { success } = result || {};
       if (success) {
-        // yield put({
-        //   type: '_updateState',
-        //   payload: {
-        //   }
-        // })
+        yield put({
+          type: '_updateState',
+          payload: {
+            currMenuTree,
+            menuTrees,
+          },
+        });
       }
+      return result;
+    },
+    *deCollectMenu({ payload }, { call, select, put }) {
+      const { currMenuTree, menuTrees } = yield select(state => state.menu);
+      traverseTrees([currMenuTree], item => {
+        if (item.id === payload.id) {
+          item.favorite = false;
+        }
+      });
+
+      traverseTrees([menuTrees], item => {
+        if (item.id === payload.id) {
+          item.favorite = false;
+        }
+      });
+      const result = yield call(deCollectMenu, payload);
+      const { success } = result || {};
+      if (success) {
+        yield put({
+          type: '_updateState',
+          payload: {
+            currMenuTree,
+            menuTrees,
+          },
+        });
+      }
+
       return result;
     },
     *updateShowTabCounts({ payload }, { put }) {
@@ -370,27 +423,27 @@ export default {
         }
       });
       /** 添加监听收藏页签 */
-      eventBus.addListener('collectTab', tabId => {
+      eventBus.addListener('collectMenu', tabId => {
         if (tabId) {
           dispatch({
-            type: 'collectTab',
+            type: 'collectMenu',
             payload: {
               id: tabId,
             },
           });
         }
       });
-      // /** 添加监听收藏页签 */
-      // eventBus.addListener('refreshTab', tabId => {
-      //   if (tabId) {
-      //     dispatch({
-      //       type: 'collectTab',
-      //       payload: {
-      //         id: tabId,
-      //       },
-      //     });
-      //   }
-      // });
+      // /** 添加监听取消收藏页签 */
+      eventBus.addListener('deCollectMenu', tabId => {
+        if (tabId) {
+          dispatch({
+            type: 'deCollectMenu',
+            payload: {
+              id: tabId,
+            },
+          });
+        }
+      });
     },
   },
 
