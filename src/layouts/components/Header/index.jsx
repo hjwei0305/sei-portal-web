@@ -7,6 +7,7 @@ import SelectModule from './components/SelectModule';
 import UserIcon from './components/UserIcon';
 import Notify from './components/Notify';
 import Help from './components/Help';
+import CaptureScreen from './components/CaptureScreen';
 
 import styles from './index.less';
 
@@ -40,6 +41,7 @@ export default class Header extends React.Component {
           </span>
         </div>
         <div className={cls('header-layout-right')}>
+          <CaptureScreen className={cls('trigger')} />
           <Help className={cls('trigger')} />
           <Notify className={cls('trigger')} />
           <UserIcon />
