@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-15 10:24:41
+ * @Last Modified time: 2020-06-16 14:11:47
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -328,6 +328,23 @@ export default {
         router.replace('/user/login');
       }
     },
+    /** 打开收藏菜单 */
+    *openFavoriteMenu({ payload }, { put, select }) {
+      const { activedMenu } = payload;
+      const { allLeafMenus } = yield select(state => state.menu);
+      if (activedMenu) {
+        const [tempactivedMenu] = allLeafMenus.filter(m => m.id === activedMenu.id);
+        /** 更新开业页签 */
+        yield put({
+          type: 'openTab',
+          payload: {
+            activedMenu: tempactivedMenu || activedMenu,
+          },
+        });
+      }
+
+      return payload;
+    },
     *openTab({ payload }, { put }) {
       const { activedMenu } = payload;
       if (activedMenu) {
@@ -440,6 +457,17 @@ export default {
             type: 'deCollectMenu',
             payload: {
               id: tabId,
+            },
+          });
+        }
+      });
+      /** 添加打开收藏页签事件 */
+      eventBus.addListener('openFavoriteMenu', activedMenu => {
+        if (activedMenu) {
+          dispatch({
+            type: 'openFavoriteMenu',
+            payload: {
+              activedMenu,
             },
           });
         }
