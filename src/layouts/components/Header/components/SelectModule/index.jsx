@@ -93,16 +93,11 @@ export default class SelectModule extends PureComponent {
                 <Col
                   span={8}
                   key={id}
-                  className={cls('app-item-wrap')}
+                  className={cls('app-item-wrap', { actived: currMenuTree.id === id })}
                   onClick={() => this.handleClick(menuTree)}
                 >
                   <div className="logo-wrap">
-                    <div
-                      className={cls({
-                        'app-logo': true,
-                        actived: currMenuTree.id === id,
-                      })}
-                    >
+                    <div className="app-logo">
                       <img alt="应用图标" src={appBase64ImgStr || tempImgHolder} />
                     </div>
                   </div>
@@ -150,7 +145,7 @@ export default class SelectModule extends PureComponent {
           visible={visible}
           placement="left"
           maskClosable
-          width={325}
+          width={380}
           onClose={this.handlerClose}
           className={cls(styles['select-module-wrapper'], 'app-module-select')}
           afterVisibleChange={this.handlerVisibleChange}

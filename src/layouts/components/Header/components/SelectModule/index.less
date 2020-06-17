@@ -1,3 +1,4 @@
+@import '../../../../../themes/default.less';
 .select-module-wrapper {
   :global {
     .ant-drawer-content-wrapper {
@@ -28,7 +29,7 @@
         .app-box {
           padding: 16px 5px 0 24px;
           .app-item-wrap {
-            width: 92px;
+            width: 110px;
             height: 92px;
             margin-bottom: 14px;
             text-decoration: none;
@@ -40,7 +41,7 @@
               height: 49px;
               transition: all 0.3s ease;
               &:hover {
-                transform: translateY(-4px);
+                transform: translateY(-6px);
               }
               .app-logo {
                 display: flex;
@@ -49,9 +50,7 @@
                 width: 44px;
                 height: 44px;
                 border-radius: 4px;
-                &.actived {
-                  box-shadow: 0 4px 16px 0 rgba(38, 38, 38, 0.12);
-                }
+                box-shadow: 0 4px 16px 0 rgba(38, 38, 38, 0.15);
               }
               img {
                 position: relative;
@@ -66,6 +65,11 @@
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
+            }
+            &.actived {
+              .desc {
+                color: @primary-color;
+              }
             }
           }
         }
