@@ -40,9 +40,6 @@
               justify-content: center;
               height: 49px;
               transition: all 0.3s ease;
-              &:hover {
-                transform: translateY(-6px);
-              }
               .app-logo {
                 display: flex;
                 align-items: center;
@@ -61,14 +58,18 @@
               }
             }
             .desc {
+              transition: all 0.3s ease;
               margin-top: 5px;
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
             }
-            &.actived {
+            &:hover {
+              .logo-wrap {
+                transform: translateY(-6px);
+              }
               .desc {
-                color: @primary-color;
+                color: fade(@primary-color, 85%);
               }
             }
           }
