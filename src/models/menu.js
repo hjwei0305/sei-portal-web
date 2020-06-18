@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-18 13:12:01
+ * @Last Modified time: 2020-06-18 14:22:38
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -177,6 +177,8 @@ export default {
           item.favorite = true;
         }
       });
+
+      const allLeafMenus = getTreeLeaf(menuTrees);
       const result = yield call(collectMenu, payload);
       const { success } = result || {};
       if (success) {
@@ -185,6 +187,7 @@ export default {
           payload: {
             currMenuTree,
             menuTrees,
+            allLeafMenus,
           },
         });
       }
@@ -203,6 +206,7 @@ export default {
           item.favorite = false;
         }
       });
+      const allLeafMenus = getTreeLeaf(menuTrees);
       const result = yield call(deCollectMenu, payload);
       const { success } = result || {};
       if (success) {
@@ -211,6 +215,7 @@ export default {
           payload: {
             currMenuTree,
             menuTrees,
+            allLeafMenus,
           },
         });
       }
@@ -301,7 +306,7 @@ export default {
         } else {
           const tempVisibleTabs = visibleTabData.filter(item => !closeTabIds.includes(item.id));
           const tempMoreTabs = moreTabData.filter(item => !closeTabIds.includes(item.id));
-          const addVisibleTabs = tempMoreTabs.slice(tempVisibleTabs.length - showTabCounts);
+          const addVisibleTabs = tempMoreTabs.slice(0, showTabCounts - tempVisibleTabs.length);
           moreTabData = tempMoreTabs.slice(showTabCounts - tempVisibleTabs.length);
           visibleTabData = tempVisibleTabs.concat(addVisibleTabs);
         }
