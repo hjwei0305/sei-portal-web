@@ -107,7 +107,7 @@ class Tabs extends Component {
 
   /** 根据id关闭页签 */
   handleClose = id => {
-    const { activedKey, onClose, data } = this.props;
+    const { activedKey, onClose, visibleTabData: data } = this.props;
     if (activedKey === id) {
       this.handleCloseCurrent();
     } else {

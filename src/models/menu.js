@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-16 14:11:47
+ * @Last Modified time: 2020-06-18 13:12:01
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -281,7 +281,9 @@ export default {
 
       /** 关闭页签 */
       if (closeTabIds && closeTabIds.length) {
-        const hasActivedTabInDelTabs = closeTabIds.some(id => activedMenu.id === id);
+        const hasActivedTabInDelTabs = activedMenu
+          ? closeTabIds.some(id => activedMenu.id === id)
+          : false;
         /** 删除的页签中包含激活的页签 */
         if (hasActivedTabInDelTabs) {
           const tempVisibleTabs = visibleTabData.filter(
