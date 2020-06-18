@@ -42,7 +42,7 @@ class TabPane extends React.Component {
 
     return data.map(({ url, id, title }) => {
       let tempUrl = url;
-      if (!reg.test(tempUrl)) {
+      if (!reg.test(tempUrl.split('?')[0])) {
         const temp = url.split('/');
         if (!temp.includes('#')) {
           tempUrl = `/${temp[1]}/#${url}`;
