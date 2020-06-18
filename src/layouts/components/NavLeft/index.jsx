@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Row, Col } from 'antd';
 import { Link } from 'umi';
 import { ScrollBar } from 'suid';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import { eventBus } from '@/utils';
 import MenuSearch from '@/components/MenuSearch';
+import FavoriteMenu from '@/components/FavoriteMenu';
 import logo from '../../../assets/logo.svg';
 import collapsedLogo from '../../../assets/logo_notxt@2x.png';
 
@@ -133,7 +134,14 @@ class NavLeft extends React.Component {
 
   render() {
     const { currentSelectedKeys, openKeys } = this.state;
-    const { collapsed, menuConfig = [], allLeafMenus, onCollapse, onSelectSearchMenu } = this.props;
+    const {
+      collapsed,
+      menuConfig = [],
+      allLeafMenus,
+      favoriteMenus,
+      onCollapse,
+      onSelectSearchMenu,
+    } = this.props;
     return (
       <div
         className={cls({
@@ -146,7 +154,21 @@ class NavLeft extends React.Component {
         </div>
         <div className="layout-menu-search">
           {!collapsed ? (
-            <MenuSearch onSelect={onSelectSearchMenu} data={allLeafMenus} />
+            <Fragment>
+              <Row type="flex" align="middle">
+                <Col style={{ flex: 1 }}>
+                  <MenuSearch onSelect={onSelectSearchMenu} data={allLeafMenus} />
+                </Col>
+                <Col style={{ width: 50 }}>
+                  {' '}
+                  <FavoriteMenu
+                    data={favoriteMenus}
+                    onSelect={onSelectSearchMenu}
+                    onRemove={this.handleCollect}
+                  />
+                </Col>
+              </Row>
+            </Fragment>
           ) : (
             <Icon className="collapsed-search-icon" type="search" onClick={onCollapse} />
           )}

@@ -286,6 +286,7 @@ export default class BasicLayout extends React.Component {
       showTabCounts,
       visibleTabData,
       moreTabData,
+      favoriteMenus,
     } = menu;
     const isSubAppRouter = this.isSubAppRouter();
     let activedKey = '';
@@ -319,6 +320,7 @@ export default class BasicLayout extends React.Component {
                 });
                 // .then(() => router.push(currMenu.url));
               }}
+              favoriteMenus={favoriteMenus}
               allLeafMenus={allLeafMenus}
               onLogoClick={this.handleLogoClick}
               menuConfig={currMenuTree ? currMenuTree.children || [] : []}

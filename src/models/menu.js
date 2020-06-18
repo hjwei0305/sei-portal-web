@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-18 14:22:38
+ * @Last Modified time: 2020-06-18 16:48:58
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -89,6 +89,8 @@ export default {
     visibleTabData: [NoMenuPages[0]],
     /** 页签可视区域，下拉中的页签数据 */
     moreTabData: [],
+    /** 收藏菜单 */
+    favoriteMenus: [],
     /** 可视区域能够显示页签的数量 */
     showTabCounts: undefined,
     /** 被激活的菜单项 */
@@ -121,9 +123,11 @@ export default {
           }
         }
         const allLeafMenus = getTreeLeaf(menuTrees);
+        const favoriteMenus = allLeafMenus.filter(item => item.favorite);
         const payload = {
           menuTrees,
           allLeafMenus,
+          favoriteMenus,
           currMenuTree: tmpCurrMenuTree,
         };
         if (initPathname) {
@@ -179,6 +183,8 @@ export default {
       });
 
       const allLeafMenus = getTreeLeaf(menuTrees);
+      const favoriteMenus = allLeafMenus.filter(item => item.favorite);
+
       const result = yield call(collectMenu, payload);
       const { success } = result || {};
       if (success) {
@@ -188,6 +194,7 @@ export default {
             currMenuTree,
             menuTrees,
             allLeafMenus,
+            favoriteMenus,
           },
         });
       }
@@ -207,6 +214,8 @@ export default {
         }
       });
       const allLeafMenus = getTreeLeaf(menuTrees);
+      const favoriteMenus = allLeafMenus.filter(item => item.favorite);
+
       const result = yield call(deCollectMenu, payload);
       const { success } = result || {};
       if (success) {
@@ -216,6 +225,7 @@ export default {
             currMenuTree,
             menuTrees,
             allLeafMenus,
+            favoriteMenus,
           },
         });
       }
