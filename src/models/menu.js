@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-19 13:54:09
+ * @Last Modified time: 2020-06-19 14:24:11
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -176,7 +176,7 @@ export default {
         }
       });
 
-      traverseTrees([menuTrees], item => {
+      traverseTrees(menuTrees, item => {
         if (item.id === payload.id) {
           item.favorite = true;
         }
@@ -215,7 +215,6 @@ export default {
       });
       const allLeafMenus = getTreeLeaf(menuTrees);
       const favoriteMenus = allLeafMenus.filter(item => item.favorite);
-      console.log('*deCollectMenu -> favoriteMenus', favoriteMenus);
 
       const result = yield call(deCollectMenu, payload);
       const { success } = result || {};

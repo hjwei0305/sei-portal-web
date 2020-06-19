@@ -25,7 +25,6 @@ export default class FavoriteMenu extends React.Component {
 
   getDataList = () => {
     const { data, onSelect } = this.props;
-    console.log('FavoriteMenu -> getDataList -> data', data);
     if (data && data.length) {
       return (
         <div className="favorite-menu-item-wrapper">
