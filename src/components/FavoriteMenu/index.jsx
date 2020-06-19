@@ -1,64 +1,76 @@
 import React from 'react';
-import { Icon, Popover, Empty } from 'antd';
+import { Icon, Popover, List } from 'antd';
+import { get } from 'lodash';
 import cls from 'classnames';
 import { ScrollBar } from 'suid';
 
 import styles from './index.less';
 
 export default class FavoriteMenu extends React.Component {
-  renderDataList = () => {
-    const { data, onSelect, onRemove } = this.props;
+  getItemTitle = item => {
+    const { onRemove } = this.props;
+    const menuTitle = get(item, 'title', '');
+    return (
+      <div>
+        {menuTitle}
+        <Icon
+          className="collect-icon"
+          theme="twoTone"
+          type="star"
+          onClick={e => onRemove(e, item)}
+        />
+      </div>
+    );
+  };
+
+  getDataList = () => {
+    const { data, onSelect } = this.props;
+    console.log('FavoriteMenu -> getDataList -> data', data);
     if (data && data.length) {
-      return data.map(item => {
-        const { id, title } = item;
-        return (
-          <div
-            className={cls({
-              'favorite-item': true,
-            })}
-            onClick={() => {
-              if (onSelect) {
-                onSelect(item);
-              }
-            }}
-            key={id}
-          >
-            {title}
-            <span
-              onClick={e => {
-                // e.stopPropagation();
-                if (onRemove) {
-                  onRemove(e, item);
-                }
-              }}
-              className="favorite-item-close"
-            >
-              x
-            </span>
-          </div>
-        );
-      });
+      return (
+        <div className="favorite-menu-item-wrapper">
+          <div className="title">我的收藏</div>
+          <List
+            itemLayout="horizontal"
+            dataSource={data}
+            renderItem={item => (
+              <List.Item key={item.id} onClick={() => onSelect(item)}>
+                <List.Item.Meta
+                  title={this.getItemTitle(item)}
+                  description={get(item, 'urlPath', '').slice(1)}
+                />
+              </List.Item>
+            )}
+          />
+        </div>
+      );
     }
-    return <Empty description="没有收藏菜单"></Empty>;
+    return (
+      <div className={cls('empty-wrapper')}>
+        <div className="title">我的收藏</div>
+        <div className="desc">暂时没有收藏菜单</div>
+      </div>
+    );
   };
 
   render() {
-    const { className } = this.props;
+    const { className, collapsed } = this.props;
 
     return (
       <Popover
         overlayClassName={cls({
           [styles['popver-wrapper']]: true,
+          [styles['popver-wrapper-collapsed']]: collapsed,
+          [styles['popver-wrapper-no-collapsed']]: !collapsed,
           [className]: true,
         })}
-        placement="rightTop"
+        placement={collapsed ? 'rightBottom' : 'bottom'}
         align={{
-          points: ['tl', 'tr'], // align top left point of sourceNode with top right point of targetNode
-          offset: [5, 5],
+          offset: collapsed ? [2, -3] : [-88, 5],
         }}
         content={
-          <div className="menu-search-popver-content">
-            <ScrollBar>{this.renderDataList()}</ScrollBar>
+          <div className="menu-favorite-popver-content">
+            <ScrollBar>{this.getDataList()}</ScrollBar>
           </div>
         }
       >

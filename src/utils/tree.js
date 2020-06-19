@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-29 20:03:21
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-15 10:14:44
+ * @Last Modified time: 2020-06-19 13:53:27
  */
 import { cloneDeep } from 'lodash';
 
@@ -24,10 +24,10 @@ export const getTreeLeaf = (trees = [], result = []) => {
 export const traverseTrees = (trees, cb) => {
   for (let i = trees.length - 1; i >= 0; i -= 1) {
     const item = trees[i];
-    if (!(item.children && item.children.length)) {
-      cb(item);
-    } else {
+    if (item.children && item.children.length) {
       traverseTrees(item.children, cb);
+    } else {
+      cb(item);
     }
   }
 };
