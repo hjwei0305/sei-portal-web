@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-21 08:43:33
+ * @Last Modified time: 2020-06-21 09:01:38
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -248,7 +248,7 @@ export default {
       if (newActivedMenu) {
         const newTabHasInMore = moreTabData.some(item => item.id === newActivedMenu.id);
         const newTabHasInVisile = visibleTabData.some(item => item.id === newActivedMenu.id);
-        if (tabData.some(item => item.id !== newActivedMenu.id)) {
+        if (!tabData.some(item => item.id === newActivedMenu.id)) {
           tabData.push(newActivedMenu);
         }
         /** 被激活的页签在更多页签数据里面 */
