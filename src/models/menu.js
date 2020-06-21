@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-19 14:24:11
+ * @Last Modified time: 2020-06-21 08:43:33
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -243,11 +243,14 @@ export default {
       const menu = yield select(state => state.menu);
       const { closeTabIds, showTabCounts: newShowCounts, activedMenu: newActivedMenu } = payload;
 
-      let { visibleTabData, moreTabData, activedMenu, showTabCounts } = menu;
+      let { visibleTabData, moreTabData, activedMenu, showTabCounts, tabData } = menu;
 
       if (newActivedMenu) {
         const newTabHasInMore = moreTabData.some(item => item.id === newActivedMenu.id);
         const newTabHasInVisile = visibleTabData.some(item => item.id === newActivedMenu.id);
+        if (tabData.some(item => item.id !== newActivedMenu.id)) {
+          tabData.push(newActivedMenu);
+        }
         /** 被激活的页签在更多页签数据里面 */
         if (newTabHasInMore) {
           visibleTabData = moreTabData
@@ -296,6 +299,7 @@ export default {
 
       /** 关闭页签 */
       if (closeTabIds && closeTabIds.length) {
+        tabData = tabData.filter(item => !closeTabIds.includes(item.id));
         const hasActivedTabInDelTabs = activedMenu
           ? closeTabIds.some(id => activedMenu.id === id)
           : false;
@@ -329,6 +333,7 @@ export default {
           visibleTabData,
           activedMenu,
           showTabCounts,
+          tabData,
         },
       });
     },
