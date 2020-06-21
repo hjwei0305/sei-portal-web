@@ -366,8 +366,8 @@ export default class BasicLayout extends React.Component {
               {mode === 'iframe' ? (
                 <TabPane
                   style={activedKey === '' ? { visibility: 'hidden', height: 0 } : {}}
-                  // data={visibleTabData.concat(moreTabData)}
-                  data={tabData}
+                  data={visibleTabData.concat(moreTabData)}
+                  // data={tabData}
                   activedKey={activedKey}
                   ref={inst => {
                     this.tabPaneRef = inst;
