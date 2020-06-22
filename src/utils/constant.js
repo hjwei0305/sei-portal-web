@@ -26,14 +26,14 @@ export const COPYRIGHTTEXT =
 
 /** 非菜单页面 */
 export const NoMenuPages = [
-  {
-    id: 'flow-homepage',
-    url: '/sei-flow-web/homepage',
-    title: '我的任务',
-    noClosable: true,
-    /** 激活刷新 */
-    activedRefresh: true,
-  },
+  // {
+  //   id: 'flow-homepage',
+  //   url: '/sei-flow-web/homepage',
+  //   title: '我的任务',
+  //   noClosable: true,
+  //   /** 激活刷新 */
+  //   activedRefresh: true,
+  // },
   {
     id: 'userProfile',
     title: '个人设置',
