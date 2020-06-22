@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-08 15:24:06
+ * @Last Modified time: 2020-06-22 09:23:20
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -18,9 +18,9 @@ import {
   updatePwd,
   authorizeData,
 } from '@/services/user';
-import { userInfoOperation, eventBus, CONSTANTS } from '@/utils';
+import { userInfoOperation, eventBus } from '@/utils';
 
-const { NoMenuPages } = CONSTANTS;
+// const { NoMenuPages } = CONSTANTS;
 const {
   setCurrentUser,
   setSessionId,
@@ -133,7 +133,7 @@ export default {
         yield put({
           type: 'menu/updateState',
           payload: {
-            visibleTabData: [NoMenuPages[0]],
+            visibleTabData: [],
             moreTabData: [],
             activedMenu: null,
           },
@@ -214,7 +214,7 @@ export default {
       yield put({
         type: 'menu/updateState',
         payload: {
-          visibleTabData: [NoMenuPages[0]],
+          visibleTabData: [],
           moreTabData: [],
           activedMenu: null,
         },
@@ -226,7 +226,7 @@ export default {
       yield put({
         type: 'menu/updateState',
         payload: {
-          visibleTabData: [NoMenuPages[0]],
+          visibleTabData: [],
           moreTabData: [],
           activedMenu: null,
         },

@@ -31,7 +31,7 @@ export default class UserIcon extends React.Component {
     dispatch({
       type: 'menu/openTab',
       payload: {
-        activedMenu: NoMenuPages[1],
+        activedMenu: NoMenuPages[0],
       },
     });
     // .then(({ activedMenu }) => {

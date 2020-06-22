@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-21 09:01:38
+ * @Last Modified time: 2020-06-22 09:22:39
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -84,9 +84,9 @@ export default {
     /** 当前菜单树 */
     currMenuTree: null,
     /** 页签数据 */
-    tabData: [NoMenuPages[0]],
+    tabData: [],
     /** 可视页签 */
-    visibleTabData: [NoMenuPages[0]],
+    visibleTabData: [],
     /** 页签可视区域，下拉中的页签数据 */
     moreTabData: [],
     /** 收藏菜单 */
