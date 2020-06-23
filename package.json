@@ -58,6 +58,7 @@
     "rc-resize-observer": "^0.2.1",
     "rc-trigger": "^2.6.2",
     "react": "^16.8.6",
+    "react-color": "^2.18.1",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-transition-group": "^4.4.1",
