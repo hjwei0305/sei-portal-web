@@ -105,6 +105,7 @@ class NavLeft extends React.Component {
   renderMenu = data =>
     data.map(item => {
       if (item.children && item.children.length) {
+        const { collapsed } = this.props;
         const title = (
           <span>
             {item.iconType ? <Icon type={item.iconType} /> : <Icon type="profile" />}
@@ -114,6 +115,12 @@ class NavLeft extends React.Component {
 
         return (
           <SubMenu title={title} key={item.id}>
+            <div
+              className={cls('submenu-hover-title')}
+              style={{ display: collapsed ? 'block' : 'none' }}
+            >
+              {item.title}
+            </div>
             {this.renderMenu(item.children)}
           </SubMenu>
         );
