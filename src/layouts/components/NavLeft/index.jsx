@@ -188,7 +188,18 @@ class NavLeft extends React.Component {
             </Fragment>
           )}
         </div>
-        <div className="layout-menu">
+        <div
+          className="layout-menu"
+          onClick={e => {
+            if (
+              e.target.className &&
+              e.target.className.includes('scrollbar-container') &&
+              onCollapse
+            ) {
+              onCollapse();
+            }
+          }}
+        >
           {openKeys ? (
             <ScrollBar>
               <Menu
