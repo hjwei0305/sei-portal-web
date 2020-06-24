@@ -194,7 +194,8 @@ class NavLeft extends React.Component {
             if (
               e.target.className &&
               e.target.className.includes('scrollbar-container') &&
-              onCollapse
+              onCollapse &&
+              collapsed
             ) {
               onCollapse();
             }
