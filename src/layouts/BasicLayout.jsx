@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { Modal, message } from 'antd';
 import { ScrollBar } from 'suid';
 import { formatMessage } from 'umi-plugin-react/locale';
-import DashBoard from '@/pages/DashBoard';
+// import DashBoard from '@/pages/DashBoard';
 import { userInfoOperation } from '@/utils';
 import ConfirmLoginModal from '@/pages/Login/ConfirmLoginModal';
 import { getWeChatCfg } from '@/services/user';
@@ -276,7 +276,7 @@ export default class BasicLayout extends React.Component {
 
   render() {
     const { collapsed } = this.state;
-    const { menu } = this.props;
+    const { menu, children } = this.props;
     const {
       tabData,
       mode,
@@ -363,15 +363,15 @@ export default class BasicLayout extends React.Component {
               </Header>
             </header>
             <content className={cls('layout-center-content')}>
-              <div
+              {/* <div
                 style={{
                   display: !isSubAppRouter && !activedKey ? 'block' : 'none',
                   height: '100%',
                 }}
               >
                 <DashBoard />
-              </div>
-              {/* {!isSubAppRouter && !activedKey ? children : null} */}
+              </div> */}
+              {!isSubAppRouter && !activedKey ? children : null}
               {mode === 'iframe' ? (
                 <TabPane
                   style={activedKey === '' ? { visibility: 'hidden', height: 0 } : {}}
