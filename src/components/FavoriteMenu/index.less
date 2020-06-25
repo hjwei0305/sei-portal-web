@@ -124,6 +124,14 @@
   line-height: 32px;
   background-color: #2b3444;
   border-radius: 100%;
+  &-actived {
+    background-color: #3d76bc;
+    :global {
+      .favorite-icon {
+        color: #f3f3f3 !important;
+      }
+    }
+  }
   &:hover {
     background-color: #3d76bc;
     :global {
@@ -134,7 +142,7 @@
   }
   :global {
     .favorite-icon {
-      color: #5d6470 !important;
+      color: #5d6470;
     }
   }
 }

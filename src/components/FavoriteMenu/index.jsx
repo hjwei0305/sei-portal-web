@@ -7,6 +7,10 @@ import { ScrollBar } from 'suid';
 import styles from './index.less';
 
 export default class FavoriteMenu extends React.Component {
+  state = {
+    visible: false,
+  };
+
   getItemTitle = item => {
     const { onRemove } = this.props;
     const menuTitle = get(item, 'title', '');
@@ -52,8 +56,15 @@ export default class FavoriteMenu extends React.Component {
     );
   };
 
+  handleChange = visible => {
+    this.setState({
+      visible,
+    });
+  };
+
   render() {
     const { className, collapsed } = this.props;
+    const { visible } = this.state;
 
     return (
       <Popover
@@ -72,8 +83,14 @@ export default class FavoriteMenu extends React.Component {
             <ScrollBar>{this.getDataList()}</ScrollBar>
           </div>
         }
+        onVisibleChange={this.handleChange}
       >
-        <div className={cls(styles['favorite-icon-wrapper'])}>
+        <div
+          className={cls({
+            [styles['favorite-icon-wrapper']]: true,
+            [styles['favorite-icon-wrapper-actived']]: visible,
+          })}
+        >
           <Icon className={cls('favorite-icon')} type="star" />
         </div>
       </Popover>
