@@ -137,7 +137,7 @@ export default class SelectModule extends PureComponent {
           <span className="title">
             {currMenuTree ? currMenuTree.title : <span>应用加载中...</span>}
           </span>
-          <ExtIcon type="app" style={{ fontSize: '16px', marginLeft: '6px' }} />
+          <ExtIcon type="app" style={{ fontSize: '18px', marginLeft: '6px' }} />
         </span>
         <Drawer
           headerStyle={headerStyle}
