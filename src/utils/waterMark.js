@@ -16,10 +16,11 @@ class Watermark {
     content = '请勿外传',
     rotate = '30',
     watermarkImg = '',
+    isUseUserNameText = false,
   }) => {
     this.container = container;
     let base64Url = watermarkImg;
-    if (!watermarkImg) {
+    if (!watermarkImg || isUseUserNameText) {
       const canvas = document.createElement('canvas');
       canvas.setAttribute('width', width);
       canvas.setAttribute('height', height);

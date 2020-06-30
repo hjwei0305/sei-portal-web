@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-30 13:45:18
+ * @Last Modified time: 2020-06-30 15:36:39
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -253,7 +253,12 @@ export default {
           },
         });
         if (watermark) {
-          waterMark.getWatermark(JSON.parse(watermark));
+          const userInfo = getCurrentUser();
+          const watermarkSetting = JSON.parse(watermark);
+          const { disabled } = watermarkSetting;
+          if (!disabled) {
+            waterMark.getWatermark({ ...watermarkSetting, content: userInfo.userName });
+          }
         }
       }
     },
