@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
-// import { router } from 'umi';
+import { get } from 'lodash';
 import { Icon, Menu, Avatar } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import ExtDropdown from '@/components/ExtDropdown';
@@ -60,7 +60,7 @@ export default class UserIcon extends React.Component {
     return (
       <ExtDropdown overlay={this.dropdownRender()}>
         <span className={cls(styles['user-icon-wrapper'], 'trigger')}>
-          <Avatar icon="user" size="13" />
+          <Avatar icon={<img alt="" src={get(this.currentUser, 'portrait')} />} size="13" />
           <span className={cls('username')}>{this.currentUser && this.currentUser.userName}</span>
         </span>
       </ExtDropdown>
