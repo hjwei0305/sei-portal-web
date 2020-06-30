@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2020-06-24 15:51:37
+ * @Last Modified time: 2020-06-30 13:45:18
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -17,8 +17,9 @@ import {
   getUserByXsid,
   updatePwd,
   authorizeData,
+  getTenantSetting,
 } from '@/services/user';
-import { userInfoOperation, eventBus } from '@/utils';
+import { userInfoOperation, eventBus, waterMark } from '@/utils';
 
 // const { NoMenuPages } = CONSTANTS;
 const {
@@ -42,6 +43,7 @@ export default {
     sessionId: null,
     verifyCode: null,
     qrConfig: null,
+    tenantSetting: null,
   },
 
   subscriptions: {
@@ -237,6 +239,22 @@ export default {
       const result = yield call(getAuthorizedFeatures, user.userId);
       if (result && result.success) {
         setCurrentAuth(result.data);
+      }
+    },
+    *getTenantSetting({ payload }, { call, put }) {
+      const result = yield call(getTenantSetting, payload);
+      const { data, success } = result;
+      if (success) {
+        const { watermark } = data;
+        yield put({
+          type: 'updateState',
+          payload: {
+            tenantSetting: data,
+          },
+        });
+        if (watermark) {
+          waterMark.getWatermark(JSON.parse(watermark));
+        }
       }
     },
     *getVerifyCode({ payload }, { call, put }) {

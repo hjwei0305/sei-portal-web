@@ -1,87 +1,100 @@
-// canvas 实现 watermark
-export default ({
-  container = document.body,
-  width = '360px',
-  height = '270px',
-  textAlign = 'center',
-  textBaseline = 'middle',
-  font = '20px microsoft yahei',
-  fillStyle = 'rgba(14, 184, 184, 0.2)',
-  content = '请勿外传',
-  rotate = '30',
-}) => {
-  const canvas = document.createElement('canvas');
-  canvas.setAttribute('width', width);
-  canvas.setAttribute('height', height);
-  const ctx = canvas.getContext('2d');
-  ctx.textAlign = textAlign;
-  ctx.textBaseline = textBaseline;
-  ctx.font = font;
-  ctx.fillStyle = fillStyle;
-  ctx.rotate((Math.PI / 180) * rotate);
-  ctx.fillText(content, parseFloat(width) / 2, parseFloat(height) / 2);
-  const base64Url = canvas.toDataURL();
-  const watermarkDiv = document.createElement('div');
-  watermarkDiv.className = 'watermark-base';
-  watermarkDiv.setAttribute(
-    'style',
-    `
-    background-image:url('${base64Url}')`,
-  );
+class Watermark {
+  mo = null;
 
-  container.setAttribute('style', `position: relative;`);
-  container.insertBefore(watermarkDiv, container.firstChild);
-  // tempImg.onload = () => {
-  //   ctx.textAlign = textAlign;
-  //   ctx.textBaseline = textBaseline;
-  //   ctx.font = font;
-  //   ctx.fillStyle = fillStyle;
-  //   ctx.rotate((Math.PI / 180) * rotate);
-  //   ctx.fillText(content, parseFloat(width) / 2, parseFloat(height) / 2);
-  //   // ctx.drawImage(tempImg, 0, 0);
-  //   const base64Url = canvas.toDataURL();
-  //   const watermarkDiv = document.createElement('div');
-  //   watermarkDiv.setAttribute(
-  //     'style',
-  //     `
-  //     position:absolute;
-  //     top:0;
-  //     left:0;
-  //     width:100%;
-  //     height:100%;
-  //     z-index:${zIndex};
-  //     pointer-events:none;
-  //     background-repeat:repeat;
-  //     background-image:url('${base64Url}')`,
-  //   );
+  container = null;
 
-  //   container.style.position = 'relative';
-  //   container.insertBefore(watermarkDiv, container.firstChild);
-  // };
-  // ctx.textAlign = textAlign;
-  // ctx.textBaseline = textBaseline;
-  // ctx.font = font;
-  // ctx.fillStyle = fillStyle;
-  // ctx.rotate((Math.PI / 180) * rotate);
-  // ctx.fillText(content, parseFloat(width) / 2, parseFloat(height) / 2);
+  params = null;
 
-  // ctx.drawImage(img, 0, 0)
-  // const base64Url = canvas.toDataURL();
-  // const watermarkDiv = document.createElement('div');
-  // watermarkDiv.setAttribute(
-  //   'style',
-  //   `
-  //   position:absolute;
-  //   top:0;
-  //   left:0;
-  //   width:100%;
-  //   height:100%;
-  //   z-index:${zIndex};
-  //   pointer-events:none;
-  //   background-repeat:repeat;
-  //   background-image:url('${base64Url}')`,
-  // );
+  getWatermark = ({
+    container = document.body,
+    width = '260px',
+    height = '150px',
+    textAlign = 'center',
+    textBaseline = 'middle',
+    font = '20px microsoft yahei',
+    fillStyle = 'rgba(184, 184, 184, 0.2)',
+    content = '请勿外传',
+    rotate = '30',
+    watermarkImg = '',
+  }) => {
+    this.container = container;
+    let base64Url = watermarkImg;
+    if (!watermarkImg) {
+      const canvas = document.createElement('canvas');
+      canvas.setAttribute('width', width);
+      canvas.setAttribute('height', height);
+      const ctx = canvas.getContext('2d');
+      ctx.textAlign = textAlign;
+      ctx.textBaseline = textBaseline;
+      ctx.font = font;
+      ctx.fillStyle = fillStyle;
+      ctx.translate(parseFloat(width) / 2, parseFloat(height) / 2);
+      ctx.rotate((Math.PI / 180) * rotate);
+      ctx.translate(-parseFloat(width) / 2, -parseFloat(height) / 2);
+      ctx.fillText(content, parseFloat(width) / 2, parseFloat(height) / 2);
+      base64Url = canvas.toDataURL();
+    }
 
-  // container.style.position = 'relative';
-  // container.insertBefore(watermarkDiv, container.firstChild);
-};
+    const watermarkDiv = document.createElement('div');
+    watermarkDiv.id = '__watermark-base__';
+    const styleStr = `
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+      z-index: 99999999 !important;
+      visibility: visible !important;
+      pointer-events: none !important;
+      background-image: url('${base64Url}') !important;
+    `;
+    watermarkDiv.setAttribute('style', `${styleStr}`);
+
+    container.insertBefore(watermarkDiv, container.firstChild);
+    const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+    /** 监听dom变化 */
+    if (MutationObserver) {
+      this.mo = new MutationObserver(() => {
+        const __wm = document.getElementById('__watermark-base__');
+        // 只在__wm元素变动才重新调用 __canvasWM
+        if ((__wm && __wm.getAttribute('style') !== styleStr) || !__wm) {
+          // 避免一直触发
+          this.mo.disconnect();
+          this.mo = null;
+          this.getWatermark({
+            container,
+            width,
+            height,
+            textAlign,
+            textBaseline,
+            font,
+            fillStyle,
+            content,
+            rotate,
+            watermarkImg,
+          });
+        }
+      });
+
+      this.mo.observe(container, {
+        attributes: true,
+        subtree: true,
+        childList: true,
+      });
+    }
+  };
+
+  removeWatermark = () => {
+    if (this.mo) {
+      this.mo.disconnect();
+      this.mo = null;
+    }
+    const __wm = document.getElementById('__watermark-base__');
+    if (this.container) {
+      this.container.removeChild(__wm);
+    }
+  };
+}
+
+export default new Watermark();

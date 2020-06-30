@@ -32,7 +32,7 @@ export default class BasicLayout extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    const { userId } = getCurrentUser() || {};
+    const { userId, tenantCode } = getCurrentUser() || {};
     /** 动态获取子模块配置，并且启动微前端应用 */
     dispatch({
       type: 'base/getApps',
@@ -56,6 +56,12 @@ export default class BasicLayout extends React.Component {
         type: 'user/getUserFeatures',
         payload: {
           userId,
+        },
+      });
+      dispatch({
+        type: 'user/getTenantSetting',
+        payload: {
+          tenantCode,
         },
       });
     }
