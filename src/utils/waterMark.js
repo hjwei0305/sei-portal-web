@@ -13,10 +13,12 @@ class Watermark {
     textBaseline = 'middle',
     font = '20px microsoft yahei',
     fillStyle = 'rgba(184, 184, 184, 0.2)',
+    color = { r: 184, g: 184, b: 184, a: 0.2 },
     content = '请勿外传',
     rotate = '30',
     watermarkImg = '',
     isUseUserNameText = false,
+    fontSize = '20',
   }) => {
     this.container = container;
     let base64Url = watermarkImg;
@@ -27,8 +29,8 @@ class Watermark {
       const ctx = canvas.getContext('2d');
       ctx.textAlign = textAlign;
       ctx.textBaseline = textBaseline;
-      ctx.font = font;
-      ctx.fillStyle = fillStyle;
+      ctx.font = `${fontSize}px microsoft yahei`;
+      ctx.fillStyle = `rgba(${color.r},${color.g},${color.b},${color.a})`;
       ctx.translate(parseFloat(width) / 2, parseFloat(height) / 2);
       ctx.rotate((Math.PI / 180) * rotate);
       ctx.translate(-parseFloat(width) / 2, -parseFloat(height) / 2);
@@ -71,9 +73,11 @@ class Watermark {
             textBaseline,
             font,
             fillStyle,
+            color,
             content,
             rotate,
             watermarkImg,
+            fontSize,
           });
         }
       });
