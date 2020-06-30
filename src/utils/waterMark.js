@@ -91,7 +91,7 @@ class Watermark {
       this.mo = null;
     }
     const __wm = document.getElementById('__watermark-base__');
-    if (this.container) {
+    if (this.container && __wm) {
       this.container.removeChild(__wm);
     }
   };
