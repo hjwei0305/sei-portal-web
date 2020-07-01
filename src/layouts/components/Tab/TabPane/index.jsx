@@ -49,13 +49,11 @@ class TabPane extends React.Component {
         }
       }
 
-      const tReg = new RegExp('#', 'g');
-
       return (
         <Iframe
           url={tempUrl}
-          key={id}
-          id={`${id}${tempUrl.replace(tReg, '')}`}
+          key={`${id}${tempUrl}`}
+          id={id}
           title={title}
           ref={ref => {
             this.ref[id] = ref;
