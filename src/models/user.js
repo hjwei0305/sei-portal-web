@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
- * @Last Modified by: Eason
- * @Last Modified time: 2020-06-30 16:43:17
+ * @Last Modified by: zp
+ * @Last Modified time: 2020-07-01 10:44:24
  */
 import { router } from 'umi';
 import { notification, message } from 'antd';
@@ -61,26 +61,29 @@ export default {
   },
 
   effects: {
-    *processUser({ payload }, { call, put }) {
+    *processUser({ payload }, { put, call }) {
       const { userInfo } = payload;
       const { sessionId, locale, authorityPolicy } = userInfo || {};
+      let portrait = defaultHeadIcon;
       setSessionId(sessionId);
       setCurrentPolicy(authorityPolicy);
       setCurrentLocale(adaptLocale(locale || 'zh_CN'));
       setLocale(adaptLocale(locale || 'zh_CN'));
       const resultPortrait = yield call(getPortrait);
-      Object.assign(userInfo, { portrait: defaultHeadIcon });
       if (resultPortrait.success) {
-        Object.assign(userInfo, { portrait: resultPortrait.data || defaultHeadIcon });
+        portrait = resultPortrait.data || defaultHeadIcon;
       }
       yield put({
         type: 'updateState',
         payload: {
-          userInfo,
+          userInfo: {
+            ...userInfo,
+            portrait,
+          },
           sessionId,
         },
       });
-      setCurrentUser(userInfo);
+      setCurrentUser({ ...userInfo, portrait });
     },
     *bindingSocialAccount({ payload }, { call }) {
       const result = yield call(bindingSocialAccount, payload);
@@ -89,13 +92,6 @@ export default {
         if (data && data.redirectUrl) {
           window.open(data.redirectUrl, '_self');
         }
-        // yield put({
-        //   type: 'processUser',
-        //   payload: {
-        //     userInfo: data,
-        //   },
-        // });
-        // router.replace('/');
       } else {
         notification.error({
           message: '请求错误',
@@ -103,7 +99,7 @@ export default {
         });
       }
     },
-    *getUserByXsid({ payload }, { put, call }) {
+    *getUserByXsid({ payload }, { put, call, take }) {
       const result = yield call(getUserByXsid, payload);
       const { success, data, message: msg } = result || {};
       if (success) {
@@ -113,6 +109,7 @@ export default {
             userInfo: data,
           },
         });
+        yield take('processUser/@@end');
         router.replace('/');
       } else {
         notification.error({
@@ -123,7 +120,7 @@ export default {
 
       return result;
     },
-    *userLogin({ payload }, { put }) {
+    *userLogin({ payload }, { put, take }) {
       const result = yield userLogin({ ...payload, locale: adaptLocale(getCurrentLocale()) });
       const { success, data, message: msg } = result || {};
       const { loginStatus } = data || {};
@@ -140,6 +137,7 @@ export default {
             userInfo: data,
           },
         });
+        yield take('processUser/@@end');
         /** 更新菜单相关状态 */
         yield put({
           type: 'menu/updateState',
@@ -189,7 +187,7 @@ export default {
 
       return result;
     },
-    *quickLogin({ payload }, { put }) {
+    *quickLogin({ payload }, { put, take }) {
       const result = yield userLogin({ ...payload, locale: adaptLocale(getCurrentLocale()) });
       const { success, data, message: msg } = result || {};
       const { loginStatus } = data || {};
@@ -200,6 +198,7 @@ export default {
             userInfo: data,
           },
         });
+        yield take('processUser/@@end');
       } else {
         notification.error({
           message: '请求错误',

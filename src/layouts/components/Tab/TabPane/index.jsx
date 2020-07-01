@@ -53,7 +53,7 @@ class TabPane extends React.Component {
         <Iframe
           url={tempUrl}
           key={id}
-          id={id}
+          id={`${id}${tempUrl}`}
           title={title}
           ref={ref => {
             this.ref[id] = ref;
