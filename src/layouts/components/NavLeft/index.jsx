@@ -148,7 +148,16 @@ class NavLeft extends React.Component {
       favoriteMenus,
       onCollapse,
       onSelectSearchMenu,
+      tenantSetting,
     } = this.props;
+    let collapsedMenuLogo = collapsedLogo;
+    let menuLogo = logo;
+    if (tenantSetting && tenantSetting.logo) {
+      const logoObj = JSON.parse(tenantSetting.logo);
+      if (!logoObj.disabled) {
+        ({ collapsedMenuLogo, menuLogo } = logoObj);
+      }
+    }
     return (
       <div
         className={cls({
@@ -157,7 +166,7 @@ class NavLeft extends React.Component {
         })}
       >
         <div className="layout-logo" onClick={this.handleLogoClick}>
-          <img src={collapsed ? collapsedLogo : logo} alt="logo" />
+          <img src={collapsed ? collapsedMenuLogo : menuLogo} alt="logo" />
         </div>
         <div className="layout-menu-search">
           {!collapsed ? (

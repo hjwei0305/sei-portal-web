@@ -20,7 +20,7 @@ const { confirm } = Modal;
 const { TabPane, TabHeader } = Tab;
 const { getCurrentUser } = userInfoOperation;
 
-@connect(({ base, menu }) => ({ base, menu }))
+@connect(({ base, menu, user }) => ({ base, menu, user }))
 export default class BasicLayout extends React.Component {
   constructor(props) {
     super(props);
@@ -282,7 +282,7 @@ export default class BasicLayout extends React.Component {
 
   render() {
     const { collapsed } = this.state;
-    const { menu, children } = this.props;
+    const { menu, children, user } = this.props;
     const {
       tabData,
       mode,
@@ -295,6 +295,7 @@ export default class BasicLayout extends React.Component {
       moreTabData,
       favoriteMenus,
     } = menu;
+    const { tenantSetting } = user;
     const isSubAppRouter = this.isSubAppRouter();
     let activedKey = '';
     let title = formatMessage({ id: 'app.dashboard', desc: '平台首页' });
@@ -340,6 +341,7 @@ export default class BasicLayout extends React.Component {
               activedMenuKey={activedKey}
               mode={mode}
               onCollapse={this.handleTogCollapsed}
+              tenantSetting={tenantSetting}
             />
           </nav>
           <section className={cls('layout-center')}>
