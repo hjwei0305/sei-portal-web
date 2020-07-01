@@ -39,12 +39,30 @@ export default class UserIcon extends React.Component {
     // });
   };
 
+  handlerDashboardCustom = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'menu/openTab',
+      payload: {
+        activedMenu: {
+          id: 'my-dashboard-home',
+          title: '自定义首页',
+          url: '/sei-dashboard-web//scene/myHome',
+        },
+      },
+    });
+  };
+
   dropdownRender = () => {
     const menu = (
-      <Menu selectedKeys={[]}>
+      <Menu selectedKeys={[]} className={cls(styles['user-menu-item'])}>
         <Menu.Item key="setting" onClick={this.handleSetting}>
           <Icon type="setting" />
           个人设置
+        </Menu.Item>
+        <Menu.Item key="my-dashboard-home" onClick={this.handlerDashboardCustom}>
+          <Icon type="home" />
+          {formatMessage({ id: 'app.dashboard.custom', desc: '自定义首页' })}
         </Menu.Item>
         <Menu.Item key="logout" onClick={this.handleClick}>
           <Icon type="logout" />
