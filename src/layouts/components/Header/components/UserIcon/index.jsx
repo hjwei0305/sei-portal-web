@@ -47,7 +47,7 @@ export default class UserIcon extends React.Component {
         activedMenu: {
           id: 'my-dashboard-home',
           title: '自定义首页',
-          url: '/sei-dashboard-web//scene/myHome',
+          url: '/sei-dashboard-web/scene/myHome',
         },
       },
     });
