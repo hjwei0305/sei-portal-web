@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 10:51:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-07-10 10:29:26
+ * @Last Modified time: 2020-07-10 11:19:27
  */
 import { utils } from 'suid';
 
@@ -19,10 +19,20 @@ export const setCurrentUser = user => {
 export const getCurrentUser = () => sessionStorage.get(CURRENT_USER);
 
 export const getCurrentLocale = () => {
-  if (!/^["|'][\s\S]*["|']$/.test(window.localStorage.getItem(CURRENT_LOCALE))) {
-    return window.localStorage.getItem(CURRENT_LOCALE);
+  const temp = window.localStorage.getItem(CURRENT_LOCALE);
+  if (temp) {
+    try {
+      window.atob(temp);
+      return localStorage.get(CURRENT_LOCALE);
+    } catch {
+      try {
+        return JSON.parse(temp);
+      } catch {
+        return temp;
+      }
+    }
   }
-  return localStorage.get(CURRENT_LOCALE);
+  return null;
 };
 
 export const setCurrentLocale = locale => {
