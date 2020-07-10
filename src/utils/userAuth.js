@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 10:51:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-08 10:51:00
+ * @Last Modified time: 2020-07-10 10:29:26
  */
 import { utils } from 'suid';
 
@@ -18,7 +18,12 @@ export const setCurrentUser = user => {
 /** 获取当前用户信息 */
 export const getCurrentUser = () => sessionStorage.get(CURRENT_USER);
 
-export const getCurrentLocale = () => localStorage.get(CURRENT_LOCALE);
+export const getCurrentLocale = () => {
+  if (!/^["|'][\s\S]*["|']$/.test(window.localStorage.getItem(CURRENT_LOCALE))) {
+    return window.localStorage.getItem(CURRENT_LOCALE);
+  }
+  return localStorage.get(CURRENT_LOCALE);
+};
 
 export const setCurrentLocale = locale => {
   localStorage.set(CURRENT_LOCALE, locale);
