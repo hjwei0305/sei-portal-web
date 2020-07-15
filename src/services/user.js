@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
- * @Last Modified by: Eason
- * @Last Modified time: 2020-06-30 16:32:06
+ * @Last Modified by: zp
+ * @Last Modified time: 2020-07-15 09:03:21
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -14,6 +14,9 @@ export const updatePwd = data =>
     method: 'POST',
     url: `${SEIAUTHSERVICE}/account/updatePassword`,
     data,
+    headers: {
+      needToken: false,
+    },
   });
 
 /**
