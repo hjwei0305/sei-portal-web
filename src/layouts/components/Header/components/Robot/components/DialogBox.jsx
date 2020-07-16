@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ExtModal, ScrollBar, utils } from 'suid';
+import { ExtModal, ScrollBar, utils, ExtIcon } from 'suid';
 import ReactDOM from 'react-dom';
 import cls from 'classnames';
 import moment from 'moment';
@@ -222,6 +222,7 @@ class DialogBox extends Component {
         }}
         onCancel={onClose}
         maskClosable={false}
+        closeIcon={<ExtIcon type="minus" antd tooltip={{ title: '最小化' }} />}
       >
         <Row className={cls('item-height')} gutter={8}>
           <Col className={cls('item-height')} span={16}>
