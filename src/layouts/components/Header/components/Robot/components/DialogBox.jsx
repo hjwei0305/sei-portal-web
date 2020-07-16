@@ -200,7 +200,7 @@ class DialogBox extends Component {
   };
 
   render() {
-    const { title = '智多星', visible, onClose } = this.props;
+    const { title = '小智', visible, onClose } = this.props;
     const { searchVal } = this.state;
 
     return (
