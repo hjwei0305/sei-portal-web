@@ -215,13 +215,13 @@ class DialogBox extends Component {
         visible={visible}
         footer={null}
         width={700}
-        mask={false}
+        // mask={false}
         bodyStyle={{
           height: 500,
           padding: 0,
         }}
         onCancel={onClose}
-        maskClosable={false}
+        // maskClosable={false}
         closeIcon={<ExtIcon type="minus" antd tooltip={{ title: '最小化' }} />}
       >
         <Row className={cls('item-height')} gutter={8}>
