@@ -8,6 +8,7 @@ import SelectModule from './components/SelectModule';
 import UserIcon from './components/UserIcon';
 import Notify from './components/Notify';
 import Help from './components/Help';
+import Robot from './components/Robot';
 
 import styles from './index.less';
 
@@ -42,6 +43,7 @@ export default class Header extends React.Component {
         </div>
         <div className={cls('header-layout-right')}>
           {/* <CaptureScreen className={cls('trigger')} /> */}
+          <Robot className={cls('trigger')} />
           <Help className={cls('trigger')} />
           <Notify className={cls('trigger')} />
           <UserIcon />
