@@ -37,6 +37,16 @@ class LoginForm extends Component {
     });
   };
 
+  focusVerifyCodeInput = () => {
+    if (this.verifyCodeInputRef) {
+      const input = document.getElementById('verifyCode');
+      if (input) {
+        input.focus();
+        input.select();
+      }
+    }
+  };
+
   render() {
     const {
       loading,
@@ -123,6 +133,7 @@ class LoginForm extends Component {
             })(
               <Input
                 disabled={loading}
+                ref={inst => (this.verifyCodeInputRef = inst)}
                 allowClear
                 autoFocus
                 prefix={<Icon type="code" style={colorStyle} />}

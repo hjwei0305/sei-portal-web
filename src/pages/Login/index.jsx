@@ -59,9 +59,16 @@ export default class Login extends Component {
             }).then(result => {
               const { success: scs } = result || {};
               if (scs) {
-                this.setState({
-                  showVertifCode: true,
-                });
+                this.setState(
+                  {
+                    showVertifCode: true,
+                  },
+                  () => {
+                    if (this.loginFormRef) {
+                      this.loginFormRef.focusVerifyCodeInput();
+                    }
+                  },
+                );
               }
             });
           }
