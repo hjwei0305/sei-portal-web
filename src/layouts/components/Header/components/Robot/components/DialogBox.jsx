@@ -255,6 +255,16 @@ class DialogBox extends Component {
           <Col className={cls('item-height')} span={8}>
             <Row className={cls('item-right')}>
               <Col className={cls('item-right-top')}>
+                <a
+                  href={`/sei-help-web/#/sei-help-web/sso?_s=${this.currentUser.sessionId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExtIcon type="question-circle" style={{ fontSize: 16 }} antd />
+                  {` 前往帮助中心`}
+                </a>
+              </Col>
+              <Col className={cls('item-right-center')}>
                 <HotPostList />
               </Col>
               <Col className={cls('item-right-bottom')}>
