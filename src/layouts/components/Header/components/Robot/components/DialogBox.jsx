@@ -260,7 +260,7 @@ class DialogBox extends Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ExtIcon type="question-circle" style={{ fontSize: 16 }} antd />
+                  <ExtIcon type="question-circle" style={{ fontSize: 20 }} antd />
                   {` 前往帮助中心`}
                 </a>
               </Col>
