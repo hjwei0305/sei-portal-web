@@ -1,0 +1,69 @@
+.login-page {
+  height: 100%;
+  background-size: cover;
+  :global {
+    .lang-wrapper {
+      float: right;
+      margin-top: 10px;
+      margin-right: 40px;
+      color: lightblue;
+      font-size: 20px;
+      &:hover {
+        color: #77a5ff;
+      }
+    }
+    .logo {
+      position: relative;
+      float: left;
+      margin-top: 46px;
+      margin-left: 114px;
+      img {
+        width: 267px;
+        height: 37px;
+      }
+    }
+
+    .account-pane-wrapper {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 90%;
+      padding: 2px;
+      min-height: 450px;
+      transform: translate(-50%, -50%);
+      border-radius: 5px;
+      .account-banner {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+      .account-form-wrapper {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        .form-box {
+          position: absolute;
+          top: 50%;
+          width: 100%;
+          padding: 20px 40px;
+          min-height: 323px;
+          transform: translateY(-50%);
+          background-color: white;
+          .login-form-title {
+            color: grey;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 70px;
+            text-align: center;
+          }
+          .ant-row.ant-form-item {
+            height: auto;
+            margin-bottom: 12px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -21,7 +21,7 @@ const routes = [
   },
   {
     path: '/user',
-    component: '../layouts/LoginLayout',
+    component: '../layouts/TempLoginLayout',
     routes: [
       {
         name: 'login',

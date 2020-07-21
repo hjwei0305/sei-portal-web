@@ -18,6 +18,10 @@ export default class FullScreen extends React.Component {
     };
   }
 
+  componentWillUnmount() {
+    window.onresize = null;
+  }
+
   handleFullScreen = () => {
     if (screenfull.isEnabled) {
       screenfull.toggle().then(() => {
