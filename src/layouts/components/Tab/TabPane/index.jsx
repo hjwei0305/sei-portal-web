@@ -40,7 +40,7 @@ class TabPane extends React.Component {
     const { data = [], activedKey, onHomeClick } = this.props;
     const reg = /^https?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\? i)?=?&?[a-zA-Z0-9_-](\?)?)*)*$/;
 
-    return data.map(({ url, id, title, parentTab, closeActivedParent }) => {
+    return data.map(({ url, id, title, parentTab, closeActiveParentTab }) => {
       let tempUrl = url;
       if (!reg.test(tempUrl.split('?')[0])) {
         const temp = url.split('/');
@@ -56,9 +56,11 @@ class TabPane extends React.Component {
           id={id}
           title={title}
           onUnmount={() => {
-            if (closeActivedParent) {
+            if (closeActiveParentTab) {
               if (parentTab) {
-                eventBus.emit('openTab', parentTab);
+                if (data.some(item => item.id === parentTab.id)) {
+                  eventBus.emit('openTab', parentTab);
+                }
               } else {
                 onHomeClick();
               }

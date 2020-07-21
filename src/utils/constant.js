@@ -39,7 +39,7 @@ export const NoMenuPages = [
     id: 'userProfile',
     title: '个人设置',
     url: '/sei-basic-web/userProfile',
-    closeActivedParent: true,
+    closeActiveParentTab: true,
   },
 ];
 

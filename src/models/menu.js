@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-07-21 16:53:06
+ * @Last Modified time: 2020-07-22 06:07:35
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -393,7 +393,7 @@ export default {
             storage.localStorage.set(key, recentMenus);
           }
         }
-        if (activedMenu.closeActivedParent) {
+        if (activedMenu.closeActiveParentTab) {
           activedMenu.parentTab = null;
           if (oldActivedMenu) {
             activedMenu.parentTab = oldActivedMenu;
