@@ -44,8 +44,10 @@ class Iframe extends Component {
   }
 
   componentWillUnmount() {
-    const { id } = this.props;
-    console.log('Iframe -> componentWillUnmount -> id', id);
+    const { onUnmount } = this.props;
+    if (onUnmount) {
+      onUnmount();
+    }
   }
 
   // componentWillUnmount() {

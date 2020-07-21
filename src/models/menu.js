@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-07-01 10:59:58
+ * @Last Modified time: 2020-07-21 16:27:18
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -374,7 +374,10 @@ export default {
 
       return payload;
     },
-    *openTab({ payload }, { put }) {
+    *openTab({ payload }, { put, select }) {
+      const menu = yield select(state => state.menu);
+      const { activedMenu: oldActivedMenu } = menu;
+
       const { activedMenu } = payload;
       if (activedMenu) {
         const originMenus = NoMenuPages.filter(m => m.id === activedMenu.id);
@@ -389,6 +392,14 @@ export default {
             set(recentMenus, tmpMenu.id, tmpMenu);
             storage.localStorage.set(key, recentMenus);
           }
+        }
+        if (
+          oldActivedMenu &&
+          oldActivedMenu.id !== activedMenu.id &&
+          activedMenu.closeActivedParent
+        ) {
+          activedMenu.parentTab = oldActivedMenu;
+          console.log('*openTab -> activedMenu', activedMenu);
         }
         /** 更新页签状态 */
         yield put({

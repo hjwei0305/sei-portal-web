@@ -40,7 +40,7 @@ class TabPane extends React.Component {
     const { data = [], activedKey } = this.props;
     const reg = /^https?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\? i)?=?&?[a-zA-Z0-9_-](\?)?)*)*$/;
 
-    return data.map(({ url, id, title }) => {
+    return data.map(({ url, id, title, parentTab }) => {
       let tempUrl = url;
       if (!reg.test(tempUrl.split('?')[0])) {
         const temp = url.split('/');
@@ -55,6 +55,9 @@ class TabPane extends React.Component {
           key={`${id}${tempUrl}`}
           id={id}
           title={title}
+          onUnmount={() => {
+            eventBus.emit('openTab', parentTab);
+          }}
           ref={ref => {
             this.ref[id] = ref;
           }}
