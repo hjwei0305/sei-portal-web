@@ -43,6 +43,11 @@ class Iframe extends Component {
     NProgress.start();
   }
 
+  componentWillUnmount() {
+    const { id } = this.props;
+    console.log('Iframe -> componentWillUnmount -> id', id);
+  }
+
   // componentWillUnmount() {
   //   if (this.refIframe && this.refIframe.contentWindow) {
   //     this.refIframe.src = 'about:blank';
