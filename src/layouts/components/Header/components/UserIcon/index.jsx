@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { get } from 'lodash';
+import { get, cloneDeep } from 'lodash';
 import { Icon, Menu, Avatar } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import ExtDropdown from '@/components/ExtDropdown';
@@ -31,7 +31,7 @@ export default class UserIcon extends React.Component {
     dispatch({
       type: 'menu/openTab',
       payload: {
-        activedMenu: NoMenuPages[0],
+        activedMenu: cloneDeep(NoMenuPages[0]),
       },
     });
     // .then(({ activedMenu }) => {
