@@ -37,10 +37,10 @@ class TabPane extends React.Component {
   };
 
   renderIframes() {
-    const { data = [], activedKey } = this.props;
+    const { data = [], activedKey, onHomeClick } = this.props;
     const reg = /^https?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\? i)?=?&?[a-zA-Z0-9_-](\?)?)*)*$/;
 
-    return data.map(({ url, id, title, parentTab }) => {
+    return data.map(({ url, id, title, parentTab, closeActivedParent }) => {
       let tempUrl = url;
       if (!reg.test(tempUrl.split('?')[0])) {
         const temp = url.split('/');
@@ -56,7 +56,13 @@ class TabPane extends React.Component {
           id={id}
           title={title}
           onUnmount={() => {
-            eventBus.emit('openTab', parentTab);
+            if (closeActivedParent) {
+              if (parentTab) {
+                eventBus.emit('openTab', parentTab);
+              } else {
+                onHomeClick();
+              }
+            }
           }}
           ref={ref => {
             this.ref[id] = ref;

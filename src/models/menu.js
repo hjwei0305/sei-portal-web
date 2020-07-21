@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-07-21 16:27:18
+ * @Last Modified time: 2020-07-21 16:53:06
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -393,13 +393,11 @@ export default {
             storage.localStorage.set(key, recentMenus);
           }
         }
-        if (
-          oldActivedMenu &&
-          oldActivedMenu.id !== activedMenu.id &&
-          activedMenu.closeActivedParent
-        ) {
-          activedMenu.parentTab = oldActivedMenu;
-          console.log('*openTab -> activedMenu', activedMenu);
+        if (activedMenu.closeActivedParent) {
+          activedMenu.parentTab = null;
+          if (oldActivedMenu) {
+            activedMenu.parentTab = oldActivedMenu;
+          }
         }
         /** 更新页签状态 */
         yield put({

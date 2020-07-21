@@ -386,6 +386,7 @@ export default class BasicLayout extends React.Component {
                   // data={visibleTabData.concat(moreTabData)}
                   data={tabData}
                   activedKey={activedKey}
+                  onHomeClick={this.handleHomeClick}
                   ref={inst => {
                     this.tabPaneRef = inst;
                   }}
