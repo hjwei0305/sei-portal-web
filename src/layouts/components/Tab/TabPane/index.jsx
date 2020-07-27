@@ -57,7 +57,7 @@ class TabPane extends React.Component {
           title={title}
           onUnmount={() => {
             if (closeActiveParentTab) {
-              if (parentTab) {
+              if (parentTab !== 'homepage') {
                 if (data.some(item => item.id === parentTab.id)) {
                   eventBus.emit('openTab', parentTab);
                 }
