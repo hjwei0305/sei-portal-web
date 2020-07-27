@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-07-22 07:40:13
+ * @Last Modified time: 2020-07-27 19:36:57
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -453,15 +453,11 @@ export default {
       /** 添加监听开页签 */
       eventBus.addListener('openTab', tab => {
         if (tab) {
-          const { id, title, url } = tab;
+          // const { id, title, url } = tab;
           dispatch({
             type: 'openTab',
             payload: {
-              activedMenu: {
-                id,
-                title,
-                url,
-              },
+              activedMenu: tab,
             },
           });
         }
