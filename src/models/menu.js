@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-07-27 20:00:32
+ * @Last Modified time: 2020-08-05 10:51:08
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -434,9 +434,14 @@ export default {
     setup({ history }) {
       return history.listen(async ({ pathname }) => {
         if (
-          !['/', '/DashBoard', '/user/login', '/sso/socialAccount', '/sso/ssoWrapperPage'].includes(
-            pathname,
-          ) &&
+          ![
+            '/',
+            '/DashBoard',
+            '/user/login',
+            '/sso/socialAccount',
+            '/sso/ssoWrapperPage',
+            '/updatePwd',
+          ].includes(pathname) &&
           init
         ) {
           init = false;
