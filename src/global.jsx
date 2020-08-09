@@ -1,7 +1,12 @@
 // import React from 'react';
+import { message } from 'antd';
 import fetchPolyfill from './fetchPolyfill';
 
 fetchPolyfill();
+/** 默认配置message，最多弹出来一个，屏幕弹框吐丝现象 */
+message.config({
+  maxCount: 1,
+});
 
 if ('serviceWorker' in navigator) {
   // unregister service worker

@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: zp
- * @Last Modified time: 2020-05-19 12:37:00
+ * @Last Modified time: 2020-07-15 09:03:21
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -14,6 +14,9 @@ export const updatePwd = data =>
     method: 'POST',
     url: `${SEIAUTHSERVICE}/account/updatePassword`,
     data,
+    headers: {
+      needToken: false,
+    },
   });
 
 /**
@@ -112,3 +115,23 @@ export async function getAuthorizedFeatures(userId) {
 export async function clearUserAuthCaches(userId) {
   return request.post(`${BASICSERVICE}/user/clearUserAuthorizedCaches/${userId}`);
 }
+
+/**
+ * 根据租户通过租户代码获取租户配置
+ * params tenantCode
+ */
+export async function getTenantSetting(params) {
+  const url = `${BASICSERVICE}/tenantSetting/findOne`;
+  return request({
+    url,
+    method: 'GET',
+    params,
+  });
+}
+
+export const getPortrait = (params = {}) =>
+  request({
+    method: 'GET',
+    url: `${BASICSERVICE}/userProfile/findPortrait`,
+    params,
+  });

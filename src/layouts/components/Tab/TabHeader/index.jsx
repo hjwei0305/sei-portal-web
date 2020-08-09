@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 import { message } from 'antd';
 import { router } from 'umi';
 import ResizeObserver from 'rc-resize-observer';
-import TabOperateIcon from '../TabOperateIcon/index.jsx';
+import DropDwonTabItems from '../DropDwonTabItems';
 import TabItem from '../TabItem/index.jsx';
 import styles from './index.less';
 
@@ -43,34 +43,22 @@ class Tabs extends Component {
     mode: 'iframe',
   };
 
-  state = {
-    showCount: undefined,
-  };
+  showStartIndex = 0;
 
-  // componentDidMount() {
-  // this.computeShowCount();
-  // window.addEventListener('resize', this.handleResize, false);
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   const { data } = this.props;
-  //   if (nextProps.data.length !== data.length) {
-  //     this.computeShowCount();
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  // window.removeEventListener('resize', this.handleResize, false);
-  // }
+  componentDidMount() {
+    this.computeShowCount();
+  }
 
   /** 根据实际宽度计算可以显示的页签个数 */
   computeShowCount = () => {
+    const { onResize } = this.props;
     // const containerWidth = this.refContainer.offsetWidth;
     const containerWidth = this.parentWidth || 0;
     const tabsWidth = containerWidth - 60 - (this.firstWidth + 4);
     const showCount = Math.floor(tabsWidth / (this.tabItemWidth + 4)) + 1;
-
-    this.setState({ showCount });
+    if (onResize) {
+      onResize(showCount);
+    }
   };
 
   /* eslint-disable */
@@ -79,7 +67,7 @@ class Tabs extends Component {
 
   /** 关闭当前激活的页签 */
   handleCloseCurrent = () => {
-    const { data, onChange, activedKey, onClose, mode } = this.props;
+    const { visibleTabData: data, onChange, activedKey, onClose, mode } = this.props;
     if (data.length >= 1) {
       const i = data.findIndex(({ id }) => id === activedKey);
       const currActivedMenu = data[i];
@@ -93,7 +81,7 @@ class Tabs extends Component {
           activingItem = data[i - 1];
         }
         if (activingItem) {
-          onChange(activingItem.id, activingItem);
+          // onChange(activingItem.id, activingItem);
           /** 安全考虑，防止复制地址，访问没有权限的地址，切换页签的时候禁止地址变化 */
           if (mode !== 'iframe') {
             /** 导航  */
@@ -107,10 +95,11 @@ class Tabs extends Component {
 
   /** 关闭所有页签 */
   handleCloseAll = () => {
-    const { data, onClose } = this.props;
+    const { onClose, visibleTabData, moreTabData } = this.props;
+    const data = visibleTabData.concat(moreTabData);
     if (data.length >= 1) {
       onClose(
-        data.map(({ id }) => id),
+        data.filter(item => !item.noClosable).map(({ id }) => id),
         true,
       );
     }
@@ -118,7 +107,7 @@ class Tabs extends Component {
 
   /** 根据id关闭页签 */
   handleClose = id => {
-    const { activedKey, onClose, data } = this.props;
+    const { activedKey, onClose, visibleTabData: data } = this.props;
     if (activedKey === id) {
       this.handleCloseCurrent();
     } else {
@@ -137,6 +126,20 @@ class Tabs extends Component {
   handleReload = () => {
     const { onReload, activedKey } = this.props;
     onReload(activedKey);
+  };
+
+  handleCloseOther = () => {
+    const { onClose, visibleTabData, moreTabData, activedKey } = this.props;
+    const data = visibleTabData.concat(moreTabData);
+    if (onClose) {
+      onClose(
+        data
+          .filter(item => !item.noClosable)
+          .map(item => item.id)
+          .filter(id => id !== activedKey),
+        false,
+      );
+    }
   };
 
   renderTabItem = (data, index) => {
@@ -158,35 +161,28 @@ class Tabs extends Component {
         key={data[0].id}
         onClose={this.handleClose}
         onClick={this.handleClick}
-        closable={index !== 0}
+        closable={!data[0].noClosable}
         activedKey={activedKey}
         actived={actived}
         mode={mode}
+        menuContextAction={{
+          reload: this.handleReload,
+          closeOther: this.handleCloseOther,
+          closeAll: this.handleCloseAll,
+        }}
       />
     );
   };
 
   renderTabItems = () => {
-    const { data } = this.props;
-    const { showCount } = this.state;
-    /** 可以显示的页签 */
-    let visibleTabs = [];
-    let tabsMore = null;
-    if (showCount && showCount < data.length) {
-      visibleTabs = data.slice(0, showCount - 1);
-      tabsMore = data.slice(showCount - 1);
-    } else {
-      visibleTabs = data;
-    }
+    const { data, visibleTabData = [] } = this.props;
 
-    return [
-      ...visibleTabs.map((tab, index) => this.renderTabItem([tab], index, data.length)),
-      this.renderTabItem(tabsMore, showCount - 1, data.length),
-    ];
+    return [...visibleTabData.map((tab, index) => this.renderTabItem([tab], index, data.length))];
   };
 
   render() {
-    const { data } = this.props;
+    const { data, activedKey, mode, moreTabData, visibleTabData, showTabCounts = 0 } = this.props;
+
     return (
       <ResizeObserver
         onResize={param => {
@@ -200,12 +196,25 @@ class Tabs extends Component {
             this.refContainer = ref;
           }}
         >
-          {this.renderTabItems()}
-          {data.length ? (
-            <TabOperateIcon
-              onReloadCurrent={this.handleReload}
-              onCloseCurrent={this.handleCloseCurrent}
-              onCloseAll={this.handleCloseAll}
+          <div
+            style={{
+              width: showTabCounts * (this.tabItemWidth + 4),
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              height: 56,
+            }}
+          >
+            <div style={{ width: visibleTabData.length * (this.tabItemWidth + 4) }}>
+              {this.renderTabItems()}
+            </div>
+          </div>
+          {moreTabData.length ? (
+            <DropDwonTabItems
+              onClose={this.handleClose}
+              onClick={this.handleClick}
+              activedKey={activedKey}
+              mode={mode}
+              data={moreTabData || []}
             />
           ) : null}
         </div>

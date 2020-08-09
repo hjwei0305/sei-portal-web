@@ -4,6 +4,7 @@ import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
 import md5 from 'md5';
 import { utils } from 'suid';
+import { waterMark } from '@/utils';
 import LoginForm from './Form';
 import QrCode from './QrCode';
 import styles from './index.less';
@@ -19,6 +20,7 @@ export default class Login extends Component {
   loginReqId = utils.getUUID();
 
   componentDidMount() {
+    waterMark.removeWatermark();
     document.addEventListener('keydown', this.onKeyDown);
   }
 
@@ -57,9 +59,16 @@ export default class Login extends Component {
             }).then(result => {
               const { success: scs } = result || {};
               if (scs) {
-                this.setState({
-                  showVertifCode: true,
-                });
+                this.setState(
+                  {
+                    showVertifCode: true,
+                  },
+                  () => {
+                    if (this.loginFormRef) {
+                      this.loginFormRef.focusVerifyCodeInput();
+                    }
+                  },
+                );
               }
             });
           }

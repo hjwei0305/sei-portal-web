@@ -23,7 +23,7 @@ class TabOperateIcon extends Component {
   };
 
   render() {
-    const { onCloseCurrent, onCloseAll, onReloadCurrent, } = this.props;
+    const { onCloseCurrent, onCloseAll, onReloadCurrent } = this.props;
     const { visible } = this.state;
     return (
       <div className={styles['custom-tabs-operate']}>

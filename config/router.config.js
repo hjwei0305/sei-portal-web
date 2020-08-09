@@ -12,11 +12,16 @@ const routes = [
         path: '/sso/ssoWrapperPage',
         component: './Sso',
       },
+      {
+        name: 'wxTurnPage',
+        path: '/sso/wxTurnPage',
+        component: './WxTurnPage',
+      },
     ],
   },
   {
     path: '/user',
-    component: '../layouts/LoginLayout',
+    component: '../layouts/TempLoginLayout',
     routes: [
       {
         name: 'login',

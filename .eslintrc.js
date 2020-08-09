@@ -6,5 +6,7 @@ module.exports = {
   },
   rules: {
     'no-underscore-dangle': [0],
+    'no-return-assign': [0],
+    'react/no-find-dom-node': [0],
   },
 };

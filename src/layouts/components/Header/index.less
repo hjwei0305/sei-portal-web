@@ -1,4 +1,4 @@
-@import url('../../vars.less');
+@import '../../../themes/default.less';
 
 @trigger-hover-bg: rgba(0, 0, 0, 0.025);
 
@@ -11,17 +11,29 @@
     .trigger {
       display: inline-block;
       height: 100%;
-      padding: 0 15px;
+      padding: 0 16px;
       font-size: 20px;
       vertical-align: top;
       cursor: pointer;
       transition: all 0.3s;
       &:hover {
-        background: @trigger-hover-bg;
+        background-color: @trigger-hover-bg;
       }
-      &_active {
-        color: #1890ff;
-        background: @base-bg-color;
+      &.trigger_active {
+        background-color: @base-bg-color;
+      }
+      .title {
+        display: inline-block;
+        min-width: 94px;
+        text-align: center;
+        span {
+          color: rgb(166, 166, 166);
+          font-size: 16px;
+        }
+      }
+      &.trigger-open {
+        color: @primary-color;
+        background-color: @trigger-hover-bg;
       }
     }
     .header-layout-right {

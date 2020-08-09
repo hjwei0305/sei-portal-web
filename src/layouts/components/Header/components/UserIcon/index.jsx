@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
-// import { router } from 'umi';
+import { get, cloneDeep } from 'lodash';
 import { Icon, Menu, Avatar } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import ExtDropdown from '@/components/ExtDropdown';
@@ -31,7 +31,7 @@ export default class UserIcon extends React.Component {
     dispatch({
       type: 'menu/openTab',
       payload: {
-        activedMenu: NoMenuPages[1],
+        activedMenu: cloneDeep(NoMenuPages[0]),
       },
     });
     // .then(({ activedMenu }) => {
@@ -39,12 +39,30 @@ export default class UserIcon extends React.Component {
     // });
   };
 
+  handlerDashboardCustom = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'menu/openTab',
+      payload: {
+        activedMenu: {
+          id: 'my-dashboard-home',
+          title: '自定义首页',
+          url: '/sei-dashboard-web/scene/myHome',
+        },
+      },
+    });
+  };
+
   dropdownRender = () => {
     const menu = (
-      <Menu selectedKeys={[]}>
+      <Menu selectedKeys={[]} className={cls(styles['user-menu-item'])}>
         <Menu.Item key="setting" onClick={this.handleSetting}>
           <Icon type="setting" />
           个人设置
+        </Menu.Item>
+        <Menu.Item key="my-dashboard-home" onClick={this.handlerDashboardCustom}>
+          <Icon type="home" />
+          {formatMessage({ id: 'app.dashboard.custom', desc: '自定义首页' })}
         </Menu.Item>
         <Menu.Item key="logout" onClick={this.handleClick}>
           <Icon type="logout" />
@@ -60,7 +78,7 @@ export default class UserIcon extends React.Component {
     return (
       <ExtDropdown overlay={this.dropdownRender()}>
         <span className={cls(styles['user-icon-wrapper'], 'trigger')}>
-          <Avatar icon="user" size="13" />
+          <Avatar icon={<img alt="" src={get(this.currentUser, 'portrait')} />} size="13" />
           <span className={cls('username')}>{this.currentUser && this.currentUser.userName}</span>
         </span>
       </ExtDropdown>

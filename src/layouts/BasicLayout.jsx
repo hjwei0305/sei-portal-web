@@ -4,9 +4,10 @@ import cls from 'classnames';
 import { router } from 'umi';
 import { Helmet } from 'react-helmet';
 import { Modal, message } from 'antd';
+import { ScrollBar } from 'suid';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { userInfoOperation, weiXinUtils } from '@/utils';
-// import { userInfoOperation,  } from '@/utils';
+// import DashBoard from '@/pages/DashBoard';
+import { userInfoOperation } from '@/utils';
 import ConfirmLoginModal from '@/pages/Login/ConfirmLoginModal';
 import { getWeChatCfg } from '@/services/user';
 import Header from './components/Header';
@@ -19,7 +20,7 @@ const { confirm } = Modal;
 const { TabPane, TabHeader } = Tab;
 const { getCurrentUser } = userInfoOperation;
 
-@connect(({ base, menu }) => ({ base, menu }))
+@connect(({ base, menu, user }) => ({ base, menu, user }))
 export default class BasicLayout extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +32,7 @@ export default class BasicLayout extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    const { userId } = getCurrentUser() || {};
+    const { userId, tenantCode } = getCurrentUser() || {};
     /** 动态获取子模块配置，并且启动微前端应用 */
     dispatch({
       type: 'base/getApps',
@@ -57,11 +58,19 @@ export default class BasicLayout extends React.Component {
           userId,
         },
       });
+      dispatch({
+        type: 'user/getTenantSetting',
+        payload: {
+          tenantCode,
+        },
+      });
     }
     window.addEventListener('message', this.delegateTab, false);
-    if (weiXinUtils.isWeiXin()) {
-      this.showOpenDefaultBrowserConfirm();
-    }
+    // if (weiXinUtils.isWeiXin()) {
+    //   this.showOpenDefaultBrowserConfirm();
+    // }
+
+    // waterMark({ content: '虹信软件股份有限公司' });
   }
 
   componentWillUnmount() {
@@ -122,6 +131,16 @@ export default class BasicLayout extends React.Component {
     });
   };
 
+  handleResize = showTabCounts => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'menu/updateShowTabCounts',
+      payload: {
+        showTabCounts,
+      },
+    });
+  };
+
   /** 页签操作 */
   handleTabs = (type, payload) => {
     const { dispatch } = this.props;
@@ -132,11 +151,21 @@ export default class BasicLayout extends React.Component {
   };
 
   handleHomeClick = () => {
-    this.handleTabs('open', {
-      activedMenu: null,
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'menu/updateState',
+      payload: {
+        activedMenu: null,
+      },
     }).then(() => {
       router.push('/DashBoard');
     });
+
+    // this.handleTabs('open', {
+    //   activedMenu: null,
+    // }).then(() => {
+    //   router.push('/DashBoard');
+    // });
   };
 
   showOpenDefaultBrowserConfirm = () => {
@@ -213,7 +242,6 @@ export default class BasicLayout extends React.Component {
             },
             res => {
               // eslint-disable-next-line no-console
-              console.log('BasicLayout -> handleLogoClick -> res', res);
               if (res.err_msg === 'openDefaultBrowser:ok') {
                 window.wx.closeWindow();
                 window.close();
@@ -254,8 +282,20 @@ export default class BasicLayout extends React.Component {
 
   render() {
     const { collapsed } = this.state;
-    const { children, history, menu } = this.props;
-    const { tabData, mode, currMenuTree, activedMenu, loginVisible } = menu;
+    const { menu, children, user } = this.props;
+    const {
+      tabData,
+      mode,
+      currMenuTree,
+      activedMenu,
+      loginVisible,
+      allLeafMenus,
+      showTabCounts,
+      visibleTabData,
+      moreTabData,
+      favoriteMenus,
+    } = menu;
+    const { tenantSetting } = user;
     const isSubAppRouter = this.isSubAppRouter();
     let activedKey = '';
     let title = formatMessage({ id: 'app.dashboard', desc: '平台首页' });
@@ -265,82 +305,112 @@ export default class BasicLayout extends React.Component {
       title = `${currMenuTree && currMenuTree.title}-${tempTitle}`;
     }
     return (
-      <section className={cls(styles['portal-layout'])}>
-        <Helmet>
-          <title>{title}</title>
-          <meta name="description" content={title} />
-        </Helmet>
-        <nav
-          className={cls({
-            'layout-sidebar': true,
-            'layout-sidebar-collapsed': collapsed,
-          })}
-        >
-          <NavLeft
-            onLogoClick={this.handleLogoClick}
-            menuConfig={currMenuTree ? currMenuTree.children || [] : []}
-            onMenuClick={currMenu => {
-              this.handleTabs('open', {
-                activedMenu: currMenu,
-              });
-            }}
-            collapsed={collapsed}
-            activedMenuKey={activedKey}
-            mode={mode}
-          />
-        </nav>
-        <section className={cls('layout-center')}>
-          <header className={cls('layout-center-header')}>
-            <Header
-              onCollapse={this.handleTogCollapsed}
+      <ScrollBar>
+        <section className={cls(styles['portal-layout'])}>
+          <Helmet>
+            <title>{title}</title>
+            <meta name="description" content={title} />
+          </Helmet>
+          <nav
+            className={cls({
+              'layout-sidebar': true,
+              'layout-sidebar-collapsed': collapsed,
+            })}
+          >
+            <NavLeft
+              onSelectSearchMenu={currMenu => {
+                const { dispatch } = this.props;
+                dispatch({
+                  type: 'menu/openTab',
+                  payload: {
+                    activedMenu: currMenu,
+                  },
+                });
+                // .then(() => router.push(currMenu.url));
+              }}
+              favoriteMenus={favoriteMenus}
+              allLeafMenus={allLeafMenus}
+              onLogoClick={this.handleLogoClick}
+              menuConfig={currMenuTree ? currMenuTree.children || [] : []}
+              onMenuClick={currMenu => {
+                this.handleTabs('open', {
+                  activedMenu: currMenu,
+                });
+              }}
               collapsed={collapsed}
-              onHomeClick={this.handleHomeClick}
-            >
-              {mode === 'spa' ? (
-                this.getBreadCrumb()
-              ) : (
-                <TabHeader
+              activedMenuKey={activedKey}
+              mode={mode}
+              onCollapse={this.handleTogCollapsed}
+              tenantSetting={tenantSetting}
+            />
+          </nav>
+          <section className={cls('layout-center')}>
+            <header className={cls('layout-center-header')}>
+              <Header
+                // onCollapse={this.handleTogCollapsed}
+                // collapsed={collapsed}
+                onHomeClick={this.handleHomeClick}
+              >
+                {mode === 'spa' ? (
+                  this.getBreadCrumb()
+                ) : (
+                  <TabHeader
+                    data={tabData}
+                    activedKey={activedKey}
+                    activedMenu={activedMenu}
+                    onClose={this.handleCloseTab}
+                    onChange={this.handleToggleTab}
+                    onReload={this.handleReload}
+                    onResize={this.handleResize}
+                    visibleTabData={visibleTabData}
+                    moreTabData={moreTabData}
+                    showTabCounts={showTabCounts}
+                    mode={mode}
+                  />
+                )}
+              </Header>
+            </header>
+            <content className={cls('layout-center-content')}>
+              {/* <div
+                style={{
+                  display: !isSubAppRouter && !activedKey ? 'block' : 'none',
+                  height: '100%',
+                }}
+              >
+                <DashBoard />
+              </div> */}
+              {!isSubAppRouter && !activedKey ? children : null}
+              {mode === 'iframe' ? (
+                <TabPane
+                  style={activedKey === '' ? { visibility: 'hidden', height: 0 } : {}}
+                  // data={visibleTabData.concat(moreTabData)}
                   data={tabData}
                   activedKey={activedKey}
-                  onClose={this.handleCloseTab}
-                  onChange={this.handleToggleTab}
-                  onReload={this.handleReload}
-                  mode={mode}
-                  history={history}
+                  onHomeClick={this.handleHomeClick}
+                  ref={inst => {
+                    this.tabPaneRef = inst;
+                  }}
                 />
+              ) : (
+                <div
+                  id="root-subapp"
+                  style={{
+                    display: isSubAppRouter ? 'block' : 'none',
+                  }}
+                ></div>
               )}
-            </Header>
-          </header>
-          <content className={cls('layout-center-content')}>
-            {!isSubAppRouter && !activedKey ? children : null}
-            {mode === 'iframe' ? (
-              <TabPane
-                style={activedKey === '' ? { visibility: 'hidden', height: 0 } : {}}
-                data={tabData}
-                activedKey={activedKey}
-                ref={inst => {
-                  this.tabPaneRef = inst;
-                }}
-              />
-            ) : (
-              <div
-                id="root-subapp"
-                style={{
-                  display: isSubAppRouter ? 'block' : 'none',
-                }}
-              ></div>
-            )}
-          </content>
+            </content>
+          </section>
+          {loginVisible ? (
+            <ConfirmLoginModal
+              title="用户登录"
+              visible={loginVisible}
+              footer={null}
+              afterSuccess={this.handleAfterSuccess}
+            />
+          ) : null}
         </section>
-        {loginVisible ? (
-          <ConfirmLoginModal
-            title="用户登录"
-            visible={loginVisible}
-            footer={null}
-            afterSuccess={this.handleAfterSuccess}
-          />
-        ) : null}
-      </section>
+      </ScrollBar>
     );
   }
 }

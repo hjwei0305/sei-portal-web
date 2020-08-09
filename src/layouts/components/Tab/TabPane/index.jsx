@@ -1,7 +1,9 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { eventBus } from '@/utils';
+import { eventBus, CONSTANTS } from '@/utils';
 import Iframe from '../Iframe';
+
+const { IS_DEVELOPMENT } = CONSTANTS;
 
 class TabPane extends React.Component {
   static propTypes = {
@@ -22,25 +24,25 @@ class TabPane extends React.Component {
 
   ref = {};
 
-  reload = id => {
-    if (this.ref[id]) {
-      this.ref[id].reload();
-    }
-  };
-
   componentDidMount() {
     eventBus.addListener('refresh', id => {
       this.reload(id);
     });
   }
 
+  reload = id => {
+    if (this.ref[id]) {
+      this.ref[id].reload();
+    }
+  };
+
   renderIframes() {
-    const { data = [], activedKey } = this.props;
+    const { data = [], activedKey, onHomeClick } = this.props;
     const reg = /^https?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\? i)?=?&?[a-zA-Z0-9_-](\?)?)*)*$/;
 
-    return data.map(({ url, id, title }) => {
+    return data.map(({ url, id, title, parentTab, closeActiveParentTab }) => {
       let tempUrl = url;
-      if (!reg.test(tempUrl)) {
+      if (!reg.test(tempUrl.split('?')[0])) {
         const temp = url.split('/');
         if (!temp.includes('#')) {
           tempUrl = `/${temp[1]}/#${url}`;
@@ -50,9 +52,20 @@ class TabPane extends React.Component {
       return (
         <Iframe
           url={tempUrl}
-          key={id}
+          key={`${id}${tempUrl}`}
           id={id}
           title={title}
+          onUnmount={() => {
+            if (closeActiveParentTab) {
+              if (parentTab !== 'homepage') {
+                if (data.some(item => item.id === parentTab.id)) {
+                  eventBus.emit('openTab', parentTab);
+                }
+              } else {
+                onHomeClick();
+              }
+            }
+          }}
           ref={ref => {
             this.ref[id] = ref;
           }}
@@ -73,7 +86,7 @@ class TabPane extends React.Component {
           ...style,
         }}
       >
-        {this.renderIframes()}
+        {!IS_DEVELOPMENT ? this.renderIframes() : null}
       </div>
     );
   }

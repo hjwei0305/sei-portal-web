@@ -1,9 +1,12 @@
-import React from 'react';
-import { Menu, Icon } from 'antd';
+import React, { Fragment } from 'react';
+import { Menu, Icon, Row, Col } from 'antd';
 import { Link } from 'umi';
 import { ScrollBar } from 'suid';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
+import { eventBus } from '@/utils';
+import MenuSearch from '@/components/MenuSearch';
+import FavoriteMenu from '@/components/FavoriteMenu';
 import logo from '../../../assets/logo.svg';
 import collapsedLogo from '../../../assets/logo_notxt@2x.png';
 
@@ -56,6 +59,12 @@ class NavLeft extends React.Component {
     }
   };
 
+  handleCollect = (e, item) => {
+    e.stopPropagation();
+    const { id, favorite } = item;
+    eventBus.emit(favorite ? 'deCollectMenu' : 'collectMenu', id);
+  };
+
   updateCurrentSelected = key => {
     this.setState({
       currentSelectedKeys: [key],
@@ -67,16 +76,28 @@ class NavLeft extends React.Component {
     if (mode !== 'iframe') {
       return (
         <Link to={item.url}>
-          <Icon type={item.iconType} />
+          {item.iconType ? <Icon type={item.iconType} /> : null}
           <span>{item.title}</span>
+          <Icon className="collect-icon" type="star" onClick={e => this.handleCollect(e, item)} />
         </Link>
       );
     }
     return (
-      <span>
-        <Icon type={item.iconType} />
-        <span>{item.title}</span>
-      </span>
+      <Fragment>
+        <span>
+          {item.iconType ? <Icon type={item.iconType} /> : null}
+          <span>{item.title}</span>
+        </span>
+        <Icon
+          className={cls({
+            'collect-icon-actived': item.favorite,
+            'collect-icon': true,
+          })}
+          type="star"
+          theme={item.favorite ? 'twoTone' : ''}
+          onClick={e => this.handleCollect(e, item)}
+        />
+      </Fragment>
     );
   };
 
@@ -84,15 +105,22 @@ class NavLeft extends React.Component {
   renderMenu = data =>
     data.map(item => {
       if (item.children && item.children.length) {
+        const { collapsed } = this.props;
         const title = (
           <span>
-            <Icon type={item.iconType} />
+            {item.iconType ? <Icon type={item.iconType} /> : <Icon type="profile" />}
             <span>{item.title}</span>
           </span>
         );
 
         return (
           <SubMenu title={title} key={item.id}>
+            <div
+              className={cls('submenu-hover-title')}
+              style={{ display: collapsed ? 'block' : 'none' }}
+            >
+              {item.title}
+            </div>
             {this.renderMenu(item.children)}
           </SubMenu>
         );
@@ -113,7 +141,23 @@ class NavLeft extends React.Component {
 
   render() {
     const { currentSelectedKeys, openKeys } = this.state;
-    const { collapsed, menuConfig = [] } = this.props;
+    const {
+      collapsed,
+      menuConfig = [],
+      allLeafMenus,
+      favoriteMenus,
+      onCollapse,
+      onSelectSearchMenu,
+      tenantSetting,
+    } = this.props;
+    let collapsedMenuLogo = collapsedLogo;
+    let menuLogo = logo;
+    if (tenantSetting && tenantSetting.logo) {
+      const logoObj = JSON.parse(tenantSetting.logo);
+      if (!logoObj.disabled) {
+        ({ collapsedMenuLogo, menuLogo } = logoObj);
+      }
+    }
     return (
       <div
         className={cls({
@@ -122,9 +166,50 @@ class NavLeft extends React.Component {
         })}
       >
         <div className="layout-logo" onClick={this.handleLogoClick}>
-          <img src={collapsed ? collapsedLogo : logo} alt="logo" />
+          <img src={collapsed ? collapsedMenuLogo : menuLogo} alt="logo" />
         </div>
-        <div className="layout-menu">
+        <div className="layout-menu-search">
+          {!collapsed ? (
+            <Fragment>
+              <Row type="flex" align="middle">
+                <Col style={{ flex: 1 }}>
+                  <MenuSearch onSelect={onSelectSearchMenu} data={allLeafMenus} />
+                </Col>
+                <Col style={{ width: 50 }}>
+                  <FavoriteMenu
+                    collapsed={collapsed}
+                    data={favoriteMenus}
+                    onSelect={onSelectSearchMenu}
+                    onRemove={this.handleCollect}
+                  />
+                </Col>
+              </Row>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Icon className="collapsed-search-icon" type="search" onClick={onCollapse} />
+              <FavoriteMenu
+                collapsed={collapsed}
+                data={favoriteMenus}
+                onSelect={onSelectSearchMenu}
+                onRemove={this.handleCollect}
+              />
+            </Fragment>
+          )}
+        </div>
+        <div
+          className="layout-menu"
+          onClick={e => {
+            if (
+              e.target.className &&
+              e.target.className.includes('scrollbar-container') &&
+              onCollapse &&
+              collapsed
+            ) {
+              onCollapse();
+            }
+          }}
+        >
           {openKeys ? (
             <ScrollBar>
               <Menu
@@ -138,6 +223,16 @@ class NavLeft extends React.Component {
               </Menu>
             </ScrollBar>
           ) : null}
+        </div>
+        <div className="layout-menu-collapse" onClick={onCollapse}>
+          {!collapsed ? (
+            <Fragment>
+              <Icon className="collapse-icon" type="double-left" />
+              <span>收起菜单</span>
+            </Fragment>
+          ) : (
+            <Icon type="double-right" />
+          )}
         </div>
       </div>
     );

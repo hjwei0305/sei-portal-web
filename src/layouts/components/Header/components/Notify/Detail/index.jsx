@@ -31,9 +31,14 @@ export default class index extends React.Component {
   };
 
   handleHaveKnown = () => {
-    const { id: msgId, msgCategory } = this.props;
+    const { id: msgId, msgCategory, afterHasKnown } = this.props;
     this.handleBtn();
-    hasKonwn({ msgId, category: msgCategory });
+    hasKonwn({ msgId, category: msgCategory }).then(result => {
+      const { success } = result;
+      if (success) {
+        afterHasKnown();
+      }
+    });
   };
 
   getModalProps = () => {

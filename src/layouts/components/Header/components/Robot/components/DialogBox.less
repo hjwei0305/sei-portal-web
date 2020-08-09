@@ -1,0 +1,133 @@
+.dialog-box {
+  :global {
+    .ant-modal-header {
+      background-color: #f9f8f8;
+    }
+    .ant-modal-body {
+      overflow: hidden;
+      .item-height {
+        height: 100%;
+        overflow: hidden;
+      }
+      .dialog-content {
+        height: 80%;
+        background-color: #f9f8f8;
+        .empty-wrapper {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+        .ant-list {
+          padding: 8px;
+          .ant-list-items {
+            .ext-list-item-meta {
+              display: flex;
+              align-items: flex-start;
+              text-align: right;
+              .ext-list-item-meta-content {
+                flex: 1;
+                .ext-list-item-meta-title {
+                  margin-bottom: 4px;
+                  color: #666;
+                  font-size: 14px;
+                  line-height: 22px;
+                }
+                .ext-list-item-meta-description {
+                  // overflow: hidden;
+                  color: rgba(0, 0, 0, 0.45);
+                  font-size: 14px;
+                  line-height: 22px;
+                  word-break: break-all;
+                  .float-content {
+                    position: relative;
+                    float: right;
+                    padding: 4px;
+                    text-align: left;
+                    background-color: #d7e5f5;
+                    border-radius: 3px;
+                    &::after {
+                      position: absolute;
+                      top: 2px;
+                      right: -2px;
+                      z-index: 100000;
+                      width: 8px;
+                      height: 8px;
+                      background-color: #d7e5f5;
+                      transform: rotate(30deg);
+                      content: '';
+                    }
+                  }
+                }
+              }
+              .ext-list-item-meta-avatar {
+                margin-left: 16px;
+              }
+            }
+
+            .ant-list-item {
+              border-bottom: none;
+              .description-content {
+                position: relative;
+                float: left;
+                padding: 4px;
+                text-align: left;
+                word-break: break-all;
+                background-color: #d7e5f5;
+                border-radius: 3px;
+                &::after {
+                  position: absolute;
+                  top: 2px;
+                  left: -2px;
+                  z-index: 100000;
+                  width: 8px;
+                  height: 8px;
+                  background-color: #d7e5f5;
+                  transform: rotate(-30deg);
+                  content: '';
+                }
+              }
+            }
+          }
+        }
+      }
+      .dialog-input {
+        height: 20%;
+        background-color: #f9f8f8;
+        border-top: 1px solid lightgray;
+        textarea {
+          padding: 20px;
+          background-color: #f9f8f8;
+          border: none;
+          outline: none;
+          resize: none;
+          &:focus {
+            border-color: none;
+            box-shadow: none;
+          }
+        }
+        .dialog-opt {
+          position: absolute;
+          right: 0;
+          bottom: 10px;
+        }
+      }
+      .item-right {
+        height: 100%;
+        .item-right-top {
+          height: 8%;
+          padding: 8px 0 0 8px;
+          font-size: 20px;
+        }
+        .item-right-center {
+          height: 46%;
+          padding: 8px 0 0 0;
+        }
+        .item-right-bottom {
+          height: 46%;
+          padding: 8px 0 0 0;
+        }
+      }
+    }
+  }
+}

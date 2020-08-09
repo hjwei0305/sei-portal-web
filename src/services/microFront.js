@@ -3,18 +3,18 @@
 export const getSubAppConfig = () =>
   Promise.resolve({
     apps: [
-      {
-        name: 'sei-basic-web',
-        entry: `/sei-basic-web?random=${new Date().getTime()}`,
-        base: '/sei-basic-web',
-      },
-      { name: 'sei-notify-web', entry: '/sei-notify-web', base: '/sei-notify-web' },
-      { name: 'sei-serial-web', entry: '/sei-serial-web', base: '/sei-serial-web' },
-      {
-        name: 'sei-task-web',
-        entry: `/sei-task-web?random=${new Date().getTime()}`,
-        base: '/sei-task-web',
-      },
+      // {
+      //   name: 'sei-basic-web',
+      //   entry: `/sei-basic-web?random=${new Date().getTime()}`,
+      //   base: '/sei-basic-web',
+      // },
+      // { name: 'sei-notify-web', entry: '/sei-notify-web', base: '/sei-notify-web' },
+      // { name: 'sei-serial-web', entry: '/sei-serial-web', base: '/sei-serial-web' },
+      // {
+      //   name: 'sei-task-web',
+      //   entry: `/sei-task-web?random=${new Date().getTime()}`,
+      //   base: '/sei-task-web',
+      // },
     ],
     defer: true,
     jsSandbox: false,

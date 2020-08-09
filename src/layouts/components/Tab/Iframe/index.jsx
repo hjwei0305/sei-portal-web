@@ -43,6 +43,13 @@ class Iframe extends Component {
     NProgress.start();
   }
 
+  componentWillUnmount() {
+    const { onUnmount } = this.props;
+    if (onUnmount) {
+      onUnmount();
+    }
+  }
+
   // componentWillUnmount() {
   //   if (this.refIframe && this.refIframe.contentWindow) {
   //     this.refIframe.src = 'about:blank';
@@ -79,9 +86,10 @@ class Iframe extends Component {
     });
 
     return (
-      <div className={className} id={`np_${id}`}>
+      <div key={id} className={className} id={`np_${id}`}>
         {loading && <PageLoader className="iframe-wrap-loading" size="large" tip="加载中..." />}
         <iframe
+          key={id}
           ref={this.setIframeRef}
           title={title}
           src={url}
