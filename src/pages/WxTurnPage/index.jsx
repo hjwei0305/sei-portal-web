@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { message } from 'antd';
+import { message } from 'suid';
 import { getWeChatCfg } from '@/services/user';
 import withUrlQs from '@/components/withUrlQs';
 

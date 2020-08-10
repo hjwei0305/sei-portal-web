@@ -1,7 +1,8 @@
 import React from 'react';
-import { Spin, message } from 'antd';
+import { Spin } from 'antd';
 import { connect } from 'dva';
 import { router } from 'umi';
+import { message } from 'suid';
 import { weiXinUtils } from '@/utils';
 
 import withUrlQs from '@/components/withUrlQs';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { List, Icon, Skeleton, message } from 'antd';
-import { ExtIcon, ScrollBar } from 'suid';
+import { List, Icon, Skeleton } from 'antd';
+import { ExtIcon, ScrollBar, message } from 'suid';
 import cls from 'classnames';
 import { userInfoOperation } from '@/utils';
 import { getHotPosts } from '../../service';

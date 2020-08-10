@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { debounce } from 'lodash';
-import { message } from 'antd';
+import { message } from 'suid';
 import { router } from 'umi';
 import ResizeObserver from 'rc-resize-observer';
 import DropDwonTabItems from '../DropDwonTabItems';

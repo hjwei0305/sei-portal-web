@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { List, Typography, Skeleton, message } from 'antd';
-import { ExtIcon, ScrollBar } from 'suid';
+import { List, Typography, Skeleton } from 'antd';
+import { ExtIcon, ScrollBar, message } from 'suid';
 import cls from 'classnames';
 import { getContacts } from '../../service';
 

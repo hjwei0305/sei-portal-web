@@ -1,12 +1,13 @@
 /*
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
- * @Last Modified by: zp
- * @Last Modified time: 2020-07-01 10:44:24
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-08-10 09:44:43
  */
 import { router } from 'umi';
-import { notification, message } from 'antd';
+import { notification } from 'antd';
 import { setLocale } from 'umi-plugin-react/locale';
+import { message } from 'suid';
 import {
   userLogin,
   userLogout,

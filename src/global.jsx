@@ -1,5 +1,5 @@
 // import React from 'react';
-import { message } from 'antd';
+import { message } from 'suid';
 import fetchPolyfill from './fetchPolyfill';
 
 fetchPolyfill();
