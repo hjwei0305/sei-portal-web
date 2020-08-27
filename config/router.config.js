@@ -17,6 +17,11 @@ const routes = [
         path: '/sso/wxTurnPage',
         component: './WxTurnPage',
       },
+      {
+        name: 'subPageTurnPage',
+        path: '/sso/subPageTurnPage',
+        component: './SubAppPageTurnPage',
+      },
     ],
   },
   {

@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-08-05 10:51:08
+ * @Last Modified time: 2020-08-27 12:06:36
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -440,6 +440,7 @@ export default {
             '/user/login',
             '/sso/socialAccount',
             '/sso/ssoWrapperPage',
+            '/sso/subPageTurnPage',
             '/updatePwd',
           ].includes(pathname) &&
           init
