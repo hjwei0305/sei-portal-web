@@ -1,6 +1,7 @@
 import React from 'react';
 import { Spin } from 'antd';
 import { message } from 'suid';
+import queryString from 'query-string';
 import { userInfoOperation } from '@/utils';
 import { getUserByXsid } from '@/services/user';
 
@@ -16,7 +17,7 @@ export default class SupPageTurnPage extends React.Component {
 
   componentDidMount() {
     const { urlQsObj } = this.props;
-    const { redirectUrl, sid } = urlQsObj;
+    const { redirectUrl, sid, ...redirectUrlParams } = urlQsObj;
     if (!redirectUrl) {
       message.error('缺少参数redirectUrl');
     } else if (sid) {
@@ -27,7 +28,7 @@ export default class SupPageTurnPage extends React.Component {
           const { success, data, message: msg } = result || {};
           if (success) {
             processSessionUser(data);
-            window.open(redirectUrl, '_self');
+            window.open(`${redirectUrl}?${queryString.stringify(redirectUrlParams)}`, '_self');
           } else {
             message.error(msg);
           }
