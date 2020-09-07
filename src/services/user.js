@@ -135,3 +135,43 @@ export const getPortrait = (params = {}) =>
     url: `${BASICSERVICE}/userProfile/findPortrait`,
     params,
   });
+
+/**
+ * 忘记密码，发送验证码
+ */
+export const sendVerifyCode = (params = {}) =>
+  request({
+    method: 'GET',
+    url: `${SEIAUTHSERVICE}/account/sendVerifyCode`,
+    params,
+  });
+
+/**
+ * 检查帐号是否存在
+ * @param {*} params
+ */
+export const checkExisted = ({ openId, reqId, tenant, verifyCode }) =>
+  request({
+    method: 'POST',
+    url: `${SEIAUTHSERVICE}/account/checkExisted`,
+    data: {
+      openId,
+      reqId,
+      tenant,
+      verifyCode,
+    },
+  });
+
+/**
+ * 找会密码
+ */
+export const findpwd = ({ id, newPassword, verifyCode }) =>
+  request({
+    method: 'POST',
+    url: `${SEIAUTHSERVICE}/account/findpwd`,
+    data: {
+      id,
+      newPassword,
+      verifyCode,
+    },
+  });

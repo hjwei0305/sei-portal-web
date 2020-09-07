@@ -41,6 +41,11 @@ const routes = [
     component: './UpdatePassword',
   },
   {
+    name: 'retrievePwd',
+    path: '/retrievePwd',
+    component: './RetrievePwd',
+  },
+  {
     path: '/',
     component: '../layouts/BasicLayout',
     Routes: ['./src/components/PrivateRoute'],

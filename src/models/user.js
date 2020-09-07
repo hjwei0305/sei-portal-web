@@ -20,6 +20,9 @@ import {
   authorizeData,
   getTenantSetting,
   getPortrait,
+  sendVerifyCode,
+  findpwd,
+  checkExisted,
 } from '@/services/user';
 import { userInfoOperation, eventBus, waterMark } from '@/utils';
 
@@ -281,6 +284,55 @@ export default {
             verifyCode: data,
           },
         });
+      } else {
+        message.error(msg);
+      }
+      return result;
+    },
+    *sendVerifyCode({ payload }, { call }) {
+      const result = yield call(sendVerifyCode, payload);
+      const { success, message: msg } = result || {};
+      if (success) {
+        message.success(msg);
+        // TODO:
+        // yield put({
+        //   type: 'updateState',
+        //   payload: {
+        //     verifyCode: data,
+        //   },
+        // });
+      } else {
+        message.error(msg);
+      }
+      return result;
+    },
+    *checkExisted({ payload }, { call }) {
+      const result = yield call(checkExisted, payload);
+      const { success, message: msg } = result || {};
+      if (success) {
+        // TODO:
+        // yield put({
+        //   type: 'updateState',
+        //   payload: {
+        //     verifyCode: data,
+        //   },
+        // });
+      } else {
+        message.error(msg);
+      }
+      return result;
+    },
+    *findpwd({ payload }, { call }) {
+      const result = yield call(findpwd, payload);
+      const { success, message: msg } = result || {};
+      if (success) {
+        // TODO:
+        // yield put({
+        //   type: 'updateState',
+        //   payload: {
+        //     verifyCode: data,
+        //   },
+        // });
       } else {
         message.error(msg);
       }

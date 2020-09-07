@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'antd';
 import { connect } from 'dva';
+import { router } from 'umi';
 import { formatMessage } from 'umi-plugin-react/locale';
 import md5 from 'md5';
 import { utils } from 'suid';
@@ -80,6 +81,10 @@ export default class Login extends Component {
     }
   };
 
+  handleRetrievePwd = () => {
+    router.replace('/retrievePwd');
+  };
+
   render() {
     const { loading, user } = this.props;
     const { verifyCode } = user;
@@ -114,6 +119,9 @@ export default class Login extends Component {
           </Button>
         </LoginForm>
         <QrCode></QrCode>
+        <Button type="link" className="forget-pwd" onClick={this.handleRetrievePwd}>
+          忘记密码
+        </Button>
       </div>
     );
   }

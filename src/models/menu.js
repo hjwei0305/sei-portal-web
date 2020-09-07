@@ -442,6 +442,7 @@ export default {
             '/sso/ssoWrapperPage',
             '/sso/subPageTurnPage',
             '/updatePwd',
+            '/retrievePwd',
           ].includes(pathname) &&
           init
         ) {
