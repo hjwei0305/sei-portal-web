@@ -82,7 +82,7 @@ export default class Login extends Component {
   };
 
   handleRetrievePwd = () => {
-    router.replace('/retrievePwd');
+    router.push('/retrievePwd');
   };
 
   render() {

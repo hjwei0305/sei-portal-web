@@ -10,10 +10,10 @@ import TimerButton from './TimerButton';
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 8,
+    span: 6,
   },
   wrapperCol: {
-    span: 16,
+    span: 18,
   },
 };
 
