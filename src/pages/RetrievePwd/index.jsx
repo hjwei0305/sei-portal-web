@@ -87,9 +87,6 @@ class RetrievePwd extends Component {
                 <Button type="primary" key="login" onClick={this.handleRelogin}>
                   去登录
                 </Button>,
-                <Button key="back" onClick={() => this.prev()}>
-                  上一步
-                </Button>,
               ]}
             />
           ) : null}
