@@ -83,9 +83,18 @@ class UpdatePwd extends Component {
 
   validateOpenId = () => {
     const { form } = this.props;
+    const { getFieldValue } = form;
 
     return new Promise((resolve, reject) => {
-      form.validateFields(['openId'], (err, formData) => {
+      const channel = getFieldValue('channel');
+      let validateValues = [];
+      if (channel === 'Mobile') {
+        validateValues = ['mobile'];
+      }
+      if (channel === 'EMAIL') {
+        validateValues = ['email'];
+      }
+      form.validateFields(validateValues, (err, formData) => {
         if (err) {
           reject(err);
         }
@@ -152,12 +161,24 @@ class UpdatePwd extends Component {
             <FormItem label="电话">
               {getFieldDecorator('mobile', {
                 initialValue: get(editData, 'mobile'),
+                rules: [
+                  {
+                    required: true,
+                    message: '电话号不能为空',
+                  },
+                ],
               })(<Input disabled />)}
             </FormItem>
           ) : (
             <FormItem label="邮箱">
               {getFieldDecorator('email', {
                 initialValue: get(editData, 'email'),
+                rules: [
+                  {
+                    required: true,
+                    message: '邮箱不能为空',
+                  },
+                ],
               })(<Input disabled />)}
             </FormItem>
           )}
