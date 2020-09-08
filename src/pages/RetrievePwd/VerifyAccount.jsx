@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Input, Form } from 'antd';
 import cls from 'classnames';
+import { findDOMNode } from 'react-dom';
 import { connect } from 'dva';
 import { utils } from 'suid';
 
@@ -61,10 +62,19 @@ class VerifyAccount extends Component {
             afterChecked(data);
           }
 
-          if (result !== 'success') {
-            this.setState({
-              showTenant: true,
-            });
+          if (result === 'multiTenant') {
+            this.setState(
+              {
+                showTenant: true,
+              },
+              () => {
+                const dom = findDOMNode(this.tenantRef);
+                if (dom) {
+                  dom.focus();
+                }
+              },
+            );
+            this.handleVertify();
           }
         }
       });
@@ -151,7 +161,7 @@ class VerifyAccount extends Component {
                     message: '租户不能为空',
                   },
                 ],
-              })(<Input />)}
+              })(<Input ref={inst => (this.tenantRef = inst)} />)}
             </FormItem>
           ) : null}
           <FormItem label="帐号">
