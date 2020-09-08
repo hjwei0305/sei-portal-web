@@ -71,6 +71,7 @@ class VerifyAccount extends Component {
                 const dom = findDOMNode(this.tenantRef);
                 if (dom) {
                   dom.focus();
+                  form.resetFields(['verifyCode']);
                 }
               },
             );
