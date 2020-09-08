@@ -75,7 +75,7 @@ export async function userLogout(params) {
 export async function getVerifyCode(reqId) {
   return request({
     method: 'GET',
-    url: `${SEIAUTHSERVICE}/auth/verifyCode?reqId=${reqId}`,
+    url: `${SEIAUTHSERVICE}/verifyCode/generate?reqId=${reqId}`,
     headers: {
       needToken: false,
     },
