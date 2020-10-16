@@ -3,7 +3,6 @@ import cls from 'classnames';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { Helmet } from 'react-helmet';
 import { CONSTANTS } from '@/utils';
-import SelectLang from './components/Header/components/SelectLang';
 import defaultLogo from '../assets/logonew@2x.png';
 import styles from './TempLoginLayout.less';
 
@@ -33,9 +32,6 @@ export class TempLoginLayout extends PureComponent {
           <div className="main-wrapper">
             <div className={cls('logo')}>
               <img src={defaultLogo} alt="" />
-            </div>
-            <div className={cls('lang-wrapper')}>
-              <SelectLang />
             </div>
             <div className={cls('form-box')}>{children}</div>
           </div>
