@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button } from 'antd';
 import { connect } from 'dva';
 import { router } from 'umi';
-import { formatMessage } from 'umi-plugin-react/locale';
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import md5 from 'md5';
 import { utils } from 'suid';
 import { waterMark } from '@/utils';
@@ -125,7 +125,7 @@ export default class Login extends Component {
           </div>
           <div className="tool-action">
             <Button type="link" className="forget-pwd" onClick={this.handleRetrievePwd}>
-              忘记密码
+              <FormattedMessage id="app.login.forgot-password" defaultMessage="忘记密码?" />
             </Button>
           </div>
         </div>
