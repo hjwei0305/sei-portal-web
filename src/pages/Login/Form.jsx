@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input } from 'antd';
+import cls from 'classnames';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
 
 const FormItem = Form.Item;
 
-@connect(() => ({}))
+@connect(({ user, loading }) => ({ user, loading }))
 @Form.create()
 class LoginForm extends Component {
   componentDidMount() {
@@ -60,23 +61,24 @@ class LoginForm extends Component {
       account,
     } = this.props;
     const { getFieldDecorator } = form;
-    const colorStyle = { color: 'rgba(0,0,0,.25)' };
+    const colorStyle = { color: 'rgba(0,0,0,.25)', fontSize: 18 };
     const FormItemStyle = { margin: 0, color: 'red' };
 
     return (
-      <Form className="login-from-wrapper">
+      <Form className={cls('login-from-wrapper', { showTenant: true, showVertifCode: true })}>
         {errorMsg ? (
           <FormItem style={FormItemStyle}>
             {getFieldDecorator('errMessage')(<span className="errMessage">{errorMsg}</span>)}
           </FormItem>
         ) : null}
-        {showTenant ? (
+        {showTenant || true ? (
           <FormItem>
             {getFieldDecorator('tenant', {
               initialValue: tenantCode,
               rules: [{ required: true, message: '请输入租户账号!' }],
             })(
               <Input
+                size="large"
                 disabled={loading || !!tenantCode}
                 prefix={<Icon type="user" style={colorStyle} />}
                 placeholder="租户账号"
@@ -95,6 +97,7 @@ class LoginForm extends Component {
             ],
           })(
             <Input
+              size="large"
               disabled={loading || !!account}
               autoFocus="autofocus"
               prefix={<Icon type="user" style={colorStyle} />}
@@ -113,6 +116,7 @@ class LoginForm extends Component {
             ],
           })(
             <Input
+              size="large"
               disabled={loading}
               prefix={<Icon type="lock" style={colorStyle} />}
               type="password"
@@ -120,7 +124,7 @@ class LoginForm extends Component {
             />,
           )}
         </FormItem>
-        {showVertifCode ? (
+        {showVertifCode || true ? (
           <FormItem>
             {getFieldDecorator('verifyCode', {
               initialValue: '',
@@ -132,6 +136,7 @@ class LoginForm extends Component {
               ],
             })(
               <Input
+                size="large"
                 disabled={loading}
                 ref={inst => (this.verifyCodeInputRef = inst)}
                 allowClear

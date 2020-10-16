@@ -1,6 +1,32 @@
 .container-box {
+  position: relative;
+  z-index: 10;
+  width: 400px;
+  margin: 0 auto;
+  margin-bottom: 64px;
+  padding: 24px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e9e9e9;
+  border-radius: 4px;
+  box-shadow: 0 3px 26px rgba(255, 255, 255, 0.4);
+
   :global {
+    .ant-input-lg {
+      height: 48px;
+      padding: 8px 11px;
+      font-size: 16px;
+    }
+    .ant-input-affix-wrapper .ant-input:not(:first-child) {
+      padding-left: 36px;
+    }
     .login-form-title {
+      height: 60px;
+      margin-bottom: 20px;
+      color: rgba(0, 0, 0, 0.85);
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 60px;
+      text-align: center;
       &_item {
         cursor: pointer;
         &:hover {
@@ -11,16 +37,17 @@
         color: #1890ff;
       }
     }
-    .sei-qrcode-wrapper {
-      float: right;
-      span:hover {
-        text-decoration: underline;
-      }
+    .third-login {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 8px 24px;
+      background-color: #fff;
     }
     .login-from-wrapper {
       .ant-row.ant-form-item {
         height: auto;
-        margin-bottom: 12px;
       }
       .login-form-button {
         width: 100%;

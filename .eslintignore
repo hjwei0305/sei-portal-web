@@ -1,5 +1,6 @@
 /lambda/
 /scripts
 /config
+/public/
 /src/fetchPolyfill.js
 .history

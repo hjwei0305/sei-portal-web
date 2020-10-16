@@ -26,12 +26,12 @@
     }
   },
   "lint-staged": {
-    "**/*.less": "stylelint --fix --syntax less",
-    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+    "src/**/*.less": "stylelint --fix --syntax less",
+    "src/**/*.{js,jsx,tsx,ts,less,md,json}": [
       "prettier --write",
       "git add"
     ],
-    "**/*.{js,jsx,ts,tsx}": "eslint --cache --fix --format=pretty"
+    "src/**/*.{js,jsx,ts,tsx}": "eslint --cache --fix --format=pretty"
   },
   "browserslist": [
     "> 1%",

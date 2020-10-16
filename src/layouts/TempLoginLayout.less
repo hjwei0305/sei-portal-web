@@ -1,68 +1,43 @@
-.login-page {
+.login-box {
+  width: 100%;
   height: 100%;
-  background-size: cover;
+  background-color: transparent;
   :global {
-    .lang-wrapper {
-      float: right;
-      margin-top: 10px;
-      margin-right: 40px;
-      color: lightblue;
-      font-size: 20px;
-      &:hover {
-        color: #77a5ff;
-      }
-    }
-    .logo {
-      position: relative;
-      float: left;
-      margin-top: 46px;
-      margin-left: 114px;
-      img {
-        width: 267px;
-        height: 37px;
-      }
-    }
-
-    .account-pane-wrapper {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 90%;
-      min-height: 450px;
-      padding: 2px;
-      border-radius: 5px;
-      transform: translate(-50%, -50%);
-      .account-banner {
+    .main-wrapper {
+      width: 100%;
+      height: 100%;
+      background: #fafafa;
+      .lang-wrapper {
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-      }
-      .account-form-wrapper {
-        position: absolute;
-        top: 0;
         right: 0;
-        bottom: 0;
-        .form-box {
-          position: absolute;
-          top: 50%;
-          width: 100%;
-          min-height: 323px;
-          padding: 20px 40px;
-          background-color: white;
-          transform: translateY(-50%);
-          .login-form-title {
-            color: grey;
-            font-weight: 700;
-            font-size: 20px;
-            line-height: 70px;
-            text-align: center;
-          }
-          .ant-row.ant-form-item {
-            height: auto;
-            margin-bottom: 12px;
-          }
+        margin-top: 10px;
+        margin-right: 40px;
+        color: lightblue;
+        font-size: 20px;
+        &:hover {
+          color: #77a5ff;
         }
+      }
+      .logo {
+        position: absolute;
+        left: 0;
+        margin-top: 46px;
+        margin-left: 114px;
+        img {
+          width: 267px;
+          height: 37px;
+        }
+      }
+      .form-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: 16px;
+        padding-left: 16px;
       }
     }
   }

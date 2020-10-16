@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
- * @Last Modified by: zp
- * @Last Modified time: 2020-07-15 09:03:21
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-10-16 16:49:24
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -75,7 +75,7 @@ export async function userLogout(params) {
 export async function getVerifyCode(reqId) {
   return request({
     method: 'GET',
-    url: `${SEIAUTHSERVICE}/auth/verifyCode?reqId=${reqId}`,
+    url: `${SEIAUTHSERVICE}/verifyCode?reqId=${reqId}`,
     headers: {
       needToken: false,
     },

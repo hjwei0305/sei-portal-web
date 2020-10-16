@@ -5,11 +5,11 @@ export default {
     pathRewrite: { '^/api-mock': '' },
   },
   '/api-gateway': {
-    target: 'http://10.4.208.86:8100',
+    target: 'http://dsei.changhong.com',
     changeOrigin: true,
   },
   '/apps-config': {
-    target: 'http://10.4.208.86:8100',
+    target: 'http://dsei.changhong.com',
     changeOrigin: true,
     pathRewrite: { '^/apps-config': '' },
   },

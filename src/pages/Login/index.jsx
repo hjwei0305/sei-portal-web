@@ -105,6 +105,7 @@ export default class Login extends Component {
           <Button
             loading={isLoading}
             type="primary"
+            size="large"
             onClick={this.login}
             className="login-form-button"
           >
@@ -113,7 +114,9 @@ export default class Login extends Component {
               : formatMessage({ id: 'login.loginning', desc: '登录中...' })}
           </Button>
         </LoginForm>
-        <QrCode></QrCode>
+        <div className="third-login">
+          <QrCode />
+        </div>
       </div>
     );
   }
