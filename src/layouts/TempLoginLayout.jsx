@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import cls from 'classnames';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { Helmet } from 'react-helmet';
+import { CONSTANTS } from '@/utils';
 import SelectLang from './components/Header/components/SelectLang';
 import defaultLogo from '../assets/logonew@2x.png';
-import { CONSTANTS } from '@/utils';
 import styles from './TempLoginLayout.less';
 
 const { LOCAL_PATH } = CONSTANTS;
