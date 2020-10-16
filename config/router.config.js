@@ -17,6 +17,11 @@ const routes = [
         path: '/sso/wxTurnPage',
         component: './WxTurnPage',
       },
+      {
+        name: 'subPageTurnPage',
+        path: '/sso/subPageTurnPage',
+        component: './SubAppPageTurnPage',
+      },
     ],
   },
   {
@@ -34,6 +39,11 @@ const routes = [
     name: 'updatePwd',
     path: '/updatePwd',
     component: './UpdatePassword',
+  },
+  {
+    name: 'retrievePwd',
+    path: '/retrievePwd',
+    component: './RetrievePwd',
   },
   {
     path: '/',

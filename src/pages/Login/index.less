@@ -3,13 +3,10 @@
   z-index: 10;
   width: 400px;
   margin: 0 auto;
-  margin-bottom: 64px;
-  padding: 24px;
   background-color: rgba(255, 255, 255, 0.95);
   border: 1px solid #e9e9e9;
   border-radius: 4px;
   box-shadow: 0 3px 26px rgba(255, 255, 255, 0.4);
-
   :global {
     .ant-input-lg {
       height: 48px;
@@ -21,6 +18,7 @@
     }
     .login-form-title {
       height: 60px;
+      margin: 48px 24px;
       margin-bottom: 20px;
       color: rgba(0, 0, 0, 0.85);
       font-weight: 700;
@@ -37,13 +35,18 @@
         color: #1890ff;
       }
     }
-    .third-login {
-      position: absolute;
+    .ant-form {
+      margin: 0 24px;
+    }
+    .tool-box {
+      position: relative;
       bottom: 0;
       left: 0;
       width: 100%;
       padding: 8px 24px;
       background-color: #fff;
+      display: flex;
+      justify-content: space-between;
     }
     .login-from-wrapper {
       .ant-row.ant-form-item {
@@ -51,7 +54,12 @@
       }
       .login-form-button {
         width: 100%;
+        margin: 8px 0 32px 0;
+        height: 48px;
       }
+    }
+    .forget-pwd {
+      float: left;
     }
   }
 }

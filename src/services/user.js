@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: Eason
- * @Last Modified time: 2020-10-16 16:49:24
+ * @Last Modified time: 2020-10-16 17:05:42
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -75,7 +75,7 @@ export async function userLogout(params) {
 export async function getVerifyCode(reqId) {
   return request({
     method: 'GET',
-    url: `${SEIAUTHSERVICE}/verifyCode?reqId=${reqId}`,
+    url: `${SEIAUTHSERVICE}/verifyCode/generate?reqId=${reqId}`,
     headers: {
       needToken: false,
     },
@@ -134,4 +134,44 @@ export const getPortrait = (params = {}) =>
     method: 'GET',
     url: `${BASICSERVICE}/userProfile/findPortrait`,
     params,
+  });
+
+/**
+ * 忘记密码，发送验证码
+ */
+export const sendVerifyCode = (params = {}) =>
+  request({
+    method: 'GET',
+    url: `${SEIAUTHSERVICE}/account/sendVerifyCode`,
+    params,
+  });
+
+/**
+ * 检查帐号是否存在
+ * @param {*} params
+ */
+export const checkExisted = ({ openId, reqId, tenant, verifyCode }) =>
+  request({
+    method: 'POST',
+    url: `${SEIAUTHSERVICE}/account/checkExisted`,
+    data: {
+      openId,
+      reqId,
+      tenant,
+      verifyCode,
+    },
+  });
+
+/**
+ * 找会密码
+ */
+export const findpwd = ({ id, newPassword, verifyCode }) =>
+  request({
+    method: 'POST',
+    url: `${SEIAUTHSERVICE}/account/findpwd`,
+    data: {
+      id,
+      newPassword,
+      verifyCode,
+    },
   });

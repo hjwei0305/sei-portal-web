@@ -6,7 +6,7 @@ import { formatMessage } from 'umi-plugin-react/locale';
 
 const FormItem = Form.Item;
 
-@connect(({ user, loading }) => ({ user, loading }))
+@connect(() => ({}))
 @Form.create()
 class LoginForm extends Component {
   componentDidMount() {
@@ -65,13 +65,13 @@ class LoginForm extends Component {
     const FormItemStyle = { margin: 0, color: 'red' };
 
     return (
-      <Form className={cls('login-from-wrapper', { showTenant: true, showVertifCode: true })}>
+      <Form className={cls('login-from-wrapper')}>
         {errorMsg ? (
           <FormItem style={FormItemStyle}>
             {getFieldDecorator('errMessage')(<span className="errMessage">{errorMsg}</span>)}
           </FormItem>
         ) : null}
-        {showTenant || true ? (
+        {showTenant ? (
           <FormItem>
             {getFieldDecorator('tenant', {
               initialValue: tenantCode,
@@ -124,7 +124,7 @@ class LoginForm extends Component {
             />,
           )}
         </FormItem>
-        {showVertifCode || true ? (
+        {showVertifCode ? (
           <FormItem>
             {getFieldDecorator('verifyCode', {
               initialValue: '',

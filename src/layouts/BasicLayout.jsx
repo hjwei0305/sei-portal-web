@@ -300,9 +300,13 @@ export default class BasicLayout extends React.Component {
     let activedKey = '';
     let title = formatMessage({ id: 'app.dashboard', desc: '平台首页' });
     if (activedMenu) {
-      const { id, title: tempTitle } = activedMenu;
+      const { id, title: tempTitle, rootName } = activedMenu;
       activedKey = id;
-      title = `${currMenuTree && currMenuTree.title}-${tempTitle}`;
+      if (rootName) {
+        title = `${currMenuTree && currMenuTree.title}-${tempTitle}`;
+      } else {
+        title = tempTitle;
+      }
     }
     return (
       <ScrollBar>

@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 10:51:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-07-10 11:19:27
+ * @Last Modified time: 2020-08-27 12:05:34
  */
 import { utils } from 'suid';
 
@@ -62,3 +62,12 @@ export const getSessionId = () => sessionStorage.get(TOKEN_KEY);
 
 /** 根据键清空 */
 export const clearUserInfo = () => sessionStorage.clear([CURRENT_USER, TOKEN_KEY]);
+
+/** 处理sessionUser */
+export const processSessionUser = (userInfo = {}) => {
+  const { sessionId, locale, authorityPolicy } = userInfo;
+  setSessionId(sessionId);
+  setCurrentPolicy(authorityPolicy);
+  setCurrentLocale(adaptLocale(locale || 'zh_CN'));
+  setCurrentUser(userInfo);
+};
