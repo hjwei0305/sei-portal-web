@@ -45,7 +45,7 @@ const SelectLang = props => {
   );
 
   return (
-    <ExtDropdown overlay={langMenu} className={cls(styles['trigger'])}>
+    <ExtDropdown overlay={langMenu} className={cls(styles.trigger)}>
       <span className={cls(styles.dropDown, className)}>
         <Icon type="global" title={formatMessage({ id: 'app.lang', desc: '语种' })} />
         <span style={{ fontSize: 12 }}>{languageShortLabels[selectedLang]}</span>
