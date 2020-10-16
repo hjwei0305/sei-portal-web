@@ -1,4 +1,5 @@
 import { utils } from 'suid';
+import { name } from '../../package.json';
 
 const { NODE_ENV } = process.env;
 
@@ -11,6 +12,8 @@ export const HOST = '';
 export const CONTEXTPATH = NODE_ENV === 'development' ? '/api-gateway' : '/api-gateway'; // '/api-gateway';
 
 export const IS_DEVELOPMENT = NODE_ENV === 'development';
+
+export const LOCAL_PATH = process.env.NODE_ENV !== 'production' ? '..' : `../${name}`;
 
 export const BASEURL = `${HOST}${CONTEXTPATH}`;
 

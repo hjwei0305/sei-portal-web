@@ -4,8 +4,10 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { Helmet } from 'react-helmet';
 import SelectLang from './components/Header/components/SelectLang';
 import defaultLogo from '../assets/logonew@2x.png';
-
+import { CONSTANTS } from '@/utils';
 import styles from './TempLoginLayout.less';
+
+const { LOCAL_PATH } = CONSTANTS;
 
 export class TempLoginLayout extends PureComponent {
   render() {
@@ -23,7 +25,7 @@ export class TempLoginLayout extends PureComponent {
           <iframe
             title="dynamic-point"
             frameBorder="0"
-            src="../ani/index.html"
+            src={`${LOCAL_PATH}/ani/index.html`}
             style={{ width: '100%', height: '100%' }}
           />
         </div>
