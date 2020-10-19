@@ -170,6 +170,7 @@ class LoginForm extends Component {
               prefix={<Icon type="user" style={colorStyle} />}
               placeholder={formatMessage({ id: 'login.userName' })}
               autocomplete="off"
+              allowClear
               addonAfter={this.renderUserMore()}
             />,
           )}
@@ -189,6 +190,7 @@ class LoginForm extends Component {
               disabled={loading}
               prefix={<Icon type="lock" style={colorStyle} />}
               type="password"
+              allowClear
               placeholder={formatMessage({ id: 'login.password' })}
             />,
           )}
