@@ -169,7 +169,7 @@ class LoginForm extends Component {
               autoFocus="autofocus"
               prefix={<Icon type="user" style={colorStyle} />}
               placeholder={formatMessage({ id: 'login.userName' })}
-              autoComplete="off"
+              autocomplete="off"
               addonAfter={this.renderUserMore()}
             />,
           )}
