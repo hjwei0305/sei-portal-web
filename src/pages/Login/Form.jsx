@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input } from 'antd';
+import { Form, Icon, Input, Dropdown, Menu, Popconfirm } from 'antd';
 import cls from 'classnames';
 import { connect } from 'dva';
-import { formatMessage } from 'umi-plugin-react/locale';
+import { ExtIcon, utils } from 'suid';
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
+import { CONSTANTS } from '@/utils';
 
+const { LOCALE_USER_LIST_KEY } = CONSTANTS;
+const { storage } = utils;
 const FormItem = Form.Item;
 
 @connect(() => ({}))
@@ -48,6 +52,69 @@ class LoginForm extends Component {
     }
   };
 
+  handlerDeleteLocalAccount = account => {
+    const userData = storage.localStorage.get(LOCALE_USER_LIST_KEY) || [];
+    const localUsers = userData.filter(u => u.account !== account);
+    storage.localStorage.set(LOCALE_USER_LIST_KEY, localUsers);
+    this.forceUpdate();
+  };
+
+  handlerSelectAccount = e => {
+    const { form } = this.props;
+    form.setFieldsValue({ account: e.key });
+  };
+
+  getLocaleAccount = userData => {
+    const menu = (
+      <Menu>
+        {userData.map(u => (
+          <Menu.Item key={u.account} onClick={this.handlerSelectAccount}>
+            <div className="horizontal">
+              <div className="row-start vertical">
+                <div className="account">{u.account}</div>
+                <div className="desc">{u.userName}</div>
+              </div>
+              <div className="action-box" onClick={e => e.stopPropagation()}>
+                <Popconfirm
+                  placement="topRight"
+                  title={
+                    <FormattedMessage
+                      id="app.account.local.delete.confirm"
+                      defaultMessage="确定要删除此账号的登录痕迹吗?"
+                    />
+                  }
+                  onConfirm={() => this.handlerDeleteLocalAccount(u.account)}
+                >
+                  <ExtIcon type="delete" className="del" antd />
+                </Popconfirm>
+              </div>
+            </div>
+          </Menu.Item>
+        ))}
+      </Menu>
+    );
+    return menu;
+  };
+
+  renderUserMore = () => {
+    const userData = storage.localStorage.get(LOCALE_USER_LIST_KEY) || [];
+    if (userData.length > 0) {
+      return (
+        <Dropdown
+          placement="bottomRight"
+          getPopupContainer={() => document.getElementById('__user_form')}
+          trigger={['click']}
+          overlay={this.getLocaleAccount(userData)}
+        >
+          <div className="account-more">
+            <Icon type="down" style={{ fontSize: 14, cursor: 'pointer' }} />
+          </div>
+        </Dropdown>
+      );
+    }
+    return null;
+  };
+
   render() {
     const {
       loading,
@@ -65,7 +132,7 @@ class LoginForm extends Component {
     const FormItemStyle = { margin: 0, color: 'red' };
 
     return (
-      <Form className={cls('login-from-wrapper')}>
+      <Form className={cls('login-from-wrapper')} id="__user_form">
         {errorMsg ? (
           <FormItem style={FormItemStyle}>
             {getFieldDecorator('errMessage')(<span className="errMessage">{errorMsg}</span>)}
@@ -86,7 +153,7 @@ class LoginForm extends Component {
             )}
           </FormItem>
         ) : null}
-        <FormItem>
+        <FormItem className="user-account">
           {getFieldDecorator('account', {
             initialValue: account,
             rules: [
@@ -98,10 +165,12 @@ class LoginForm extends Component {
           })(
             <Input
               size="large"
-              disabled={loading || !!account}
+              disabled={loading}
               autoFocus="autofocus"
               prefix={<Icon type="user" style={colorStyle} />}
               placeholder={formatMessage({ id: 'login.userName' })}
+              autoComplete="off"
+              addonAfter={this.renderUserMore()}
             />,
           )}
         </FormItem>

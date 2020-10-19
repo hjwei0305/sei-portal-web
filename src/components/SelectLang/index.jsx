@@ -12,7 +12,6 @@ const { setCurrentLocale, getCurrentLocale } = userInfoOperation;
 const SelectLang = props => {
   const { className } = props;
   const selectedLang = getCurrentLocale() || getLocale();
-  console.log(selectedLang);
   const changeLang = ({ key }) => {
     setLocale(key);
     setCurrentLocale(key);
@@ -23,10 +22,6 @@ const SelectLang = props => {
     'en-US': 'English',
   };
 
-  const languageShortLabels = {
-    'zh-CN': '中文',
-    'en-US': 'En',
-  };
   const languageIcons = {
     'zh-CN': '🇨🇳',
     'en-US': '🇺🇸',
@@ -48,7 +43,7 @@ const SelectLang = props => {
     <ExtDropdown overlay={langMenu} className={cls(styles.trigger)}>
       <span className={cls(styles.dropDown, className)}>
         <Icon type="global" title={formatMessage({ id: 'app.lang', desc: '语种' })} />
-        <span style={{ fontSize: 12 }}>{languageShortLabels[selectedLang]}</span>
+        <span style={{ fontSize: 12 }}>{languageLabels[selectedLang]}</span>
         <Icon type="down" title={formatMessage({ id: 'app.lang', desc: '语种' })} />
       </span>
     </ExtDropdown>

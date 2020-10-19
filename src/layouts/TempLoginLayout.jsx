@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import cls from 'classnames';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { Helmet } from 'react-helmet';
+import { PageLoader, Animate } from 'suid';
 import { CONSTANTS } from '@/utils';
 import defaultLogo from '../assets/logonew@2x.png';
 import styles from './TempLoginLayout.less';
@@ -9,8 +10,20 @@ import styles from './TempLoginLayout.less';
 const { LOCAL_PATH } = CONSTANTS;
 
 export class TempLoginLayout extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      loading: true,
+    };
+  }
+
+  onFrameLoaded = () => {
+    this.setState({ loading: false });
+  };
+
   render() {
     const { children } = this.props;
+    const { loading } = this.state;
     return (
       <>
         <Helmet>
@@ -26,6 +39,7 @@ export class TempLoginLayout extends PureComponent {
             frameBorder="0"
             src={`${LOCAL_PATH}/ani/index.html`}
             style={{ width: '100%', height: '100%' }}
+            onLoad={this.onFrameLoaded}
           />
         </div>
         <div className={styles['login-box']}>
@@ -33,7 +47,9 @@ export class TempLoginLayout extends PureComponent {
             <div className={cls('logo')}>
               <img src={defaultLogo} alt="" />
             </div>
-            <div className={cls('form-box')}>{children}</div>
+            <div className={cls('form-box')}>
+              {loading ? <PageLoader /> : <Animate type="bounceIn">{children}</Animate>}
+            </div>
           </div>
         </div>
       </>

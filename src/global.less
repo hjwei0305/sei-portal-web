@@ -80,5 +80,20 @@ body,
         }
       }
     }
+    .horizontal,
+    .vertical {
+      display: flex;
+      align-items: center;
+    }
+    .vertical {
+      flex-direction: column;
+    }
+    .center {
+      justify-content: center;
+    }
+    .row-start {
+      flex-grow: 1;
+      align-items: flex-start;
+    }
   }
 }

@@ -9,6 +9,8 @@ export { CONST_GLOBAL };
 
 export const HOST = '';
 
+export const LOCALE_USER_LIST_KEY = '_____U_LIST';
+
 export const CONTEXTPATH = NODE_ENV === 'development' ? '/api-gateway' : '/api-gateway'; // '/api-gateway';
 
 export const IS_DEVELOPMENT = NODE_ENV === 'development';
