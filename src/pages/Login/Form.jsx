@@ -97,8 +97,9 @@ class LoginForm extends Component {
   };
 
   renderUserMore = () => {
+    const { timeoutLogin = false } = this.props;
     const userData = storage.localStorage.get(LOCALE_USER_LIST_KEY) || [];
-    if (userData.length > 0) {
+    if (!timeoutLogin && userData.length > 0) {
       return (
         <Dropdown
           placement="bottomRight"
@@ -126,6 +127,7 @@ class LoginForm extends Component {
       showVertifCode,
       tenantCode,
       account,
+      timeoutLogin,
     } = this.props;
     const { getFieldDecorator } = form;
     const colorStyle = { color: 'rgba(0,0,0,.25)', fontSize: 18 };
@@ -165,12 +167,12 @@ class LoginForm extends Component {
           })(
             <Input
               size="large"
-              disabled={loading}
+              disabled={loading || timeoutLogin}
               autoFocus="autofocus"
               prefix={<Icon type="user" style={colorStyle} />}
               placeholder={formatMessage({ id: 'login.userName' })}
               autocomplete="off"
-              allowClear
+              allowClear={!timeoutLogin}
               addonAfter={this.renderUserMore()}
             />,
           )}

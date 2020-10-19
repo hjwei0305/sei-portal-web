@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date: 2020-04-13 15:01:55
- * @Last Modified by: zp
- * @Last Modified time: 2020-04-13 15:06:54
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-10-19 15:01:16
  */
 import React, { Component } from 'react';
 import { connect } from 'dva';
@@ -11,8 +11,8 @@ import { ExtModal, utils } from 'suid';
 import { Button } from 'antd';
 import md5 from 'md5';
 import { userInfoOperation } from '@/utils';
-
 import LoginForm from './Form';
+import styles from './ConfirmLoginModal.less';
 
 const { getCurrentUser } = userInfoOperation;
 
@@ -121,11 +121,19 @@ export class ConfirmLoginModal extends Component {
     const { account, tenantCode } = userInfo || {};
 
     return (
-      <ExtModal title="过期登录" closable={false} footer={null} visible={visible}>
+      <ExtModal
+        title="过期登录"
+        wrapClassName={styles['container-box']}
+        width={400}
+        closable={false}
+        footer={null}
+        visible={visible}
+      >
         <LoginForm
           onRef={inst => {
             this.loginFormRef = inst;
           }}
+          timeoutLogin
           verifyCode={verifyCode}
           loading={isLoading}
           showTenant={showTenant}
@@ -134,11 +142,16 @@ export class ConfirmLoginModal extends Component {
           tenantCode={tenantCode}
         >
           <div style={{ float: 'right' }}>
-            <Button loading={isLoading} onClick={this.handleReLogin} style={{ marginRight: 10 }}>
-              重新登录
+            <Button
+              size="large"
+              loading={isLoading}
+              onClick={this.handleReLogin}
+              style={{ marginRight: 10 }}
+            >
+              新账号登录
             </Button>
-            <Button loading={isLoading} type="primary" onClick={this.handleQuickLogin}>
-              快速登录
+            <Button size="large" loading={isLoading} type="primary" onClick={this.handleQuickLogin}>
+              登录
             </Button>
           </div>
         </LoginForm>
