@@ -33,7 +33,7 @@ export const getUserByXsid = params =>
   });
 
 /**
- * 绑定社交帐号
+ * 绑定社交账号
  * @param {object} data 参数
  */
 export const bindingSocialAccount = data =>
@@ -46,7 +46,7 @@ export const bindingSocialAccount = data =>
 /**
  * 登录方法
  * @param {object} params [参数]
- * account {string} 帐号
+ * account {string} 账号
  * password {string} 密码
  * tenant {string} 租户
  * id {string} 唯一值
@@ -147,7 +147,7 @@ export const sendVerifyCode = (params = {}) =>
   });
 
 /**
- * 检查帐号是否存在
+ * 检查账号是否存在
  * @param {*} params
  */
 export const checkExisted = ({ openId, reqId, tenant, verifyCode }) =>

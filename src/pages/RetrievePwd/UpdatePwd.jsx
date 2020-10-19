@@ -152,7 +152,7 @@ class UpdatePwd extends Component {
               </Radio.Group>,
             )}
           </FormItem>
-          <FormItem label="帐号">
+          <FormItem label="账号">
             {getFieldDecorator('openId', {
               initialValue: get(editData, 'openId'),
             })(<Input disabled />)}

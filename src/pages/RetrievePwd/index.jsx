@@ -11,7 +11,7 @@ const { Step } = Steps;
 
 const steps = [
   {
-    title: '验证帐号',
+    title: '验证账号',
   },
   {
     title: '找回密码',

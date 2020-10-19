@@ -45,8 +45,8 @@ export default class SocialAccount extends Component {
     return (
       <>
         <Helmet>
-          <title>帐号绑定</title>
-          <meta name="description" content="帐号绑定" />
+          <title>账号绑定</title>
+          <meta name="description" content="账号绑定" />
         </Helmet>
         <div className={styles['bind-warpper']}>
           <BindForm

@@ -39,7 +39,7 @@ class LoginForm extends Component {
     const {
       loading,
       form,
-      formTitle = '帐号绑定',
+      formTitle = '账号绑定',
       children,
       openId,
       tenant,

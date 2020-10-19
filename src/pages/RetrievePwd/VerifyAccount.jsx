@@ -165,12 +165,12 @@ class VerifyAccount extends Component {
               })(<Input ref={inst => (this.tenantRef = inst)} />)}
             </FormItem>
           ) : null}
-          <FormItem label="帐号">
+          <FormItem label="账号">
             {getFieldDecorator('openId', {
               rules: [
                 {
                   required: true,
-                  message: '帐号不能为空',
+                  message: '账号不能为空',
                 },
               ],
             })(<Input />)}

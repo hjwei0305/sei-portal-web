@@ -1,5 +1,5 @@
 export default {
-  'login.title': '帐号登录',
+  'login.title': '账号登录',
   'login.userName': '用户名',
   'login.userName-invalid': '请输入用户名!',
   'login.password': '密码',

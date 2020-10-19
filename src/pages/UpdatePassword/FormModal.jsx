@@ -99,13 +99,13 @@ class ResetPwd extends PureComponent {
             initialValue: editData.tenant,
           })(<Input disabled={!!saving} />)}
         </FormItem>
-        <FormItem label="帐号">
+        <FormItem label="账号">
           {getFieldDecorator('account', {
             initialValue: editData.account,
             rules: [
               {
                 required: true,
-                message: '帐号不能为空',
+                message: '账号不能为空',
               },
             ],
           })(<Input disabled={!!saving} />)}
