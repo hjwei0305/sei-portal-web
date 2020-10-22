@@ -13,7 +13,7 @@
     "shape": {
       "type": ["circle"],
       "stroke": {
-        "width": 1,
+        "width": 0,
         "color": "#000000"
       },
       "polygon": {
@@ -29,28 +29,28 @@
       "value": 0.4,
       "random": true,
       "anim": {
-        "enable": true,
+        "enable": false,
         "speed": 1,
         "opacity_min": 0.1,
         "sync": false
       }
     },
     "size": {
-      "value": 20,
+      "value": 30,
       "random": true,
       "anim": {
         "enable": true,
         "speed": 2,
-        "size_min": 0.5,
+        "size_min": 5,
         "sync": false
       }
     },
     "line_linked": {
       "enable": true,
-      "distance": 300,
-      "color": "#999",
-      "opacity": 0.2,
-      "width": 2
+      "distance": 400,
+      "color": "#f8f8f8",
+      "opacity": 0.6,
+      "width": 1
     },
     "move": {
       "enable": true,

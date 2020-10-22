@@ -4,6 +4,7 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { Helmet } from 'react-helmet';
 import { PageLoader, Animate } from 'suid';
 import { CONSTANTS } from '@/utils';
+import Footer from '@/components/Footer';
 import defaultLogo from '../assets/logonew@2x.png';
 import styles from './TempLoginLayout.less';
 
@@ -52,6 +53,7 @@ export class TempLoginLayout extends PureComponent {
             </div>
           </div>
         </div>
+        <Footer />
       </>
     );
   }
