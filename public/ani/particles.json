@@ -1,7 +1,7 @@
 {
   "particles": {
     "number": {
-      "value": 20,
+      "value": 10,
       "density": {
         "enable": true,
         "value_area": 1000
@@ -11,7 +11,7 @@
       "value": "random"
     },
     "shape": {
-      "type": ["circle"],
+      "type": ["circle","triangle","polygon"],
       "stroke": {
         "width": 0,
         "color": "#000000"
@@ -47,9 +47,9 @@
     },
     "line_linked": {
       "enable": true,
-      "distance": 400,
+      "distance": 300,
       "color": "#f8f8f8",
-      "opacity": 0.6,
+      "opacity": 0.4,
       "width": 1
     },
     "move": {
