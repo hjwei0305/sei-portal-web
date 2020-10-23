@@ -7,7 +7,7 @@ const Footer = () => (
   >
     <div style={{ margin: '0 auto' }}>
       四川虹信软件股份有限公司{' '}
-      <a href="http://www.rcsit.cn" style={{ color: '#999' }}>
+      <a href="http://www.rcsit.cn" style={{ color: '#ccc6c6' }}>
         www.rcsit.cn
       </a>{' '}
       | Copyright © 2020
