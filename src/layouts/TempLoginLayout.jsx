@@ -38,7 +38,7 @@ export class TempLoginLayout extends PureComponent {
           <iframe
             title="dynamic-point"
             frameBorder="0"
-            src={`${LOCAL_PATH}/ani/index.html?v=1`}
+            src={`${LOCAL_PATH}/ani/index.html?v=2`}
             style={{ width: '100%', height: '100%' }}
             onLoad={this.onFrameLoaded}
           />
