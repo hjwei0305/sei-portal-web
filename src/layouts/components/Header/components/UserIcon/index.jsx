@@ -76,7 +76,7 @@ export default class UserIcon extends React.Component {
 
   render() {
     return (
-      <ExtDropdown overlay={this.dropdownRender()}>
+      <ExtDropdown overlay={this.dropdownRender()} trigger={['click']}>
         <span className={cls(styles['user-icon-wrapper'], 'trigger')}>
           <Avatar icon={<img alt="" src={get(this.currentUser, 'portrait')} />} size="13" />
           <span className={cls('username')}>{this.currentUser && this.currentUser.userName}</span>
