@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-01-06 10:48:11
- * @Last Modified by: zp
- * @Last Modified time: 2020-06-23 16:11:09
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-10-30 13:47:30
  */
 export default [
   [
@@ -23,7 +23,7 @@ export default [
         default: 'zh-CN',
       },
       dynamicImport: {
-        loadingComponent: './components/PageLoading/index',
+        loadingComponent: './components/Loader',
         webpackChunkName: true,
       },
       dll: {

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Form, Button } from 'antd';
 import { connect } from 'dva';
 import { router } from 'umi';
+import cls from 'classnames';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import md5 from 'md5';
-import { utils } from 'suid';
+import { utils, Animate } from 'suid';
 import { waterMark } from '@/utils';
 import SelectLang from '@/components/SelectLang';
 import LoginForm from './Form';
@@ -94,10 +95,23 @@ export default class Login extends Component {
 
     return (
       <div className={styles['container-box']}>
-        <div className="login-form-title">
-          <span>{formatMessage({ id: 'login.title', desc: '账号登录' })}</span>
+        <div className={cls('form-logo', 'horizontal')}>
+          <Animate type="fadeInLeft" delay={400}>
+            S
+          </Animate>
+          <Animate type="tada" delay={800} duration={2000}>
+            E
+          </Animate>
+          <Animate type="fadeInRight" delay={400}>
+            I
+          </Animate>
         </div>
-
+        <div className="login-form-title vertical">
+          <Animate type="flipInY" delay={600}>
+            <div className="title">业务协同平台</div>
+            <div className="desc">智慧创造价值 专业赢得信赖</div>
+          </Animate>
+        </div>
         <LoginForm
           onRef={inst => {
             this.loginFormRef = inst;
