@@ -2,9 +2,11 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:17
  * @Last Modified by: Eason
- * @Last Modified time: 2020-10-19 13:43:20
+ * @Last Modified time: 2020-11-03 14:55:18
  */
 export default {
+  'app.title': 'B&C Platform',
+  'app.subtitle': 'Wisdom creates value, profession wins trust',
   'app.lang': 'Languages',
   'app.logout': 'Logout',
   'app.dashboard': 'DashBoard',

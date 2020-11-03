@@ -108,8 +108,12 @@ export default class Login extends Component {
         </div>
         <div className="login-form-title vertical">
           <Animate type="flipInY" delay={600}>
-            <div className="title">业务协同平台</div>
-            <div className="desc">智慧创造价值 专业赢得信赖</div>
+            <div className="title">
+              <FormattedMessage id="app.title" defaultMessage="业务协同平台" />
+            </div>
+            <div className="desc">
+              <FormattedMessage id="app.subtitle" defaultMessage="智慧创造价值 专业赢得信赖" />
+            </div>
           </Animate>
         </div>
         <LoginForm

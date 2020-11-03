@@ -2,9 +2,11 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:06
  * @Last Modified by: Eason
- * @Last Modified time: 2020-10-19 13:39:28
+ * @Last Modified time: 2020-11-03 14:51:53
  */
 export default {
+  'app.title': '业务协同平台',
+  'app.subtitle': '智慧创造价值 专业赢得信赖',
   'app.lang': '语言',
   'app.logout': '退出',
   'app.dashboard': '平台首页',

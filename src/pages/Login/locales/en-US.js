@@ -1,9 +1,9 @@
 export default {
   'login.title': 'Account Login',
-  'login.userName': 'userName',
-  'login.userName-invalid': 'please enter userName!',
-  'login.password': 'password',
-  'login.password-invalid': 'please enter password!',
+  'login.userName': 'User Name',
+  'login.userName-invalid': 'Please enter userName!',
+  'login.password': 'Password',
+  'login.password-invalid': 'Please enter password!',
   'login.message-invalid-credentials': 'Invalid username or password',
   'login.message-invalid-verification-code': 'Invalid verification code',
   'login.tab-login-credentials': 'Credentials',
