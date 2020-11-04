@@ -67,7 +67,9 @@ class TempLoginLayout extends PureComponent {
               ) : (
                 <>
                   <Animate type="bounceIn">{children}</Animate>
-                  <Footer />
+                  <Animate type="fadeIn" delay={400}>
+                    <Footer />
+                  </Animate>
                 </>
               )}
             </div>
