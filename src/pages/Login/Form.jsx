@@ -171,7 +171,7 @@ class LoginForm extends Component {
               autoFocus="autofocus"
               prefix={<Icon type="user" style={colorStyle} />}
               placeholder={formatMessage({ id: 'login.userName' })}
-              autocomplete="off"
+              autoComplete="off"
               allowClear={!timeoutLogin}
               addonAfter={this.renderUserMore()}
             />,

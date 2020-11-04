@@ -27,7 +27,7 @@ class QrCode extends Component {
     return (
       <a onClick={this.handleClick} className="sei-qrcode-wrapper">
         <Tooltip title={<FormattedMessage id="app.login.wechat" defaultMessage="企业微信登录" />}>
-          <Avatar src={webChatBase64} size={20} />
+          <Avatar src={webChatBase64} size={28} />
         </Tooltip>
       </a>
     );

@@ -2,20 +2,19 @@
 
 .container-box {
   position: relative;
-  z-index: 10;
   width: 400px;
   margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid #fff;
   border-radius: 4px;
-  box-shadow: 0 3px 48px rgba(28, 38, 84, 0.45);
+  box-shadow: 0 0 16px rgba(31, 84, 167, 0.1);
+  border: 2px solid #f3f3f3;
   :global {
     .form-logo {
       justify-content: center;
       margin-top: 36px;
       color: @primary-color;
       font-weight: 700;
-      font-size: 64px;
+      font-size: 48px;
       letter-spacing: 8px;
     }
     .ant-input-lg {
@@ -122,6 +121,14 @@
             }
           }
         }
+      }
+    }
+    .third-login {
+      text-align: center;
+      margin: 0 36px 24px 36px;
+      .ant-divider-inner-text {
+        font-size: 14px;
+        color: fade(@black, 15%);
       }
     }
     .tool-box {

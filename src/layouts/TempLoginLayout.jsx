@@ -2,20 +2,37 @@ import React, { PureComponent } from 'react';
 import cls from 'classnames';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { Helmet } from 'react-helmet';
-import { PageLoader, Animate } from 'suid';
+import { PageLoader, Animate, ScrollBar } from 'suid';
 import { CONSTANTS } from '@/utils';
 import Footer from '@/components/Footer';
 import styles from './TempLoginLayout.less';
 
 const { LOCAL_PATH } = CONSTANTS;
 
-export class TempLoginLayout extends PureComponent {
+class TempLoginLayout extends PureComponent {
+  static scrollBarRef;
+
   constructor() {
     super();
     this.state = {
       loading: true,
     };
   }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.onResize, false);
+    this.onResize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  onResize = () => {
+    if (this.scrollBarRef) {
+      this.scrollBarRef.updateScroll();
+    }
+  };
 
   onFrameLoaded = () => {
     this.setState({ loading: false });
@@ -43,14 +60,19 @@ export class TempLoginLayout extends PureComponent {
           />
         </div>
         <div className={styles['login-box']}>
-          <div className="main-wrapper">
-            <div className={cls('logo')} />
-            <div className={cls('form-box')}>
-              {loading ? <PageLoader /> : <Animate type="bounceIn">{children}</Animate>}
+          <ScrollBar className="login-bar" ref={ref => (this.scrollBarRef = ref)}>
+            <div className={cls('form-box', 'vertical')}>
+              {loading ? (
+                <PageLoader />
+              ) : (
+                <>
+                  <Animate type="bounceIn">{children}</Animate>
+                  <Footer />
+                </>
+              )}
             </div>
-          </div>
+          </ScrollBar>
         </div>
-        <Footer />
       </>
     );
   }

@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:17
  * @Last Modified by: Eason
- * @Last Modified time: 2020-11-03 14:55:18
+ * @Last Modified time: 2020-11-04 16:39:51
  */
 export default {
   'app.title': 'B&C Platform',
@@ -13,6 +13,7 @@ export default {
   'app.menusearch.placeholder': 'Please enter keywords to search',
   'app.dashboard.custom': 'Custom Dashboard',
   'app.login.wechat': 'Login width WeChat Work ',
+  'app.login.others': 'Login in other ways',
   'app.login.forgot-password': 'Forgot password?',
   'app.account.local.delete.confirm': 'Are you sure to delete the mark of this account?',
 };

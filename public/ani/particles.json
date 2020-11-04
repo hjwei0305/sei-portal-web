@@ -41,15 +41,15 @@
       "anim": {
         "enable": true,
         "speed": 1,
-        "size_min": 20,
+        "size_min": 36,
         "sync": false
       }
     },
     "line_linked": {
       "enable": true,
       "distance": 300,
-      "color": "#ddd",
-      "opacity": 1,
+      "color": "#dfdfdf",
+      "opacity": 0.8,
       "width": 1
     },
     "move": {

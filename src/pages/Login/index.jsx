@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'antd';
+import { Form, Button, Divider } from 'antd';
 import { connect } from 'dva';
 import { router } from 'umi';
 import cls from 'classnames';
@@ -138,16 +138,17 @@ export default class Login extends Component {
               : formatMessage({ id: 'login.loginning', desc: '登录中...' })}
           </Button>
         </LoginForm>
+        <div className="third-login">
+          <Divider>
+            <FormattedMessage id="app.login.others" defaultMessage="其它方式登录" />
+          </Divider>
+          <QrCode />
+        </div>
         <div className="tool-box">
-          <div className="third-login">
-            <QrCode />
-          </div>
-          <div className="tool-action">
-            <Button type="link" className="forget-pwd" onClick={this.handleRetrievePwd}>
-              <FormattedMessage id="app.login.forgot-password" defaultMessage="忘记密码?" />
-            </Button>
-            <SelectLang />
-          </div>
+          <Button type="link" className="forget-pwd" onClick={this.handleRetrievePwd}>
+            <FormattedMessage id="app.login.forgot-password" defaultMessage="忘记密码?" />
+          </Button>
+          <SelectLang />
         </div>
       </div>
     );
