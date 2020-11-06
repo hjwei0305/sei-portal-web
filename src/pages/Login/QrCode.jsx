@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
-import { Avatar, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
 import webChatBase64 from '@/assets/wechat.logo.png';
 
 @connect(({ user, loading }) => ({ user, loading }))
@@ -27,7 +27,7 @@ class QrCode extends Component {
     return (
       <a onClick={this.handleClick} className="sei-qrcode-wrapper">
         <Tooltip title={<FormattedMessage id="app.login.wechat" defaultMessage="企业微信登录" />}>
-          <Avatar src={webChatBase64} size={28} />
+          <img src={webChatBase64} alt="" />
         </Tooltip>
       </a>
     );

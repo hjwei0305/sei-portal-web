@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '@/assets/logo_hx.png';
 
 const Footer = () => (
   <div
@@ -13,11 +12,8 @@ const Footer = () => (
     }}
   >
     <div className="horizontal">
-      <div className="logo">
-        <img src={logo} alt="" />
-      </div>
       <div className="vertical">
-        <div style={{ margin: '0 auto', textAlign: 'left', width: '100%' }}>
+        <div style={{ margin: '0 auto', width: '100%' }}>
           四川虹信软件股份有限公司 <a href="http://www.rcsit.cn">www.rcsit.cn</a> | Copyright © 2020
         </div>
         <div style={{ margin: '0 auto' }}>
