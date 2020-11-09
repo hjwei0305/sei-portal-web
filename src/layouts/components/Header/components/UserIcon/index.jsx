@@ -58,8 +58,8 @@ export default class UserIcon extends React.Component {
     this.guide = new Driver({
       doneBtnText: '完成', // Text on the final button
       closeBtnText: '关闭', // Text on the close button for this step
-      nextBtnText: '下一个', // Next button text for this step
-      prevBtnText: '上一个',
+      nextBtnText: '下一个 →', // Next button text for this step
+      prevBtnText: '← 上一个',
       padding: 0,
       overlayClickNext: true,
     });
