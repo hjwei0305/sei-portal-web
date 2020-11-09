@@ -172,10 +172,10 @@ class NavLeft extends React.Component {
           {!collapsed ? (
             <Fragment>
               <Row type="flex" align="middle">
-                <Col style={{ flex: 1 }}>
+                <Col id="menu-search-container" style={{ flex: 1 }}>
                   <MenuSearch onSelect={onSelectSearchMenu} data={allLeafMenus} />
                 </Col>
-                <Col style={{ width: 50 }}>
+                <Col id="favorite-container" style={{ width: 50 }}>
                   <FavoriteMenu
                     collapsed={collapsed}
                     data={favoriteMenus}
@@ -224,7 +224,7 @@ class NavLeft extends React.Component {
             </ScrollBar>
           ) : null}
         </div>
-        <div className="layout-menu-collapse" onClick={onCollapse}>
+        <div id="collapse-icon-container" className="layout-menu-collapse" onClick={onCollapse}>
           {!collapsed ? (
             <Fragment>
               <Icon className="collapse-icon" type="double-left" />

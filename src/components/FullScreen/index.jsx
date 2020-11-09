@@ -45,7 +45,7 @@ export default class FullScreen extends React.Component {
     const { className } = this.props;
 
     return (
-      <span onClick={this.handleFullScreen} className={className}>
+      <span id="screenfull-container" onClick={this.handleFullScreen} className={className}>
         <Icon type={isFullscreen ? 'fullscreen-exit' : 'fullscreen'} style={{ fontSize: '20px' }} />
       </span>
     );

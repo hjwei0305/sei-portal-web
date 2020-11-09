@@ -6,6 +6,7 @@ import { Icon, Menu, Avatar } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import ExtDropdown from '@/components/ExtDropdown';
 import { userInfoOperation, CONSTANTS } from '@/utils';
+import { Driver, steps } from '../../../Guide';
 
 import styles from './index.less';
 
@@ -53,6 +54,19 @@ export default class UserIcon extends React.Component {
     });
   };
 
+  handleGuilde = () => {
+    this.guide = new Driver({
+      doneBtnText: '完成', // Text on the final button
+      closeBtnText: '关闭', // Text on the close button for this step
+      nextBtnText: '下一个', // Next button text for this step
+      prevBtnText: '上一个',
+      padding: 0,
+      overlayClickNext: true,
+    });
+    this.guide.defineSteps(steps);
+    this.guide.start();
+  };
+
   dropdownRender = () => {
     const menu = (
       <Menu selectedKeys={[]} className={cls(styles['user-menu-item'])}>
@@ -63,6 +77,10 @@ export default class UserIcon extends React.Component {
         <Menu.Item key="my-dashboard-home" onClick={this.handlerDashboardCustom}>
           <Icon type="home" />
           {formatMessage({ id: 'app.dashboard.custom', desc: '自定义首页' })}
+        </Menu.Item>
+        <Menu.Item key="my-dashboard-home" onClick={this.handleGuilde}>
+          <Icon type="question-circle" />
+          新手引导
         </Menu.Item>
         <Menu.Item key="logout" onClick={this.handleClick}>
           <Icon type="logout" />
@@ -77,7 +95,7 @@ export default class UserIcon extends React.Component {
   render() {
     return (
       <ExtDropdown overlay={this.dropdownRender()} trigger={['click']}>
-        <span className={cls(styles['user-icon-wrapper'], 'trigger')}>
+        <span id="user-icon-wrapper" className={cls(styles['user-icon-wrapper'], 'trigger')}>
           <Avatar icon={<img alt="" src={get(this.currentUser, 'portrait')} />} size="13" />
           <span className={cls('username')}>{this.currentUser && this.currentUser.userName}</span>
         </span>

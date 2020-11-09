@@ -11,6 +11,7 @@ import { userInfoOperation } from '@/utils';
 import ConfirmLoginModal from '@/pages/Login/ConfirmLoginModal';
 import { getWeChatCfg } from '@/services/user';
 import Header from './components/Header';
+import { Driver, steps } from './components/Guide';
 import NavLeft from './components/NavLeft';
 import Tab from './components/Tab';
 
@@ -50,6 +51,17 @@ export default class BasicLayout extends React.Component {
           payload: {
             userId,
           },
+        }).then(() => {
+          this.guide = new Driver({
+            doneBtnText: '完成', // Text on the final button
+            closeBtnText: '关闭', // Text on the close button for this step
+            nextBtnText: '下一个', // Next button text for this step
+            prevBtnText: '上一个',
+            padding: 0,
+            overlayClickNext: true,
+          });
+          this.guide.defineSteps(steps);
+          this.guide.start();
         });
       });
       dispatch({

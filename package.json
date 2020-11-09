@@ -42,6 +42,7 @@
     "@umijs/plugin-qiankun": "^1.5.1",
     "antd": "^3.23.6",
     "classnames": "^2.2.6",
+    "driver.js": "^0.9.8",
     "dva": "^2.6.0-beta.16",
     "events": "^3.1.0",
     "fetch-polyfill": "^0.8.2",
