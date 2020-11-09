@@ -78,7 +78,7 @@ export default class UserIcon extends React.Component {
           <Icon type="home" />
           {formatMessage({ id: 'app.dashboard.custom', desc: '自定义首页' })}
         </Menu.Item>
-        <Menu.Item key="my-dashboard-home" onClick={this.handleGuilde}>
+        <Menu.Item key="user-guide" onClick={this.handleGuilde}>
           <Icon type="question-circle" />
           新手引导
         </Menu.Item>
