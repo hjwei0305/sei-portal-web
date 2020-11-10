@@ -133,7 +133,11 @@ export default class SelectModule extends PureComponent {
     };
     return (
       <>
-        <span className={cls('trigger', { 'trigger-open': visible })} onClick={this.showDrawer}>
+        <span
+          id="app-icon-wrapper"
+          className={cls('trigger', { 'trigger-open': visible })}
+          onClick={this.showDrawer}
+        >
           <span className="title">
             {currMenuTree ? currMenuTree.title : <span>应用加载中...</span>}
           </span>

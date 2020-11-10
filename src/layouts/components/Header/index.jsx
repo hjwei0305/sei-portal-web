@@ -35,6 +35,7 @@ export default class Header extends React.Component {
         >
           <SelectModule />
           <span
+            id="homepage-icon-container"
             className={cls({ trigger: true, trigger_active: !activedKey })}
             onClick={this.handleHomeClick}
           >
@@ -50,6 +51,7 @@ export default class Header extends React.Component {
           <FullScreen className={cls('trigger')} />
         </div>
         <div
+          id="center-tabs"
           style={{
             overflow: 'hidden',
           }}

@@ -267,7 +267,7 @@ export default class index extends PureComponent {
       <>
         <Dropdown ref={node => (this.dropdownElm = node)} {...this.getDropdownProps()}>
           <Tooltip title="用户消息">
-            <span className={className}>
+            <span id="notify-container" className={className}>
               <Badge count={messageCount}>
                 <Icon type="bell" style={{ padding: 6, fontSize: 20 }} />
               </Badge>

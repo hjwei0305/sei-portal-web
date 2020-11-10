@@ -21,7 +21,7 @@ export default class Robot extends React.PureComponent {
     return (
       <>
         <Tooltip title="小智" className={className}>
-          <span onClick={this.handleQuestion}>
+          <span id="robot-wrapper" onClick={this.handleQuestion}>
             <ExtIcon type="robot" style={{ fontSize: 16 }} antd />
           </span>
         </Tooltip>
