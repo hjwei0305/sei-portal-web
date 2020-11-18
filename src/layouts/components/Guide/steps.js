@@ -51,7 +51,7 @@ const steps = [
     popover: {
       title: '小智',
       description: '可以通过提问的方式，解决你在系统中遇到的问题。',
-      position: 'bottom',
+      position: 'bottom-right',
     },
     padding: 0,
   },
@@ -60,7 +60,7 @@ const steps = [
     popover: {
       title: '消息提醒',
       description: '提醒用户有新的消息，并且能够查看消息详情',
-      position: 'bottom',
+      position: 'bottom-right',
     },
     padding: 0,
   },
@@ -69,7 +69,7 @@ const steps = [
     popover: {
       title: '个人操作',
       description: '点击显示个人操作菜单，包括个人设置，退出登录等',
-      position: 'left',
+      position: 'bottom-right',
     },
     padding: 0,
   },
@@ -77,8 +77,8 @@ const steps = [
     element: '#screenfull-container',
     popover: {
       title: '全屏操作',
-      description: '设置页面进去全屏模式',
-      position: 'left',
+      description: '设置页面进入全屏模式',
+      position: 'bottom-right',
     },
     padding: 0,
   },
@@ -88,6 +88,7 @@ const steps = [
     popover: {
       title: '折叠操作',
       description: '打开或者关闭侧边菜单栏',
+      position: 'right-bottom',
     },
     padding: 0,
   },

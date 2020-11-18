@@ -20,6 +20,7 @@ import {
   authorizeData,
   getTenantSetting,
   getPreferences,
+  setUserGuidePreference,
   sendVerifyCode,
   findpwd,
   checkExisted,
@@ -263,6 +264,13 @@ export default {
       const result = yield call(getAuthorizedFeatures, user.userId);
       if (result && result.success) {
         setCurrentAuth(result.data);
+      }
+    },
+    *setUserGuidePreference(_, { call }) {
+      const userInfo = getCurrentUser();
+      const result = yield call(setUserGuidePreference);
+      if (result && result.success) {
+        setCurrentUser({ userInfo, preferences: { ...userInfo.preferences, guide: true } });
       }
     },
     *getTenantSetting({ payload }, { call, put }) {

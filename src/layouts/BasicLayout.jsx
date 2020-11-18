@@ -33,7 +33,7 @@ export default class BasicLayout extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    const { userId, tenantCode } = getCurrentUser() || {};
+    const { userId, tenantCode, preferences } = getCurrentUser() || {};
     /** 动态获取子模块配置，并且启动微前端应用 */
     dispatch({
       type: 'base/getApps',
@@ -52,16 +52,25 @@ export default class BasicLayout extends React.Component {
             userId,
           },
         }).then(() => {
-          this.guide = new Driver({
-            doneBtnText: '完成', // Text on the final button
-            closeBtnText: '关闭', // Text on the close button for this step
-            nextBtnText: '下一个 →', // Next button text for this step
-            prevBtnText: '← 上一个',
-            padding: 0,
-            overlayClickNext: true,
-          });
-          this.guide.defineSteps(steps);
-          this.guide.start();
+          if (!preferences.guide) {
+            this.guide = new Driver({
+              doneBtnText: '完成', // Text on the final button
+              closeBtnText: '关闭', // Text on the close button for this step
+              nextBtnText: '下一个 →', // Next button text for this step
+              prevBtnText: '← 上一个',
+              padding: 0,
+              overlayClickNext: true,
+              onNext: ({ node }) => {
+                if (node.id === 'collapse-icon-container') {
+                  dispatch({
+                    type: 'user/setUserGuidePreference',
+                  });
+                }
+              },
+            });
+            this.guide.defineSteps(steps);
+            this.guide.start();
+          }
         });
       });
       dispatch({
