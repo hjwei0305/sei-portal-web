@@ -18,6 +18,7 @@ export default class UserIcon extends React.Component {
   constructor(props) {
     super(props);
     this.currentUser = getCurrentUser();
+    console.log(this.currentUser);
   }
 
   handleClick = () => {
@@ -96,7 +97,10 @@ export default class UserIcon extends React.Component {
     return (
       <ExtDropdown overlay={this.dropdownRender()} trigger={['click']}>
         <span id="user-icon-wrapper" className={cls(styles['user-icon-wrapper'], 'trigger')}>
-          <Avatar icon={<img alt="" src={get(this.currentUser, 'portrait')} />} size="13" />
+          <Avatar
+            icon={<img alt="" src={get(this.currentUser, 'preferences.portrait')} />}
+            size="13"
+          />
           <span className={cls('username')}>{this.currentUser && this.currentUser.userName}</span>
         </span>
       </ExtDropdown>

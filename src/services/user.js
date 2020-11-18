@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: Eason
- * @Last Modified time: 2020-10-16 17:05:42
+ * @Last Modified time: 2020-11-18 14:30:56
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -129,10 +129,10 @@ export async function getTenantSetting(params) {
   });
 }
 
-export const getPortrait = (params = {}) =>
+export const getPreferences = (params = {}) =>
   request({
     method: 'GET',
-    url: `${BASICSERVICE}/userProfile/findPortrait`,
+    url: `${BASICSERVICE}/userProfile/getPreferences`,
     params,
   });
 

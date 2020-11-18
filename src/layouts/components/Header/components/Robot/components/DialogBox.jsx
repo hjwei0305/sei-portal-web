@@ -47,7 +47,7 @@ class DialogBox extends Component {
       dialogRecords.push({
         content: searchVal,
         datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
-        avatar: this.currentUser.portrait,
+        avatar: this.currentUser.preferences.portrait,
         isCurruser: true,
         userName: this.currentUser.userName,
       });
@@ -61,7 +61,7 @@ class DialogBox extends Component {
               searchVal,
               content: '客官，莫急。小智正在头脑风暴',
               datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
-              avatar: this.currentUser.portrait,
+              avatar: this.currentUser.preferences.portrait,
               userName: '小智',
             },
           ]),

@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: Eason
- * @Last Modified time: 2020-10-19 13:52:27
+ * @Last Modified time: 2020-11-18 14:56:40
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -19,7 +19,7 @@ import {
   updatePwd,
   authorizeData,
   getTenantSetting,
-  getPortrait,
+  getPreferences,
   sendVerifyCode,
   findpwd,
   checkExisted,
@@ -75,26 +75,31 @@ export default {
         userData.unshift({ account, userName });
       }
       storage.localStorage.set(LOCALE_USER_LIST_KEY, userData);
-      let portrait = defaultHeadIcon;
       setSessionId(sessionId);
       setCurrentPolicy(authorityPolicy);
       setCurrentLocale(adaptLocale(locale || 'zh_CN'));
       setLocale(adaptLocale(locale || 'zh_CN'));
-      const resultPortrait = yield call(getPortrait);
-      if (resultPortrait.success) {
-        portrait = resultPortrait.data || defaultHeadIcon;
+      const resultPreferences = yield call(getPreferences);
+      const preferences = { portrait: defaultHeadIcon };
+      if (resultPreferences.success) {
+        try {
+          const p = JSON.parse(resultPreferences.data);
+          Object.assign(preferences, p);
+        } catch {
+          Object.assign(preferences, { portrait: resultPreferences.data });
+        }
       }
       yield put({
         type: 'updateState',
         payload: {
           userInfo: {
+            preferences,
             ...userInfo,
-            portrait,
           },
           sessionId,
         },
       });
-      setCurrentUser({ ...userInfo, portrait });
+      setCurrentUser({ ...userInfo, preferences });
     },
     *bindingSocialAccount({ payload }, { call }) {
       const result = yield call(bindingSocialAccount, payload);
