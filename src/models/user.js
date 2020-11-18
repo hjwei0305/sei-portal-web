@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: Eason
- * @Last Modified time: 2020-11-18 14:56:40
+ * @Last Modified time: 2020-11-18 14:57:40
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -86,7 +86,7 @@ export default {
           const p = JSON.parse(resultPreferences.data);
           Object.assign(preferences, p);
         } catch {
-          Object.assign(preferences, { portrait: resultPreferences.data });
+          Object.assign(preferences, { portrait: resultPreferences.data || defaultHeadIcon });
         }
       }
       yield put({
