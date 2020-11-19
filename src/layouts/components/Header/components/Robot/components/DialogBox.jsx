@@ -166,7 +166,7 @@ class DialogBox extends Component {
 
     return (
       <Divider className={cls('empty-wrapper')} dashed>
-        请在下方输入关键进行提问
+        请在下方输入关键词进行提问
       </Divider>
     );
   };
