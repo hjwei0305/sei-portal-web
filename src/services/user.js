@@ -137,6 +137,17 @@ export const getPreferences = (params = {}) =>
   });
 
 /**
+ * 设置新手引导，已知
+ */
+export const setUserGuidePreference = () =>
+  request({
+    method: 'POST',
+    url: `${BASICSERVICE}/userProfile/setUserPreference/guide`,
+    data: 'true',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+/**
  * 忘记密码，发送验证码
  */
 export const sendVerifyCode = (params = {}) =>

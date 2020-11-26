@@ -18,7 +18,6 @@ export default class UserIcon extends React.Component {
   constructor(props) {
     super(props);
     this.currentUser = getCurrentUser();
-    console.log(this.currentUser);
   }
 
   handleClick = () => {
