@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Divider } from 'antd';
+import { Form, Button } from 'antd';
 import { connect } from 'dva';
 import { router } from 'umi';
 import cls from 'classnames';
@@ -139,9 +139,6 @@ export default class Login extends Component {
           </Button>
         </LoginForm>
         <div className="third-login">
-          <Divider>
-            <FormattedMessage id="app.login.others" defaultMessage="其它方式登录" />
-          </Divider>
           <QrCode />
         </div>
         <div className="tool-box">

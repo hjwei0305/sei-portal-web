@@ -221,7 +221,7 @@ class LoginForm extends Component {
             )}
           </FormItem>
         ) : null}
-        <FormItem>{children}</FormItem>
+        <FormItem style={{ marginBottom: 0 }}>{children}</FormItem>
       </Form>
     );
   }

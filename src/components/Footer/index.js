@@ -5,7 +5,7 @@ const Footer = () => (
     className="vertical"
     style={{
       position: 'relative',
-      marginTop: 32,
+      marginTop: 64,
       textAlign: 'center',
       width: '100%',
       height: 64,

@@ -124,14 +124,21 @@
       }
     }
     .third-login {
-      margin: 0 36px 24px 36px;
+      margin: 0 36px;
       text-align: center;
-      .ant-divider-inner-text {
-        color: fade(@black, 15%);
-        font-size: 14px;
-      }
       .sei-qrcode-wrapper {
         display: inline-block;
+        img {
+          margin-right: 8px;
+        }
+        span {
+          color: fade(@black, 45%);
+        }
+        &:hover {
+          span {
+            color: fade(@primary-color, 65%);
+          }
+        }
       }
     }
     .tool-box {
@@ -153,11 +160,11 @@
       .ant-row.ant-form-item {
         height: auto;
       }
-      .login-form-button {
-        width: 100%;
-        height: 48px;
-        margin: 8px 0 32px 0;
-      }
+    }
+    .login-form-button {
+      width: 100%;
+      height: 48px;
+      margin: 8px 0;
     }
   }
 }
