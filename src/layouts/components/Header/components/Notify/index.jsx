@@ -172,7 +172,7 @@ export default class index extends PureComponent {
     >
       <List
         itemLayout="horizontal"
-        dataSource={data.slice(0, 5)}
+        dataSource={data.slice(0, 10)}
         renderItem={item => (
           <List.Item
             className={cls(styles['custom_ant-list-item'])}
