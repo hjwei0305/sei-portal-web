@@ -165,7 +165,7 @@ export default class index extends PureComponent {
   getTabPane = ([type, data]) => (
     <TabPane
       key={type}
-      tab={`${this.cateGoryMap[type]}(${data.length})`}
+      tab={`${this.cateGoryMap[type]}`}
       onClick={e => {
         e.stopPropagation();
       }}
