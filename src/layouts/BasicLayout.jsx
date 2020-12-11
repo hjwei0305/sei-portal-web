@@ -60,6 +60,9 @@ export default class BasicLayout extends React.Component {
               prevBtnText: '← 上一个',
               padding: 0,
               overlayClickNext: true,
+              onPrevious: () => {
+                console.log('onReset', 'onReset');
+              },
               onNext: ({ node }) => {
                 if (node.id === 'collapse-icon-container') {
                   dispatch({
