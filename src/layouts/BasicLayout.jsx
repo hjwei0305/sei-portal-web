@@ -100,7 +100,7 @@ export default class BasicLayout extends React.Component {
 
   handleSetUserGuidePreference = e => {
     const { dispatch } = this.props;
-    if (e && e.target && e.target.className.includes('driver-close-btn')) {
+    if (e && e.target.className === 'driver-close-btn') {
       dispatch({
         type: 'user/setUserGuidePreference',
       });
