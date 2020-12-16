@@ -60,9 +60,6 @@ export default class BasicLayout extends React.Component {
               prevBtnText: '← 上一个',
               padding: 0,
               overlayClickNext: true,
-              onPrevious: () => {
-                console.log('onReset', 'onReset');
-              },
               onNext: ({ node }) => {
                 if (node.id === 'collapse-icon-container') {
                   dispatch({
@@ -71,6 +68,7 @@ export default class BasicLayout extends React.Component {
                 }
               },
             });
+            document.body.addEventListener('click', this.handleSetUserGuidePreference);
             this.guide.defineSteps(steps);
             this.guide.start();
           }
@@ -93,13 +91,21 @@ export default class BasicLayout extends React.Component {
     // if (weiXinUtils.isWeiXin()) {
     //   this.showOpenDefaultBrowserConfirm();
     // }
-
-    // waterMark({ content: '虹信软件股份有限公司' });
   }
 
   componentWillUnmount() {
     window.removeEventListener('message', this.delegateTab);
+    document.body.removeEventListener('click', this.handleSetUserGuidePreference);
   }
+
+  handleSetUserGuidePreference = e => {
+    const { dispatch } = this.props;
+    if (e && e.target.className === 'driver-close-btn') {
+      dispatch({
+        type: 'user/setUserGuidePreference',
+      });
+    }
+  };
 
   handleAfterSuccess = () => {
     const { menu } = this.props;
