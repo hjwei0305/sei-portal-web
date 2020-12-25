@@ -51,6 +51,7 @@ function adapterMenus(tree) {
     rootName,
     appBase64ImgStr,
     favorite,
+    activedRefresh: true,
   };
 }
 
