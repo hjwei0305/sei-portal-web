@@ -13,7 +13,7 @@ import {
   userLogout,
   bindingSocialAccount,
   getAuthorizedFeatures,
-  clearUserAuthCaches,
+  // clearUserAuthCaches,
   getVerifyCode,
   getUserByXsid,
   updatePwd,
@@ -228,8 +228,8 @@ export default {
     },
     *userLogout(_, { put }) {
       router.replace('/user/login');
-      const user = getCurrentUser();
-      yield clearUserAuthCaches(user.userId);
+      // const user = getCurrentUser();
+      // yield clearUserAuthCaches(user.userId);
       yield userLogout({ sid: getSessionId() });
       clearUserInfo();
       yield put({
