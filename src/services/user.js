@@ -112,8 +112,8 @@ export async function getAuthorizedFeatures(userId) {
 }
 
 /** 清除用户缓存 */
-export async function clearUserAuthCaches(userId) {
-  return request.post(`${BASICSERVICE}/user/clearUserAuthorizedCaches/${userId}`);
+export async function clearUserAuthCaches() {
+  return request.post(`${BASICSERVICE}/user/clearUserAuthorizedCaches`);
 }
 
 /**
