@@ -108,7 +108,7 @@ export async function getWeChatCfg(params = { authType: 'weChat' }) {
 
 /** 获取当前用户有权限的功能项集合 */
 export async function getAuthorizedFeatures(userId) {
-  return request.get(`${SEIAUTHSERVICE}/auth/getAuthorizedFeatures?userId=${userId}`);
+  return request.get(`${BASICSERVICE}/user/getUserAuthorizedFeatureMaps?userId=${userId}`);
 }
 
 /** 清除用户缓存 */
