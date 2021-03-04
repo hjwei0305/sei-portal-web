@@ -249,7 +249,7 @@ export default {
       });
     },
     *redirectLogin(_, { put }) {
-      window.location.replace('#/user/login');
+      window.location.replace('/');
       // router.replace('/user/login');
       /** 更新菜单相关状态 */
       yield put({
