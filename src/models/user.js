@@ -236,10 +236,6 @@ export default {
         type: 'updateState',
         payload: {
           userInfo: null,
-          visibleTabData: [],
-          moreTabData: [],
-          tabData: [],
-          activedMenu: null,
         },
       });
       /** 更新菜单相关状态 */
@@ -248,6 +244,7 @@ export default {
         payload: {
           visibleTabData: [],
           moreTabData: [],
+          tabData: [],
           activedMenu: null,
         },
       });
