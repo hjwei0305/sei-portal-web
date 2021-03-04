@@ -256,6 +256,7 @@ export default {
         payload: {
           visibleTabData: [],
           moreTabData: [],
+          tabData: [],
           activedMenu: null,
         },
       });
