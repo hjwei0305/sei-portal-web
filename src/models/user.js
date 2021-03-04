@@ -236,6 +236,10 @@ export default {
         type: 'updateState',
         payload: {
           userInfo: null,
+          visibleTabData: [],
+          moreTabData: [],
+          tabData: [],
+          activedMenu: null,
         },
       });
       /** 更新菜单相关状态 */
@@ -249,8 +253,7 @@ export default {
       });
     },
     *redirectLogin(_, { put }) {
-      window.location.replace('/');
-      // router.replace('/user/login');
+      router.replace('/user/login');
       /** 更新菜单相关状态 */
       yield put({
         type: 'menu/updateState',
