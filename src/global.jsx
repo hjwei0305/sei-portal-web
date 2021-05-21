@@ -1,6 +1,16 @@
 // import React from 'react';
 import { message } from 'suid';
+import { setLocale } from 'umi-plugin-react/locale';
+import { userInfoOperation } from '@/utils';
 import fetchPolyfill from './fetchPolyfill';
+
+const defaultLanguage = window.navigator.language;
+const { setCurrentLocale } = userInfoOperation;
+
+if (defaultLanguage) {
+  setLocale(defaultLanguage);
+  setCurrentLocale(defaultLanguage);
+}
 
 fetchPolyfill();
 /** 默认配置message，最多弹出来一个，屏幕弹框吐丝现象 */
