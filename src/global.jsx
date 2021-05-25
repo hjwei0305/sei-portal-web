@@ -5,9 +5,9 @@ import { userInfoOperation } from '@/utils';
 import fetchPolyfill from './fetchPolyfill';
 
 const defaultLanguage = window.navigator.language;
-const { setCurrentLocale } = userInfoOperation;
+const { setCurrentLocale, getCurrentLocale } = userInfoOperation;
 
-if (defaultLanguage) {
+if (!getCurrentLocale() && defaultLanguage) {
   setLocale(defaultLanguage);
   setCurrentLocale(defaultLanguage);
 }
