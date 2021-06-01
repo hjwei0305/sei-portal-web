@@ -8,8 +8,15 @@ const defaultLanguage = window.navigator.language;
 const { setCurrentLocale, getCurrentLocale } = userInfoOperation;
 
 if (!getCurrentLocale() && defaultLanguage) {
-  setLocale(defaultLanguage);
-  setCurrentLocale(defaultLanguage);
+  if ('zh-CN'.includes(defaultLanguage)) {
+    setLocale('zh-CN');
+    setCurrentLocale('zh-CN');
+  }
+
+  if ('en-US'.includes(defaultLanguage)) {
+    setLocale('en-US');
+    setCurrentLocale('en-US');
+  }
 }
 
 fetchPolyfill();
