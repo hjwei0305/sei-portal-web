@@ -204,7 +204,8 @@ export default class index extends PureComponent {
         transition: 'all .3s',
         cursor: 'pointer',
       }}
-      onClick={() => {
+      onClick={e => {
+        e.stopPropagation();
         eventBus.emit('openTab', {
           id: 'userMessageView',
           title: '用户消息',
