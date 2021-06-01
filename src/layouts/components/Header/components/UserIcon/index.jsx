@@ -70,7 +70,8 @@ export default class UserIcon extends React.Component {
   dropdownRender = () => {
     const menu = (
       <Menu
-        onClick={({ key }) => {
+        onClick={({ key, domEvent }) => {
+          domEvent.stopPropagation();
           switch (key) {
             case 'setting':
               this.handleSetting();
