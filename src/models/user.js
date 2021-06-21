@@ -244,6 +244,7 @@ export default {
         payload: {
           visibleTabData: [],
           moreTabData: [],
+          tabData: [],
           activedMenu: null,
         },
       });
@@ -256,6 +257,7 @@ export default {
         payload: {
           visibleTabData: [],
           moreTabData: [],
+          tabData: [],
           activedMenu: null,
         },
       });

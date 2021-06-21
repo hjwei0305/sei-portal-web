@@ -6,7 +6,6 @@ import { Helmet } from 'react-helmet';
 import { Modal, message } from 'antd';
 import { ScrollBar } from 'suid';
 import { formatMessage } from 'umi-plugin-react/locale';
-// import DashBoard from '@/pages/DashBoard';
 import { userInfoOperation } from '@/utils';
 import ConfirmLoginModal from '@/pages/Login/ConfirmLoginModal';
 import { getWeChatCfg } from '@/services/user';
@@ -190,12 +189,6 @@ export default class BasicLayout extends React.Component {
     }).then(() => {
       router.push('/DashBoard');
     });
-
-    // this.handleTabs('open', {
-    //   activedMenu: null,
-    // }).then(() => {
-    //   router.push('/DashBoard');
-    // });
   };
 
   showOpenDefaultBrowserConfirm = () => {

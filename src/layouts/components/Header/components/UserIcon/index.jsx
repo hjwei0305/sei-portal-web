@@ -69,20 +69,42 @@ export default class UserIcon extends React.Component {
 
   dropdownRender = () => {
     const menu = (
-      <Menu selectedKeys={[]} className={cls(styles['user-menu-item'])}>
-        <Menu.Item key="setting" onClick={this.handleSetting}>
+      <Menu
+        onClick={({ key, domEvent }) => {
+          domEvent.stopPropagation();
+          switch (key) {
+            case 'setting':
+              this.handleSetting();
+              break;
+            case 'my-dashboard-home':
+              this.handlerDashboardCustom();
+              break;
+            case 'user-guide':
+              this.handleGuilde();
+              break;
+            case 'logout':
+              this.handleClick();
+              break;
+            default:
+              break;
+          }
+        }}
+        selectedKeys={[]}
+        className={cls(styles['user-menu-item'])}
+      >
+        <Menu.Item key="setting">
           <Icon type="setting" />
           个人设置
         </Menu.Item>
-        <Menu.Item key="my-dashboard-home" onClick={this.handlerDashboardCustom}>
+        <Menu.Item key="my-dashboard-home">
           <Icon type="home" />
           {formatMessage({ id: 'app.dashboard.custom', desc: '自定义首页' })}
         </Menu.Item>
-        <Menu.Item key="user-guide" onClick={this.handleGuilde}>
+        <Menu.Item key="user-guide">
           <Icon type="question-circle" />
           新手引导
         </Menu.Item>
-        <Menu.Item key="logout" onClick={this.handleClick}>
+        <Menu.Item key="logout">
           <Icon type="logout" />
           {formatMessage({ id: 'app.logout', desc: '退出' })}
         </Menu.Item>

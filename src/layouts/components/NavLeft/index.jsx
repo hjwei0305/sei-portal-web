@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Menu, Icon, Row, Col } from 'antd';
 import { Link } from 'umi';
-import { ScrollBar } from 'suid';
+import { ScrollBar, ProLayout } from 'suid';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import { eventBus } from '@/utils';
@@ -13,6 +13,7 @@ import collapsedLogo from '../../../assets/logo_notxt@2x.png';
 import styles from './index.less';
 
 const { SubMenu } = Menu;
+const { Header, Content, Footer } = ProLayout;
 
 class NavLeft extends React.Component {
   constructor(props) {
@@ -165,7 +166,86 @@ class NavLeft extends React.Component {
           [styles['nav-left-wrapper-collapsed']]: collapsed,
         })}
       >
-        <div className="layout-logo" onClick={this.handleLogoClick}>
+        <ProLayout>
+          <Header height={56} gutter={[0, 0]} style={{ padding: 0 }}>
+            <div className="layout-logo" onClick={this.handleLogoClick}>
+              <img src={collapsed ? collapsedMenuLogo : menuLogo} alt="logo" />
+            </div>
+          </Header>
+          <Header height="auto" gutter={[0, 0]}>
+            <div className="layout-menu-search">
+              {!collapsed ? (
+                <Fragment>
+                  <Row type="flex" align="middle" style={{ flex: 1 }}>
+                    <Col id="menu-search-container" style={{ flex: 1 }}>
+                      <MenuSearch onSelect={onSelectSearchMenu} data={allLeafMenus} />
+                    </Col>
+                    <Col id="favorite-container" style={{ width: 50 }}>
+                      <FavoriteMenu
+                        collapsed={collapsed}
+                        data={favoriteMenus}
+                        onSelect={onSelectSearchMenu}
+                        onRemove={this.handleCollect}
+                      />
+                    </Col>
+                  </Row>
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <Icon className="collapsed-search-icon" type="search" onClick={onCollapse} />
+                  <FavoriteMenu
+                    collapsed={collapsed}
+                    data={favoriteMenus}
+                    onSelect={onSelectSearchMenu}
+                    onRemove={this.handleCollect}
+                  />
+                </Fragment>
+              )}
+            </div>
+          </Header>
+          <Content>
+            <div
+              className="layout-menu"
+              onClick={e => {
+                if (
+                  e.target.className &&
+                  e.target.className.includes('scrollbar-container') &&
+                  onCollapse &&
+                  collapsed
+                ) {
+                  onCollapse();
+                }
+              }}
+            >
+              {openKeys ? (
+                <ScrollBar>
+                  <Menu
+                    defaultOpenKeys={openKeys}
+                    selectedKeys={currentSelectedKeys}
+                    mode="inline"
+                    theme="dark"
+                    inlineCollapsed={collapsed}
+                  >
+                    {this.renderMenu(menuConfig)}
+                  </Menu>
+                </ScrollBar>
+              ) : null}
+            </div>
+          </Content>
+          <Footer height={40} gutter={[0, 0]}>
+            <div id="collapse-icon-container" className="layout-menu-collapse" onClick={onCollapse}>
+              {!collapsed ? (
+                <Fragment>
+                  <Icon className="collapse-icon" type="double-left" />
+                  <span>收起菜单</span>
+                </Fragment>
+              ) : (
+                <Icon type="double-right" />
+              )}
+            </div>
+          </Footer>
+        </ProLayout>
+        {/* <div className="layout-logo" onClick={this.handleLogoClick}>
           <img src={collapsed ? collapsedMenuLogo : menuLogo} alt="logo" />
         </div>
         <div className="layout-menu-search">
@@ -233,7 +313,7 @@ class NavLeft extends React.Component {
           ) : (
             <Icon type="double-right" />
           )}
-        </div>
+        </div> */}
       </div>
     );
   }

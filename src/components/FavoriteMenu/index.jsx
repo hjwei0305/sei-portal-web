@@ -76,7 +76,7 @@ export default class FavoriteMenu extends React.Component {
         })}
         placement={collapsed ? 'rightBottom' : 'bottom'}
         align={{
-          offset: collapsed ? [2, -3] : [-88, 5],
+          offset: collapsed ? [2, -3] : [-90, 5],
         }}
         content={
           <div className="menu-favorite-popver-content">
