@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: Eason
- * @Last Modified time: 2020-12-11 15:50:44
+ * @Last Modified time: 2021-06-21 17:02:30
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -278,13 +278,15 @@ export default {
       const result = yield call(getTenantSetting, payload);
       const { data, success } = result;
       if (success) {
-        const { watermark } = data;
+        const { watermark, flowEngineCode } = data;
         yield put({
           type: 'updateState',
           payload: {
             tenantSetting: data,
           },
         });
+        /** 设置租户流程引擎类型 */
+        storage.sessionStorage.set(CONST_GLOBAL.FLOW_ENGINE, flowEngineCode);
         if (watermark) {
           const userInfo = getCurrentUser();
           const watermarkSetting = JSON.parse(watermark);
