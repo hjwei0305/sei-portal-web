@@ -68,6 +68,9 @@ export async function userLogout(params) {
     url: `${SEIAUTHSERVICE}/auth/logout`,
     method: 'POST',
     data: params.sid,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 }
 
