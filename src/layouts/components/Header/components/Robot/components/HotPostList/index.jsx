@@ -3,10 +3,10 @@ import { List, Icon, Skeleton } from 'antd';
 import { ExtIcon, ScrollBar, message } from 'suid';
 import cls from 'classnames';
 import { userInfoOperation } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { getHotPosts } from '../../service';
 
 import styles from './index.less';
-import { formatMessage } from 'umi-plugin-react/locale';
 
 const { getCurrentUser } = userInfoOperation;
 
