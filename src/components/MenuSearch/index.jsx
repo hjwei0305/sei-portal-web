@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import propTypes from 'prop-types';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { noop, groupBy, debounce, trim, orderBy, take } from 'lodash';
 import { Input, Popover, Empty } from 'antd';
 import { ScrollBar, utils } from 'suid';
@@ -112,14 +113,22 @@ export default class MenuSearch extends PureComponent {
   };
 
   renderEmptyText = () => {
-    const text = '暂时没有数据';
+    const text = formatMessage({
+      id: 'app.menu.recent.use.empty.desc',
+      defaultMessage: '暂时没有数据',
+    });
     const { searchValue } = this.state;
     if (searchValue) {
       return text;
     }
     return (
       <>
-        <span style={{ color: '#ccc' }}>提示: 输入菜单关键字</span>
+        <span style={{ color: '#ccc' }}>
+          {formatMessage({
+            id: 'app.menu.recent.use.empty.tip',
+            defaultMessage: '提示: 输入菜单关键字',
+          })}
+        </span>
         <br />
         {text}
       </>
@@ -152,7 +161,7 @@ export default class MenuSearch extends PureComponent {
       );
     }
     const searchResultProps = {
-      title: '最近使用',
+      title: formatMessage({ id: 'app.menu.recent.use.title', defaultMessage: '最近使用' }),
       dataSource: menus,
       onSelect: this.handlerSelect,
     };

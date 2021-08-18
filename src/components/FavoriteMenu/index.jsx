@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { Icon, Popover, List } from 'antd';
 import { get } from 'lodash';
 import cls from 'classnames';
@@ -32,7 +33,9 @@ export default class FavoriteMenu extends React.Component {
     if (data && data.length) {
       return (
         <div className="favorite-menu-item-wrapper">
-          <div className="title">我的收藏</div>
+          <div className="title">
+            {formatMessage({ id: 'app.collection.title', defaultMessage: '我的收藏' })}
+          </div>
           <List
             itemLayout="horizontal"
             dataSource={data}
@@ -50,8 +53,12 @@ export default class FavoriteMenu extends React.Component {
     }
     return (
       <div className={cls('empty-wrapper')}>
-        <div className="title">我的收藏</div>
-        <div className="desc">暂时没有收藏菜单</div>
+        <div className="title">
+          {formatMessage({ id: 'app.collection.title', defaultMessage: '我的收藏' })}
+        </div>
+        <div className="desc">
+          {formatMessage({ id: 'app.collection.empty.desc', defaultMessage: '暂时没有收藏菜单' })}
+        </div>
       </div>
     );
   };

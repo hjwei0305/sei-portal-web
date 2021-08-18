@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:17
  * @Last Modified by: zp
- * @Last Modified time: 2021-08-18 10:12:17
+ * @Last Modified time: 2021-08-18 10:40:59
  */
 export default {
   'app.title': 'B&C Platform',
@@ -42,4 +42,13 @@ export default {
   'app.step.screenfull.desc': 'the setup page enters full screen mode',
   'app.step.collapse.title': 'folding operation',
   'app.step.collapse.desc': 'turn the side menu bar on or off',
+  'app.collection.title': 'collection',
+  'app.collection.empty.desc': 'no data',
+  'app.menu.recent.use.title': 'recently used',
+  'app.menu.recent.use.empty.desc': 'no data',
+  'app.menu.recent.use.empty.tip': 'tips: enter menu keywords',
+  'app.guide.pre': 'pre',
+  'app.guide.next': 'next',
+  'app.guide.close': 'close',
+  'app.guide.done': 'done',
 };

@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:06
  * @Last Modified by: zp
- * @Last Modified time: 2021-08-18 10:05:36
+ * @Last Modified time: 2021-08-18 10:40:31
  */
 export default {
   'app.title': '业务协同平台',
@@ -39,4 +39,13 @@ export default {
   'app.step.screenfull.desc': '设置页面进入全屏模式',
   'app.step.collapse.title': '折叠操作',
   'app.step.collapse.desc': '打开或者关闭侧边菜单栏',
+  'app.collection.title': '我的收藏',
+  'app.collection.empty.desc': '暂时没有收藏菜单',
+  'app.menu.recent.use.title': '最近使用',
+  'app.menu.recent.use.empty.desc': '暂时没有数据',
+  'app.menu.recent.use.empty.tip': '提示: 输入菜单关键字',
+  'app.guide.pre': '上一个',
+  'app.guide.next': '下一个',
+  'app.guide.close': '关闭',
+  'app.guide.done': '完成',
 };

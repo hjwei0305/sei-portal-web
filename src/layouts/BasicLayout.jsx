@@ -53,10 +53,10 @@ export default class BasicLayout extends React.Component {
         }).then(() => {
           if (!preferences.guide) {
             this.guide = new Driver({
-              doneBtnText: '完成', // Text on the final button
-              closeBtnText: '关闭', // Text on the close button for this step
-              nextBtnText: '下一个 →', // Next button text for this step
-              prevBtnText: '← 上一个',
+              doneBtnText: formatMessage({ id: 'app.guide.done', defaultMessage: '完成' }), // Text on the final button
+              closeBtnText: formatMessage({ id: 'app.guide.close', defaultMessage: '关闭' }), // Text on the close button for this step
+              nextBtnText: `${formatMessage({ id: 'app.guide.next', defaultMessage: '下一个' })} →`, // Next button text for this step
+              prevBtnText: `← ${formatMessage({ id: 'app.guide.pre', defaultMessage: '上一个' })}`,
               padding: 0,
               overlayClickNext: true,
               onNext: ({ node }) => {
