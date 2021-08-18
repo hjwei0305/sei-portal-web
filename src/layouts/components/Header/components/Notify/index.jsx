@@ -222,7 +222,7 @@ export default class index extends PureComponent {
         });
       }}
     >
-      {formatMessage({ id: '', defaultMessage: '查看更多内容' })}
+      {formatMessage({ id: 'app.user.mesaage.more', defaultMessage: '查看更多内容' })}
     </div>
   );
 
