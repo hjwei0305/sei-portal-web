@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:17
  * @Last Modified by: zp
- * @Last Modified time: 2021-08-18 11:07:06
+ * @Last Modified time: 2021-08-18 11:18:44
  */
 export default {
   'app.title': 'B&C Platform',
@@ -60,4 +60,5 @@ export default {
   'app.user.mesaage.title': 'message',
   'app.user.mesaage.more': 'more',
   'app.user.mesaage.empty.title': 'no data',
+  'app.applications.title': 'apps',
 };

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { omit } from 'lodash';
 import { Row, Col, Drawer } from 'antd';
 import { ExtIcon, ScrollBar, utils } from 'suid';
@@ -120,7 +121,7 @@ export default class SelectModule extends PureComponent {
         onClick={this.handlerClose}
         style={{ fontSize: '16px', marginRight: '24px', color: 'rgb(166, 166, 166)' }}
       />
-      我的应用
+      {formatMessage({ id: 'app.applications.title', defaultMessage: '我的应用' })}
     </>
   );
 
