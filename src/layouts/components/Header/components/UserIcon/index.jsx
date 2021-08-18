@@ -94,7 +94,7 @@ export default class UserIcon extends React.Component {
       >
         <Menu.Item key="setting">
           <Icon type="setting" />
-          个人设置
+          {formatMessage({ id: 'app.user.setting', defaultMessage: '个人设置' })}
         </Menu.Item>
         <Menu.Item key="my-dashboard-home">
           <Icon type="home" />
@@ -102,7 +102,7 @@ export default class UserIcon extends React.Component {
         </Menu.Item>
         <Menu.Item key="user-guide">
           <Icon type="question-circle" />
-          新手引导
+          {formatMessage({ id: 'app.user.guide.title', defaultMessage: '新手引导' })}
         </Menu.Item>
         <Menu.Item key="logout">
           <Icon type="logout" />

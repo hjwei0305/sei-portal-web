@@ -1,4 +1,5 @@
 import { utils } from 'suid';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { name } from '../../package.json';
 
 const { NODE_ENV } = process.env;
@@ -42,7 +43,7 @@ export const NoMenuPages = [
   // },
   {
     id: 'userProfile',
-    title: '个人设置',
+    title: formatMessage({ id: 'app.user.setting', defaultMessage: '个人设置' }),
     url: '/sei-basic-web/userProfile',
     // closeActiveParentTab: true,
   },

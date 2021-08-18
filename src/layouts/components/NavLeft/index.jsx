@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Menu, Icon, Row, Col } from 'antd';
 import { Link } from 'umi';
 import { ScrollBar, ProLayout } from 'suid';
+import { formatMessage } from 'umi-plugin-react/locale';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import { eventBus } from '@/utils';
@@ -237,7 +238,9 @@ class NavLeft extends React.Component {
               {!collapsed ? (
                 <Fragment>
                   <Icon className="collapse-icon" type="double-left" />
-                  <span>收起菜单</span>
+                  <span>
+                    {formatMessage({ id: 'app.menu.collopse', defaultMessage: '收起菜单' })}
+                  </span>
                 </Fragment>
               ) : (
                 <Icon type="double-right" />
