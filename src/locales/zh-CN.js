@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:06
  * @Last Modified by: zp
- * @Last Modified time: 2021-08-18 11:18:35
+ * @Last Modified time: 2021-08-18 11:25:50
  */
 export default {
   'app.title': '业务协同平台',
@@ -54,6 +54,7 @@ export default {
   'app.wit.send': '发送',
   'app.wit.go.help': '前往帮助中心',
   'app.wit.min': '最小化',
+  'app.wit.searching.txt': '客官，莫急。小智正在头脑风暴',
   'app.user.mesaage.title': '用户消息',
   'app.user.mesaage.more': '查看更多内容',
   'app.user.mesaage.empty.title': '暂无消息',

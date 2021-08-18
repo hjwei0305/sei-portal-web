@@ -60,7 +60,10 @@ class DialogBox extends Component {
               id: tempId,
               loading: true,
               searchVal,
-              content: '客官，莫急。小智正在头脑风暴',
+              content: formatMessage({
+                id: 'app.wit.searching.txt',
+                defaultMessage: '客官，莫急。小智正在头脑风暴',
+              }),
               datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
               avatar: this.currentUser.preferences.portrait,
               userName: formatMessage({ id: 'app.step.wit.title', defaultMessage: '小智' }),

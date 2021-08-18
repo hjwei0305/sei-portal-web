@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExtIcon } from 'suid';
 import { Tooltip } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
 import DialogBox from './components/DialogBox';
 
 export default class Robot extends React.PureComponent {
@@ -20,7 +21,10 @@ export default class Robot extends React.PureComponent {
 
     return (
       <>
-        <Tooltip title="小智" className={className}>
+        <Tooltip
+          title={formatMessage({ id: 'app.step.wit.title', defaultMessage: '小智' })}
+          className={className}
+        >
           <span id="robot-wrapper" onClick={this.handleQuestion}>
             <ExtIcon type="robot" style={{ fontSize: 16 }} antd />
           </span>

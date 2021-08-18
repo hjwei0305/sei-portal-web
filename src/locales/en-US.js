@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:17
  * @Last Modified by: zp
- * @Last Modified time: 2021-08-18 11:18:44
+ * @Last Modified time: 2021-08-18 11:27:09
  */
 export default {
   'app.title': 'B&C Platform',
@@ -59,6 +59,7 @@ export default {
   'app.wit.min': 'min',
   'app.user.mesaage.title': 'message',
   'app.user.mesaage.more': 'more',
+  'app.wit.searching.txt': 'searching',
   'app.user.mesaage.empty.title': 'no data',
   'app.applications.title': 'apps',
 };
