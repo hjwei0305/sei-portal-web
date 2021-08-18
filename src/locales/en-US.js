@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:17
  * @Last Modified by: zp
- * @Last Modified time: 2021-08-18 10:40:59
+ * @Last Modified time: 2021-08-18 11:07:06
  */
 export default {
   'app.title': 'B&C Platform',
@@ -51,4 +51,13 @@ export default {
   'app.guide.next': 'next',
   'app.guide.close': 'close',
   'app.guide.done': 'done',
+  'app.wit.search.placehoder': 'please enter keywords below to ask questions',
+  'app.wit.search.hot': 'hot discussion',
+  'app.wit.contacts': 'contacts',
+  'app.wit.send': 'send',
+  'app.wit.go.help': 'help center',
+  'app.wit.min': 'min',
+  'app.user.mesaage.title': 'message',
+  'app.user.mesaage.more': 'more',
+  'app.user.mesaage.empty.title': 'no data',
 };

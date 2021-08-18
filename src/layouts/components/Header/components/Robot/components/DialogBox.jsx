@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ExtModal, ScrollBar, utils, ExtIcon } from 'suid';
 import ReactDOM from 'react-dom';
+import { formatMessage } from 'umi-plugin-react/locale';
 import cls from 'classnames';
 import moment from 'moment';
 import { Row, Col, Divider, Input, Button, message, List, Avatar, Spin } from 'antd';
@@ -62,7 +63,7 @@ class DialogBox extends Component {
               content: '客官，莫急。小智正在头脑风暴',
               datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
               avatar: this.currentUser.preferences.portrait,
-              userName: '小智',
+              userName: formatMessage({ id: 'app.step.wit.title', defaultMessage: '小智' }),
             },
           ]),
           searchVal: '',
@@ -166,7 +167,10 @@ class DialogBox extends Component {
 
     return (
       <Divider className={cls('empty-wrapper')} dashed>
-        请在下方输入关键词进行提问
+        {formatMessage({
+          id: 'app.wit.search.placehoder',
+          defaultMessage: '请在下方输入关键词进行提问',
+        })}
       </Divider>
     );
   };
@@ -200,7 +204,11 @@ class DialogBox extends Component {
   };
 
   render() {
-    const { title = '小智', visible, onClose } = this.props;
+    const {
+      title = formatMessage({ id: 'app.step.wit.title', defaultMessage: '小智' }),
+      visible,
+      onClose,
+    } = this.props;
     const { searchVal } = this.state;
 
     return (
@@ -222,7 +230,13 @@ class DialogBox extends Component {
         }}
         onCancel={onClose}
         // maskClosable={false}
-        closeIcon={<ExtIcon type="minus" antd tooltip={{ title: '最小化' }} />}
+        closeIcon={
+          <ExtIcon
+            type="minus"
+            antd
+            tooltip={{ title: formatMessage({ id: 'app.wit.min', defaultMessage: '最小化' }) }}
+          />
+        }
       >
         <Row className={cls('item-height')} gutter={8}>
           <Col className={cls('item-height')} span={16}>
@@ -246,7 +260,7 @@ class DialogBox extends Component {
                 />
                 <div className={cls('dialog-opt')}>
                   <Button type="primary" onClick={this.handleSend}>
-                    发送
+                    {formatMessage({ id: 'app.wit.send', defaultMessage: '发送' })}
                   </Button>
                 </div>
               </Col>
@@ -261,7 +275,8 @@ class DialogBox extends Component {
                   rel="noopener noreferrer"
                 >
                   <ExtIcon type="question-circle" style={{ fontSize: 20 }} antd />
-                  {` 前往帮助中心`}
+
+                  {` ${formatMessage({ id: 'app.wit.go.help', defaultMessage: '前往帮助中心' })}`}
                 </a>
               </Col>
               <Col className={cls('item-right-center')}>

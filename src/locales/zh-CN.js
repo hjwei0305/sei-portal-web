@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:06
  * @Last Modified by: zp
- * @Last Modified time: 2021-08-18 10:40:31
+ * @Last Modified time: 2021-08-18 11:15:46
  */
 export default {
   'app.title': '业务协同平台',
@@ -48,4 +48,13 @@ export default {
   'app.guide.next': '下一个',
   'app.guide.close': '关闭',
   'app.guide.done': '完成',
+  'app.wit.search.placehoder': '请在下方输入关键词进行提问',
+  'app.wit.search.hot': '本周热议',
+  'app.wit.contacts': '联系人',
+  'app.wit.send': '发送',
+  'app.wit.go.help': '前往帮助中心',
+  'app.wit.min': '最小化',
+  'app.user.mesaage.title': '用户消息',
+  'app.user.mesaage.more': '查看更多内容',
+  'app.user.mesaage.empty.title': '暂无消息',
 };

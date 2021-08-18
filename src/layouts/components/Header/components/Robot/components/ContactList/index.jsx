@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { List, Typography, Skeleton } from 'antd';
 import { ExtIcon, ScrollBar, message } from 'suid';
+import { formatMessage } from 'umi-plugin-react/locale';
 import cls from 'classnames';
 import { getContacts } from '../../service';
 
@@ -78,7 +79,7 @@ class ContactList extends Component {
     return (
       <div className={cls(styles['contact-list'])}>
         <div className={cls('contact-list-title')}>
-          联系人
+          {formatMessage({ id: 'app.wit.contacts', defaultMessage: '联系人' })}
           <span className={cls('extra')}>
             <ExtIcon
               disabled={loading}

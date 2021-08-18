@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { Tooltip, Badge, Icon, Dropdown, Card, List, Avatar, Tabs, Skeleton, Empty } from 'antd';
 import cls from 'classnames';
 import * as focus from 'focus-outside';
@@ -154,7 +155,12 @@ export default class index extends PureComponent {
           </Tabs>
         ) : (
           <>
-            <Empty description="暂无消息" />
+            <Empty
+              description={formatMessage({
+                id: 'app.user.mesaage.empty.title',
+                defaultMessage: '暂无消息',
+              })}
+            />
             {this.getMoreRender()}
           </>
         )}
@@ -216,7 +222,7 @@ export default class index extends PureComponent {
         });
       }}
     >
-      查看更多内容
+      {formatMessage({ id: '', defaultMessage: '查看更多内容' })}
     </div>
   );
 
@@ -267,7 +273,9 @@ export default class index extends PureComponent {
     return (
       <>
         <Dropdown ref={node => (this.dropdownElm = node)} {...this.getDropdownProps()}>
-          <Tooltip title="用户消息">
+          <Tooltip
+            title={formatMessage({ id: 'app.user.mesaage.title', defaultMessage: '用户消息' })}
+          >
             <span id="notify-container" className={className}>
               <Badge count={messageCount}>
                 <Icon type="bell" style={{ padding: 6, fontSize: 20 }} />

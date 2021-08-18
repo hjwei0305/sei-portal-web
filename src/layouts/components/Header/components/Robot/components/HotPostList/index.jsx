@@ -6,6 +6,7 @@ import { userInfoOperation } from '@/utils';
 import { getHotPosts } from '../../service';
 
 import styles from './index.less';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const { getCurrentUser } = userInfoOperation;
 
@@ -81,7 +82,7 @@ class HotPostList extends Component {
     return (
       <div className={cls(styles['hot-post-list'])}>
         <div className={cls('post-list-title')}>
-          本周热议
+          {formatMessage({ id: 'app.wit.search.hot', defaultMessage: '本周热议' })}
           <span className={cls('extra')}>
             <ExtIcon
               disabled={loading}
