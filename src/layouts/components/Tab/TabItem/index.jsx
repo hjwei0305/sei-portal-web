@@ -4,6 +4,7 @@ import Trigger from 'rc-trigger';
 import classNames from 'classnames';
 import { Icon, Dropdown, Menu } from 'antd';
 import { Link, router } from 'umi';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { CSSTransition } from 'react-transition-group';
 import { eventBus } from '@/utils';
 
@@ -178,8 +179,14 @@ export default class TabItem extends React.Component {
           }
         }}
       >
-        {actived ? <Menu.Item key="closeOther">关闭其他</Menu.Item> : null}
-        <Menu.Item key="closeAll">关闭所有</Menu.Item>
+        {actived ? (
+          <Menu.Item key="closeOther">
+            {formatMessage({ id: 'other.close', defaultMessage: '关闭其他' })}
+          </Menu.Item>
+        ) : null}
+        <Menu.Item key="closeAll">
+          {formatMessage({ id: 'all.close', defaultMessage: '关闭所有' })}
+        </Menu.Item>
       </Menu>
     );
   };

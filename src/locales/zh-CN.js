@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:06
  * @Last Modified by: zp
- * @Last Modified time: 2021-08-26 13:46:49
+ * @Last Modified time: 2021-08-26 13:53:11
  */
 export default {
   'app.title': '业务协同平台',
@@ -62,4 +62,5 @@ export default {
   'current.refresh': '刷新当前',
   'current.close': '关闭当前',
   'all.close': '关闭所有',
+  'other.close': '关闭其他',
 };

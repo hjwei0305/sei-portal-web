@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:17
  * @Last Modified by: zp
- * @Last Modified time: 2021-08-26 13:47:15
+ * @Last Modified time: 2021-08-26 13:53:21
  */
 export default {
   'app.title': 'B&C Platform',
@@ -65,4 +65,5 @@ export default {
   'current.refresh': 'refresh',
   'current.close': 'close',
   'all.close': 'close all',
+  'other.close': 'close others',
 };
