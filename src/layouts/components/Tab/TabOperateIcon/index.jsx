@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Icon, Popover } from 'antd';
 import PropTypes from 'prop-types';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './index.less';
 
 class TabOperateIcon extends Component {
@@ -33,13 +34,13 @@ class TabOperateIcon extends Component {
           content={
             <div onClick={this.handleClick}>
               <div className="operate-item" onClick={onReloadCurrent}>
-                {'刷新当前'}
+                {formatMessage({ id: 'current.refresh', defaultMessage: '刷新当前' })}
               </div>
               <div className="operate-item" onClick={onCloseCurrent}>
-                {'关闭当前'}
+                {formatMessage({ id: 'current.close', defaultMessage: '关闭当前' })}
               </div>
               <div className="operate-item" onClick={onCloseAll}>
-                {'关闭所有'}
+                {formatMessage({ id: 'all.close', defaultMessage: '关闭所有' })}
               </div>
             </div>
           }

@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:06
  * @Last Modified by: zp
- * @Last Modified time: 2021-08-18 11:25:50
+ * @Last Modified time: 2021-08-26 13:46:49
  */
 export default {
   'app.title': '业务协同平台',
@@ -59,4 +59,7 @@ export default {
   'app.user.mesaage.more': '查看更多内容',
   'app.user.mesaage.empty.title': '暂无消息',
   'app.applications.title': '我的应用',
+  'current.refresh': '刷新当前',
+  'current.close': '关闭当前',
+  'all.close': '关闭所有',
 };
