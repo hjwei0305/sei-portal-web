@@ -2,11 +2,11 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
  * @Last Modified by: Eason
- * @Last Modified time: 2020-11-18 14:30:56
+ * @Last Modified time: 2021-09-22 08:15:17
  */
 import { request, CONSTANTS } from '@/utils';
 
-const { SEIAUTHSERVICE, BASICSERVICE } = CONSTANTS;
+const { SEIAUTHSERVICE, BASICSERVICE, BASEURL } = CONSTANTS;
 
 /** 更新密码 */
 export const updatePwd = data =>
@@ -189,3 +189,10 @@ export const findpwd = ({ id, newPassword, verifyCode }) =>
       verifyCode,
     },
   });
+
+/** 获取当前用户的信用信息 */
+export async function getCurrentUserCredit() {
+  return request({
+    url: `${BASEURL}/soms-v6/employeeCredit/findCurrentUserCredit`,
+  });
+}

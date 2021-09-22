@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: Eason
- * @Last Modified time: 2021-06-21 17:02:30
+ * @Last Modified time: 2021-09-22 15:40:16
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -24,6 +24,7 @@ import {
   sendVerifyCode,
   findpwd,
   checkExisted,
+  getCurrentUserCredit,
 } from '@/services/user';
 import { userInfoOperation, eventBus, waterMark, CONSTANTS } from '@/utils';
 
@@ -55,6 +56,7 @@ export default {
     verifyCode: null,
     qrConfig: null,
     tenantSetting: null,
+    showLog: false,
   },
 
   subscriptions: {
@@ -82,6 +84,7 @@ export default {
       setCurrentLocale(adaptLocale(locale || 'zh_CN'));
       setLocale(adaptLocale(locale || 'zh_CN'));
       const resultPreferences = yield call(getPreferences);
+      const creditResult = yield call(getCurrentUserCredit);
       const preferences = { portrait: defaultHeadIcon };
       if (resultPreferences.success) {
         try {
@@ -91,17 +94,22 @@ export default {
           Object.assign(preferences, { portrait: resultPreferences.data || defaultHeadIcon });
         }
       }
+      let credit = null;
+      if (creditResult.success) {
+        credit = creditResult.data;
+      }
       yield put({
         type: 'updateState',
         payload: {
           userInfo: {
             preferences,
             ...userInfo,
+            credit,
           },
           sessionId,
         },
       });
-      setCurrentUser({ ...userInfo, preferences });
+      setCurrentUser({ ...userInfo, preferences, credit });
     },
     *bindingSocialAccount({ payload }, { call }) {
       const result = yield call(bindingSocialAccount, payload);

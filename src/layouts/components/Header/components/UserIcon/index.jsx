@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { get, cloneDeep } from 'lodash';
-import { Icon, Menu, Avatar } from 'antd';
+import { Icon, Menu, Avatar, Result, Button, Rate } from 'antd';
+import { Space } from 'suid';
 import { formatMessage } from 'umi-plugin-react/locale';
 import ExtDropdown from '@/components/ExtDropdown';
 import { userInfoOperation, CONSTANTS } from '@/utils';
@@ -14,7 +15,7 @@ const { NoMenuPages } = CONSTANTS;
 const { getCurrentUser } = userInfoOperation;
 
 @connect(() => ({}))
-export default class UserIcon extends React.Component {
+class UserIcon extends React.Component {
   constructor(props) {
     super(props);
     this.currentUser = getCurrentUser();
@@ -71,6 +72,59 @@ export default class UserIcon extends React.Component {
     this.guide.start();
   };
 
+  getCreditProps = () => {
+    const creditProps = {};
+    return creditProps;
+  };
+
+  handlerShowLog = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'user/updateState',
+      payload: {
+        showLog: true,
+      },
+    });
+  };
+
+  renderUserCredit = () => {
+    const {
+      credit: { rating, ratingName, score, creditLogCount },
+    } = this.currentUser;
+    return (
+      <Result
+        icon={
+          <div className="icon-box">
+            <div className="rate-desc">{ratingName}</div>
+            <Rate value={rating} disabled />
+            <div className="tip">
+              {formatMessage({ id: 'credit.tip', defaultMessage: '每一次用心 都是信用的积累' })}
+            </div>
+          </div>
+        }
+        title={formatMessage({ id: 'creditRecord.rating', defaultMessage: '信用等级' })}
+        subTitle={
+          <Space className="credit-box" size={42}>
+            <Space direction="vertical" size={0}>
+              <div className="score">{score}</div>
+              <div className="title">
+                {formatMessage({ id: 'creditRecord.score', defaultMessage: '信用分' })}
+              </div>
+            </Space>
+            <Space direction="vertical" size={0}>
+              <div className="score">{creditLogCount}</div>
+              <div className="title">
+                <Button type="link" onClick={this.handlerShowLog} size="small">
+                  {formatMessage({ id: 'my.credit.log', defaultMessage: '信用记录' })}
+                </Button>
+              </div>
+            </Space>
+          </Space>
+        }
+      />
+    );
+  };
+
   dropdownRender = () => {
     const menu = (
       <Menu
@@ -96,6 +150,9 @@ export default class UserIcon extends React.Component {
         selectedKeys={[]}
         className={cls(styles['user-menu-item'])}
       >
+        <Menu.Item key="credit" className="credit-box">
+          {this.renderUserCredit()}
+        </Menu.Item>
         <Menu.Item key="setting">
           <Icon type="setting" />
           {formatMessage({ id: 'app.user.setting', defaultMessage: '个人设置' })}
@@ -132,3 +189,5 @@ export default class UserIcon extends React.Component {
     );
   }
 }
+
+export default UserIcon;

@@ -13,6 +13,7 @@ import Header from './components/Header';
 import { Driver, steps } from './components/Guide';
 import NavLeft from './components/NavLeft';
 import Tab from './components/Tab';
+import CreditLog from './components/CreditLog';
 
 import styles from './BasicLayout.less';
 
@@ -303,6 +304,16 @@ export default class BasicLayout extends React.Component {
     return urlPath;
   };
 
+  handlerCloseLog = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'user/updateState',
+      payload: {
+        showLog: false,
+      },
+    });
+  };
+
   render() {
     const { collapsed } = this.state;
     const { menu, children, user } = this.props;
@@ -318,7 +329,7 @@ export default class BasicLayout extends React.Component {
       moreTabData,
       favoriteMenus,
     } = menu;
-    const { tenantSetting } = user;
+    const { tenantSetting, showLog } = user;
     const isSubAppRouter = this.isSubAppRouter();
     let activedKey = '';
     let title = formatMessage({ id: 'app.dashboard', desc: '平台首页' });
@@ -437,6 +448,7 @@ export default class BasicLayout extends React.Component {
             />
           ) : null}
         </section>
+        <CreditLog showLog={showLog} closeLog={this.handlerCloseLog} />
       </ScrollBar>
     );
   }

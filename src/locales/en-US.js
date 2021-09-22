@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-01-30 18:34:17
- * @Last Modified by: zp
- * @Last Modified time: 2021-08-26 13:53:21
+ * @Last Modified by: Eason
+ * @Last Modified time: 2021-09-22 15:16:46
  */
 export default {
   'app.title': 'B&C Platform',
@@ -66,4 +66,13 @@ export default {
   'current.close': 'close',
   'all.close': 'close all',
   'other.close': 'close others',
+  'my.credit.log': 'My credit history',
+  'creditRecord.rating': '信用等级',
+  'creditRecord.score': '信用分',
+  'creditRecord.log.source': '考核来源',
+  'creditRecord.log.event': '考核事件',
+  'creditRecord.log.eventNote': '事件说明',
+  'creditRecord.log.score': '分值变化',
+  'credit.tip': '每一次用心 都是信用的积累',
+  'app.search.tip': '输入{field}关键字查询',
 };
