@@ -61,6 +61,10 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/onlineUser',
+    component: './OnLineUser',
+  },
 ];
 
 export default routes;
