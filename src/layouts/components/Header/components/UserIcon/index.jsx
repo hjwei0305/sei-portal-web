@@ -90,7 +90,7 @@ class UserIcon extends React.Component {
   renderUserCredit = () => {
     const { credit = {} } = this.currentUser;
     const rating = get(credit, 'rating') || 0;
-    const ratingName = get(credit, 'ratingName') || '无';
+    const ratingName = get(credit, 'ratingName') || '--';
     const score = get(credit, 'score') || 0;
     const creditLogCount = get(credit, 'creditLogCount') || 0;
     return (
