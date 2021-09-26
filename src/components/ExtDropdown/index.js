@@ -31,7 +31,7 @@ export default class HeaderDropdown extends PureComponent {
   handleOutside = () => {
     setTimeout(() => {
       this.setState({ visible: false });
-    }, 80);
+    }, 500);
   };
 
   handleVisibleChange = visible => {
