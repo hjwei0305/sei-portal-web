@@ -33,7 +33,9 @@ class UserIcon extends React.Component {
     dispatch({
       type: 'menu/openTab',
       payload: {
-        activedMenu: cloneDeep(NoMenuPages[0]),
+        activedMenu: Object.assign(cloneDeep(NoMenuPages[0]), {
+          title: formatMessage({ id: 'app.user.setting', defaultMessage: '个人设置' }),
+        }),
       },
     });
     // .then(({ activedMenu }) => {

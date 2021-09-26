@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-09 15:49:41
  * @Last Modified by: zp
- * @Last Modified time: 2020-08-27 12:06:36
+ * @Last Modified time: 2021-09-26 09:03:31
  */
 import { router } from 'umi';
 import { utils } from 'suid';
@@ -153,7 +153,12 @@ export default {
             [activedMenu] = temp;
           }
           if (activedMenu.id !== NoMenuPages[0].id) {
-            payload.tabData = [NoMenuPages[0], activedMenu];
+            payload.tabData = [
+              Object.assign(NoMenuPages[0], {
+                title: formatMessage({ id: 'app.user.setting', defaultMessage: '个人设置' }),
+              }),
+              activedMenu,
+            ];
           } else {
             payload.tabData = [activedMenu];
           }
