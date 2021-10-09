@@ -68,7 +68,9 @@ class LogList extends Component {
     return (
       <Space>
         <Tooltip title={`${tipTitle}:${item.source}`}>{item.event}</Tooltip>
-        <Tooltip title={item.createdDate}>{`${moment(item.createdDate).fromNow()}`}</Tooltip>
+        <Tooltip title={item.createdDate}>
+          <em style={{ fontSize: 10, color: '#999' }}>{`${moment(item.createdDate).fromNow()}`}</em>
+        </Tooltip>
       </Space>
     );
   };
