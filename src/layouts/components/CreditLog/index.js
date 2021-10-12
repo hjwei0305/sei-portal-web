@@ -105,6 +105,7 @@ class LogList extends Component {
       showSearch: false,
       onSelectChange: this.handlerSelectRow,
       showArrow: false,
+      searchProperties: ['event', 'eventNote'],
       itemField: {
         title: this.renderTitle,
         description: item => item.eventNote,
