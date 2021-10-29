@@ -91,7 +91,7 @@ class LogList extends Component {
               fontWeight: 700,
             }}
           >
-            {score}
+            {score > 0 ? `+${score}` : score}
           </div>
         </Tooltip>
       </Space>
