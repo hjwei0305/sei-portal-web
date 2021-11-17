@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: Eason
- * @Last Modified time: 2021-09-22 15:40:16
+ * @Last Modified time: 2021-11-17 09:04:23
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -299,12 +299,15 @@ export default {
         storage.sessionStorage.set(CONST_GLOBAL.FLOW_ENGINE, flowEngineCode);
         if (watermark) {
           const userInfo = getCurrentUser();
+          console.log(userInfo);
           const watermarkSetting = JSON.parse(watermark);
           const { disabled, isUseUserNameText, watermarkText } = watermarkSetting;
           if (!disabled) {
-            const markText = isUseUserNameText ? userInfo.userName : watermarkText;
+            const markText = isUseUserNameText
+              ? `${userInfo.userName}-${userInfo.account}`
+              : watermarkText;
             storage.sessionStorage.set(CONST_GLOBAL.WATERMARK, markText);
-            waterMark.getWatermark({ ...watermarkSetting, content: userInfo.userName });
+            waterMark.getWatermark({ ...watermarkSetting, content: markText });
           }
         }
       }
