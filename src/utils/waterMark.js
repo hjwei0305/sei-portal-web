@@ -38,55 +38,59 @@ class Watermark {
       base64Url = canvas.toDataURL();
     }
 
-    const watermarkDiv = document.createElement('div');
-    watermarkDiv.id = '__watermark-base__';
-    const styleStr = `
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      display: block !important;
-      width: 100% !important;
-      height: 100% !important;
-      z-index: 99999999 !important;
-      visibility: visible !important;
-      pointer-events: none !important;
-      background-image: url('${base64Url}') !important;
-    `;
-    watermarkDiv.setAttribute('style', `${styleStr}`);
+    const __wm = document.getElementById('__watermark-base__');
 
-    container.insertBefore(watermarkDiv, container.firstChild);
-    const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-    /** 监听dom变化 */
-    if (MutationObserver) {
-      this.mo = new MutationObserver(() => {
-        const __wm = document.getElementById('__watermark-base__');
-        // 只在__wm元素变动才重新调用 __canvasWM
-        if ((__wm && __wm.getAttribute('style') !== styleStr) || !__wm) {
-          // 避免一直触发
-          this.mo.disconnect();
-          this.mo = null;
-          this.getWatermark({
-            container,
-            width,
-            height,
-            textAlign,
-            textBaseline,
-            font,
-            fillStyle,
-            color,
-            content,
-            rotate,
-            watermarkImg,
-            fontSize,
-          });
-        }
-      });
+    if (!__wm) {
+      const watermarkDiv = document.createElement('div');
+      watermarkDiv.id = '__watermark-base__';
+      const styleStr = `
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        z-index: 99999999 !important;
+        visibility: visible !important;
+        pointer-events: none !important;
+        background-image: url('${base64Url}') !important;
+      `;
+      watermarkDiv.setAttribute('style', `${styleStr}`);
 
-      this.mo.observe(container, {
-        attributes: true,
-        subtree: true,
-        childList: true,
-      });
+      container.insertBefore(watermarkDiv, container.firstChild);
+      const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+      /** 监听dom变化 */
+      if (MutationObserver) {
+        this.mo = new MutationObserver(() => {
+          const __wm = document.getElementById('__watermark-base__');
+          // 只在__wm元素变动才重新调用 __canvasWM
+          if ((__wm && __wm.getAttribute('style') !== styleStr) || !__wm) {
+            // 避免一直触发
+            this.mo.disconnect();
+            this.mo = null;
+            this.getWatermark({
+              container,
+              width,
+              height,
+              textAlign,
+              textBaseline,
+              font,
+              fillStyle,
+              color,
+              content,
+              rotate,
+              watermarkImg,
+              fontSize,
+            });
+          }
+        });
+
+        this.mo.observe(container, {
+          attributes: true,
+          subtree: true,
+          childList: true,
+        });
+      }
     }
   };
 
