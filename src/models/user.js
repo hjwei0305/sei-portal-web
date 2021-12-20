@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: Eason
- * @Last Modified time: 2021-11-17 09:04:23
+ * @Last Modified time: 2021-12-20 16:25:49
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -281,7 +281,7 @@ export default {
       const userInfo = getCurrentUser();
       const result = yield call(setUserGuidePreference);
       if (result && result.success) {
-        setCurrentUser({ userInfo, preferences: { ...userInfo.preferences, guide: true } });
+        setCurrentUser({ ...userInfo, preferences: { ...userInfo.preferences, guide: true } });
       }
     },
     *getTenantSetting({ payload }, { call, put }) {
