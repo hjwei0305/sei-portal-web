@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import { Dropdown } from 'antd';
+import { isEqual } from 'lodash';
 import cls from 'classnames';
 import * as focus from 'focus-outside';
 import styles from './index.less';
@@ -8,12 +9,9 @@ import styles from './index.less';
 export default class HeaderDropdown extends PureComponent {
   static dropdownElm;
 
-  static lazyOutside;
-
   constructor(props) {
     super(props);
     this.dropdownElm = null;
-    this.lazyOutside = true;
     this.state = {
       visible: false,
     };
@@ -29,6 +27,16 @@ export default class HeaderDropdown extends PureComponent {
     }
   }
 
+  componentDidUpdate(_, prevState) {
+    const { visible } = this.state;
+    if (!isEqual(prevState.visible, visible) && visible) {
+      const { onShow } = this.props;
+      if (visible) {
+        onShow();
+      }
+    }
+  }
+
   componentWillUnmount() {
     if (this.dropdownElm) {
       focus.unbind(ReactDOM.findDOMNode(this.dropdownElm), this.handleOutside);
@@ -36,18 +44,9 @@ export default class HeaderDropdown extends PureComponent {
   }
 
   handleOutside = () => {
-    if (this.lazyOutside) {
-      setTimeout(() => {
-        this.setState({ visible: false });
-      }, 200);
-    }
-  };
-
-  handlerShow = () => {
-    this.lazyOutside = false;
-    this.setState({ visible: true }, () => {
-      this.lazyOutside = true;
-    });
+    setTimeout(() => {
+      this.setState({ visible: false });
+    }, 200);
   };
 
   handleVisibleChange = visible => {

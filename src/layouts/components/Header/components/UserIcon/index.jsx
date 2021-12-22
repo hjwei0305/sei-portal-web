@@ -16,23 +16,12 @@ const { getCurrentUser } = userInfoOperation;
 
 @connect(({ user, loading }) => ({ user, loading }))
 class UserIcon extends React.Component {
-  static dropdownRef;
-
   constructor(props) {
     super(props);
-    this.dropdownRef = null;
     this.currentUser = getCurrentUser();
   }
 
-  refreshCredit = e => {
-    if (e) {
-      e.stopPropagation();
-    }
-    if (this.dropdownRef) {
-      setTimeout(() => {
-        this.dropdownRef.handlerShow();
-      }, 200);
-    }
+  refreshCredit = () => {
     const { dispatch, loading } = this.props;
     const creditLoading = loading.effects['user/refreshCredit'];
     if (creditLoading) {
@@ -209,17 +198,9 @@ class UserIcon extends React.Component {
     return menu;
   };
 
-  handlerDropdownRef = ref => {
-    this.dropdownRef = ref;
-  };
-
   render() {
     return (
-      <ExtDropdown
-        overlay={this.dropdownRender()}
-        trigger={['click']}
-        onRef={this.handlerDropdownRef}
-      >
+      <ExtDropdown overlay={this.dropdownRender()} trigger={['click']} onShow={this.refreshCredit}>
         <span id="user-icon-wrapper" className={cls(styles['user-icon-wrapper'], 'trigger')}>
           <Avatar
             icon={<img alt="" src={get(this.currentUser, 'preferences.portrait')} />}
