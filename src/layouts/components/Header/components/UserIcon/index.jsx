@@ -100,9 +100,28 @@ class UserIcon extends React.Component {
     });
   };
 
-  renderUserCredit = () => {
+  getStateProps = () => {
     const { loading } = this.props;
     const creditLoading = loading.effects['user/refreshCredit'];
+    const stateProps = {
+      className: 'btn-resfresh done',
+      type: 'check-circle',
+      tooltip: { title: '信用分已最新' },
+    };
+    if (creditLoading) {
+      Object.assign(stateProps, {
+        className: 'btn-resfresh',
+        type: 'sync',
+        spin: true,
+        tooltip: { title: '正在更新信用...' },
+      });
+    } else {
+      Object.assign(stateProps, { theme: 'filled' });
+    }
+    return stateProps;
+  };
+
+  renderUserCredit = () => {
     const { credit = {} } = this.currentUser;
     const rating = get(credit, 'rating') || 0;
     const ratingName = get(credit, 'ratingName') || '--';
@@ -126,14 +145,7 @@ class UserIcon extends React.Component {
               <div className="score">{score}</div>
               <div className="title">
                 {formatMessage({ id: 'creditRecord.score', defaultMessage: '信用分' })}
-                <ExtIcon
-                  className="btn-resfresh"
-                  type="sync"
-                  spin={creditLoading}
-                  tooltip={{ title: '更新信用' }}
-                  onClick={this.refreshCredit}
-                  antd
-                />
+                <ExtIcon {...this.getStateProps()} antd />
               </div>
             </Space>
             <Space direction="vertical" size={0}>
