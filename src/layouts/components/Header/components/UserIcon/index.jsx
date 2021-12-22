@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
+import ReactDOM from 'react-dom';
 import { get, cloneDeep } from 'lodash';
+import * as focus from 'focus-outside';
 import { Icon, Menu, Avatar, Result, Button, Rate } from 'antd';
 import { Space, ExtIcon } from 'suid';
 import { formatMessage } from 'umi-plugin-react/locale';
@@ -23,6 +25,24 @@ class UserIcon extends React.Component {
       showMenu: false,
     };
   }
+
+  componentDidMount() {
+    if (this.dropdownElm) {
+      focus.bind(ReactDOM.findDOMNode(this.dropdownElm), this.handleOutside);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.dropdownElm) {
+      focus.unbind(ReactDOM.findDOMNode(this.dropdownElm), this.handleOutside);
+    }
+  }
+
+  handleOutside = () => {
+    setTimeout(() => {
+      this.setState({ showMenu: false });
+    }, 200);
+  };
 
   refreshCredit = () => {
     const { dispatch } = this.props;
