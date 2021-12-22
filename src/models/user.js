@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: Eason
- * @Last Modified time: 2021-12-22 17:09:11
+ * @Last Modified time: 2021-12-22 17:57:33
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -319,7 +319,6 @@ export default {
         storage.sessionStorage.set(CONST_GLOBAL.FLOW_ENGINE, flowEngineCode);
         if (watermark) {
           const userInfo = getCurrentUser();
-          console.log(userInfo);
           const watermarkSetting = JSON.parse(watermark);
           const { disabled, isUseUserNameText, watermarkText } = watermarkSetting;
           if (!disabled) {

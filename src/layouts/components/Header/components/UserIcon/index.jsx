@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
-import ReactDOM from 'react-dom';
 import { get, cloneDeep } from 'lodash';
-import * as focus from 'focus-outside';
 import { Icon, Menu, Avatar, Result, Button, Rate } from 'antd';
 import { Space, ExtIcon } from 'suid';
 import { formatMessage } from 'umi-plugin-react/locale';
@@ -18,37 +16,28 @@ const { getCurrentUser } = userInfoOperation;
 
 @connect(({ user, loading }) => ({ user, loading }))
 class UserIcon extends React.Component {
-  static userRef;
+  static dropdownRef;
 
   constructor(props) {
     super(props);
-    this.userRef = null;
+    this.dropdownRef = null;
     this.currentUser = getCurrentUser();
-    this.state = {
-      showMenu: false,
-    };
   }
 
-  componentDidMount() {
-    if (this.userRef) {
-      focus.bind(ReactDOM.findDOMNode(this.userRef), this.handleOutside);
+  refreshCredit = e => {
+    if (e) {
+      e.stopPropagation();
     }
-  }
-
-  componentWillUnmount() {
-    if (this.userRef) {
-      focus.unbind(ReactDOM.findDOMNode(this.userRef), this.handleOutside);
+    if (this.dropdownRef) {
+      setTimeout(() => {
+        this.dropdownRef.handlerShow();
+      }, 200);
     }
-  }
-
-  handleOutside = () => {
-    setTimeout(() => {
-      this.setState({ showMenu: false });
-    }, 200);
-  };
-
-  refreshCredit = () => {
-    const { dispatch } = this.props;
+    const { dispatch, loading } = this.props;
+    const creditLoading = loading.effects['user/refreshCredit'];
+    if (creditLoading) {
+      return false;
+    }
     dispatch({
       type: 'user/refreshCredit',
     });
@@ -179,19 +168,15 @@ class UserIcon extends React.Component {
           switch (key) {
             case 'setting':
               this.handleSetting();
-              this.setState({ showMenu: false });
               break;
             case 'my-dashboard-home':
               this.handlerDashboardCustom();
-              this.setState({ showMenu: false });
               break;
             case 'user-guide':
               this.handleGuilde();
-              this.setState({ showMenu: false });
               break;
             case 'logout':
               this.handleClick();
-              this.setState({ showMenu: false });
               break;
             default:
               break;
@@ -221,23 +206,19 @@ class UserIcon extends React.Component {
         </Menu.Item>
       </Menu>
     );
-
     return menu;
   };
 
-  handleVisibleChange = showMenu => {
-    this.setState({ showMenu });
+  handlerDropdownRef = ref => {
+    this.dropdownRef = ref;
   };
 
   render() {
-    const { showMenu } = this.state;
     return (
       <ExtDropdown
-        ref={node => (this.userRef = node)}
-        visible={showMenu}
-        onVisibleChange={this.handleVisibleChange}
         overlay={this.dropdownRender()}
         trigger={['click']}
+        onRef={this.handlerDropdownRef}
       >
         <span id="user-icon-wrapper" className={cls(styles['user-icon-wrapper'], 'trigger')}>
           <Avatar

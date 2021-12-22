@@ -8,15 +8,22 @@ import styles from './index.less';
 export default class HeaderDropdown extends PureComponent {
   static dropdownElm;
 
+  static lazyOutside;
+
   constructor(props) {
     super(props);
     this.dropdownElm = null;
+    this.lazyOutside = true;
     this.state = {
       visible: false,
     };
   }
 
   componentDidMount() {
+    const { onRef } = this.props;
+    if (onRef) {
+      onRef(this);
+    }
     if (this.dropdownElm) {
       focus.bind(ReactDOM.findDOMNode(this.dropdownElm), this.handleOutside);
     }
@@ -29,9 +36,16 @@ export default class HeaderDropdown extends PureComponent {
   }
 
   handleOutside = () => {
-    setTimeout(() => {
-      this.setState({ visible: false });
-    }, 200);
+    if (this.lazyOutside) {
+      setTimeout(() => {
+        this.setState({ visible: false });
+      }, 200);
+    }
+  };
+
+  handlerShow = () => {
+    this.lazyOutside = false;
+    this.setState({ visible: true });
   };
 
   handleVisibleChange = visible => {
@@ -40,14 +54,14 @@ export default class HeaderDropdown extends PureComponent {
 
   render() {
     const { visible } = this.state;
-    const { overlayClassName, ...props } = this.props;
+    const { overlayClassName, ...rest } = this.props;
     return (
       <Dropdown
         onVisibleChange={this.handleVisibleChange}
         ref={node => (this.dropdownElm = node)}
         visible={visible}
         overlayClassName={cls(styles.container, overlayClassName)}
-        {...props}
+        {...rest}
       />
     );
   }
