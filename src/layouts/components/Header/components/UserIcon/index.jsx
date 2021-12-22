@@ -175,8 +175,7 @@ class UserIcon extends React.Component {
   dropdownRender = () => {
     const menu = (
       <Menu
-        onClick={({ key, domEvent }) => {
-          domEvent.stopPropagation();
+        onClick={({ key }) => {
           switch (key) {
             case 'setting':
               this.handleSetting();
