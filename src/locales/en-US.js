@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:17
  * @Last Modified by: Eason
- * @Last Modified time: 2021-09-22 15:16:46
+ * @Last Modified time: 2021-12-22 19:11:12
  */
 export default {
   'app.title': 'B&C Platform',
@@ -75,4 +75,6 @@ export default {
   'creditRecord.log.score': '分值变化',
   'credit.tip': '每一次用心 都是信用的积累',
   'app.search.tip': '输入{field}关键字查询',
+  'credit.loaded.tip': 'The credit score is up to date',
+  'credit.loaded.doing': 'Updating credit score...',
 };

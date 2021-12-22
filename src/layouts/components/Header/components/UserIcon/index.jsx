@@ -106,14 +106,18 @@ class UserIcon extends React.Component {
     const stateProps = {
       className: 'btn-resfresh done',
       type: 'check-circle',
-      tooltip: { title: '信用分已最新' },
+      tooltip: {
+        title: formatMessage({ id: 'credit.loaded.tip', defaultMessage: '信用分已最新' }),
+      },
     };
     if (creditLoading) {
       Object.assign(stateProps, {
         className: 'btn-resfresh',
         type: 'sync',
         spin: true,
-        tooltip: { title: '正在更新信用...' },
+        tooltip: {
+          title: formatMessage({ id: 'credit.loaded.doing', defaultMessage: '正在更新信用...' }),
+        },
       });
     } else {
       Object.assign(stateProps, { theme: 'filled' });

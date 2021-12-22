@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-30 18:34:06
  * @Last Modified by: Eason
- * @Last Modified time: 2021-09-22 15:16:55
+ * @Last Modified time: 2021-12-22 19:12:07
  */
 export default {
   'app.title': '业务协同平台',
@@ -73,4 +73,6 @@ export default {
   'creditRecord.log.score': '分值变化',
   'credit.tip': '每一次用心 都是信用的积累',
   'app.search.tip': '输入{field}关键字查询',
+  'credit.loaded.tip': '信用分已最新',
+  'credit.loaded.doing': '正在更新信用分...',
 };
