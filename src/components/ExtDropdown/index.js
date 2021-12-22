@@ -45,7 +45,9 @@ export default class HeaderDropdown extends PureComponent {
 
   handlerShow = () => {
     this.lazyOutside = false;
-    this.setState({ visible: true });
+    this.setState({ visible: true }, () => {
+      this.lazyOutside = true;
+    });
   };
 
   handleVisibleChange = visible => {
