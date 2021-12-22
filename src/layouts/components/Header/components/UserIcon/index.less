@@ -1,3 +1,5 @@
+@import '../../../../../themes/default.less';
+
 .user-icon-wrapper {
   display: inline-block;
   max-width: 180px;
@@ -58,12 +60,29 @@
         }
       }
       .credit-box {
+        .btn-resfresh {
+          position: absolute;
+          top: 0;
+          right: -22px;
+          display: inline-block;
+          width: 24px;
+          height: 24px;
+          line-height: 26px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all ease-in 0.2s;
+          &:hover {
+            color: @primary-color;
+            background-color: fade(@black, 5%);
+          }
+        }
         .score {
           color: rgba(0, 0, 0, 0.85);
           font-size: 22px;
           text-align: center;
         }
         .title {
+          position: relative;
           color: #999;
         }
         button {

@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { get, cloneDeep } from 'lodash';
 import { Icon, Menu, Avatar, Result, Button, Rate } from 'antd';
-import { Space } from 'suid';
+import { Space, ExtIcon } from 'suid';
 import { formatMessage } from 'umi-plugin-react/locale';
 import ExtDropdown from '@/components/ExtDropdown';
 import { userInfoOperation, CONSTANTS } from '@/utils';
@@ -14,12 +14,22 @@ import styles from './index.less';
 const { NoMenuPages } = CONSTANTS;
 const { getCurrentUser } = userInfoOperation;
 
-@connect(() => ({}))
+@connect(({ user, loading }) => ({ user, loading }))
 class UserIcon extends React.Component {
   constructor(props) {
     super(props);
     this.currentUser = getCurrentUser();
+    this.state = {
+      showMenu: false,
+    };
   }
+
+  refreshCredit = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'user/refreshCredit',
+    });
+  };
 
   handleClick = () => {
     const { dispatch } = this.props;
@@ -90,6 +100,8 @@ class UserIcon extends React.Component {
   };
 
   renderUserCredit = () => {
+    const { loading } = this.props;
+    const creditLoading = loading.effects['user/refreshCredit'];
     const { credit = {} } = this.currentUser;
     const rating = get(credit, 'rating') || 0;
     const ratingName = get(credit, 'ratingName') || '--';
@@ -113,6 +125,14 @@ class UserIcon extends React.Component {
               <div className="score">{score}</div>
               <div className="title">
                 {formatMessage({ id: 'creditRecord.score', defaultMessage: '信用分' })}
+                <ExtIcon
+                  className="btn-resfresh"
+                  type="sync"
+                  spin={creditLoading}
+                  tooltip={{ title: '更新信用' }}
+                  onClick={this.refreshCredit}
+                  antd
+                />
               </div>
             </Space>
             <Space direction="vertical" size={0}>
@@ -137,15 +157,19 @@ class UserIcon extends React.Component {
           switch (key) {
             case 'setting':
               this.handleSetting();
+              this.setState({ showMenu: false });
               break;
             case 'my-dashboard-home':
               this.handlerDashboardCustom();
+              this.setState({ showMenu: false });
               break;
             case 'user-guide':
               this.handleGuilde();
+              this.setState({ showMenu: false });
               break;
             case 'logout':
               this.handleClick();
+              this.setState({ showMenu: false });
               break;
             default:
               break;
@@ -179,9 +203,19 @@ class UserIcon extends React.Component {
     return menu;
   };
 
+  handleVisibleChange = showMenu => {
+    this.setState({ showMenu });
+  };
+
   render() {
+    const { showMenu } = this.state;
     return (
-      <ExtDropdown overlay={this.dropdownRender()} trigger={['click']}>
+      <ExtDropdown
+        visible={showMenu}
+        onVisibleChange={this.handleVisibleChange}
+        overlay={this.dropdownRender()}
+        trigger={['click']}
+      >
         <span id="user-icon-wrapper" className={cls(styles['user-icon-wrapper'], 'trigger')}>
           <Avatar
             icon={<img alt="" src={get(this.currentUser, 'preferences.portrait')} />}

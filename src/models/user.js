@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: Eason
- * @Last Modified time: 2021-12-20 16:25:49
+ * @Last Modified time: 2021-12-22 17:09:11
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -110,6 +110,26 @@ export default {
         },
       });
       setCurrentUser({ ...userInfo, preferences, credit });
+    },
+    *refreshCredit(_, { call, select, put }) {
+      const { userInfo } = yield select(sel => sel.user);
+      const creditResult = yield call(getCurrentUserCredit);
+      let credit = null;
+      if (creditResult.success) {
+        credit = creditResult.data;
+        yield put({
+          type: 'updateState',
+          payload: {
+            userInfo: {
+              ...userInfo,
+              credit,
+            },
+          },
+        });
+      } else {
+        message.destroy();
+        message.error(creditResult.message);
+      }
     },
     *bindingSocialAccount({ payload }, { call }) {
       const result = yield call(bindingSocialAccount, payload);
