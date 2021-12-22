@@ -18,8 +18,11 @@ const { getCurrentUser } = userInfoOperation;
 
 @connect(({ user, loading }) => ({ user, loading }))
 class UserIcon extends React.Component {
+  static userRef;
+
   constructor(props) {
     super(props);
+    this.userRef = null;
     this.currentUser = getCurrentUser();
     this.state = {
       showMenu: false,
@@ -27,14 +30,14 @@ class UserIcon extends React.Component {
   }
 
   componentDidMount() {
-    if (this.dropdownElm) {
-      focus.bind(ReactDOM.findDOMNode(this.dropdownElm), this.handleOutside);
+    if (this.userRef) {
+      focus.bind(ReactDOM.findDOMNode(this.userRef), this.handleOutside);
     }
   }
 
   componentWillUnmount() {
-    if (this.dropdownElm) {
-      focus.unbind(ReactDOM.findDOMNode(this.dropdownElm), this.handleOutside);
+    if (this.userRef) {
+      focus.unbind(ReactDOM.findDOMNode(this.userRef), this.handleOutside);
     }
   }
 
@@ -231,6 +234,7 @@ class UserIcon extends React.Component {
     const { showMenu } = this.state;
     return (
       <ExtDropdown
+        ref={node => (this.userRef = node)}
         visible={showMenu}
         onVisibleChange={this.handleVisibleChange}
         overlay={this.dropdownRender()}
