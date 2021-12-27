@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
- * @Last Modified by: Eason
- * @Last Modified time: 2021-12-27 08:40:49
+ * @Last Modified by: zp
+ * @Last Modified time: 2021-12-27 16:16:38
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -320,11 +320,21 @@ export default {
         if (watermark) {
           const userInfo = getCurrentUser();
           const watermarkSetting = JSON.parse(watermark);
-          const { disabled, isUseUserNameText, watermarkText } = watermarkSetting;
+          const {
+            disabled,
+            isUseUserNameText,
+            watermarkText,
+            isUseUserAccountText,
+          } = watermarkSetting;
           if (!disabled) {
-            const markText = isUseUserNameText
-              ? `${userInfo.userName}-${userInfo.account}`
-              : watermarkText;
+            let markText = watermarkText;
+            if (isUseUserNameText && isUseUserAccountText) {
+              markText = `${userInfo.userName}-${userInfo.account}`;
+            } else if (isUseUserNameText) {
+              markText = userInfo.userName;
+            } else {
+              markText = userInfo.account;
+            }
             storage.sessionStorage.set(CONST_GLOBAL.WATERMARK, markText);
             waterMark.getWatermark({ ...watermarkSetting, content: markText });
           }
