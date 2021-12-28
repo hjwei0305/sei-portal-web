@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: zp
- * @Last Modified time: 2021-12-27 16:16:38
+ * @Last Modified time: 2021-12-28 10:49:27
  */
 import { router } from 'umi';
 import { notification } from 'antd';
@@ -332,7 +332,7 @@ export default {
               markText = `${userInfo.userName}-${userInfo.account}`;
             } else if (isUseUserNameText) {
               markText = userInfo.userName;
-            } else {
+            } else if (isUseUserAccountText) {
               markText = userInfo.account;
             }
             storage.sessionStorage.set(CONST_GLOBAL.WATERMARK, markText);
