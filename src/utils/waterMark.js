@@ -18,11 +18,12 @@ class Watermark {
     rotate = '30',
     watermarkImg = '',
     isUseUserNameText = false,
+    isUseUserAccountText = false,
     fontSize = '20',
   }) => {
     this.container = container;
     let base64Url = watermarkImg;
-    if (!watermarkImg || isUseUserNameText) {
+    if (!watermarkImg || isUseUserNameText || isUseUserAccountText) {
       const canvas = document.createElement('canvas');
       canvas.setAttribute('width', width);
       canvas.setAttribute('height', height);
