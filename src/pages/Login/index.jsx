@@ -112,7 +112,7 @@ export default class Login extends Component {
               <FormattedMessage id="app.title" defaultMessage="统一应用平台" />
             </div>
             <div className="desc">
-              <FormattedMessage id="app.subtitle" defaultMessage="智慧创造价值 专业赢得信赖" />
+              <FormattedMessage id="app.subtitle" defaultMessage="努力超越 追求卓越" />
             </div>
           </Animate>
         </div>
