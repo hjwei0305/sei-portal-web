@@ -31,7 +31,7 @@ export default class HeaderDropdown extends PureComponent {
     const { visible } = this.state;
     if (!isEqual(prevState.visible, visible) && visible) {
       const { onShow } = this.props;
-      if (visible) {
+      if (visible && onShow) {
         onShow();
       }
     }
