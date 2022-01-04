@@ -97,13 +97,13 @@ export default class Login extends Component {
       <div className={styles['container-box']}>
         <div className={cls('form-logo', 'horizontal')}>
           <Animate type="fadeInLeft" delay={400}>
-            S
+            U
           </Animate>
           <Animate type="tada" delay={800} duration={2000}>
-            E
+            A
           </Animate>
           <Animate type="fadeInRight" delay={400}>
-            I
+            P
           </Animate>
         </div>
         <div className="login-form-title vertical">

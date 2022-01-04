@@ -8,7 +8,7 @@ import { isEqual } from 'lodash';
 import { eventBus } from '@/utils';
 import MenuSearch from '@/components/MenuSearch';
 import FavoriteMenu from '@/components/FavoriteMenu';
-import logo from '../../../assets/logo.svg';
+import logo from '../../../assets/logo.png';
 import collapsedLogo from '../../../assets/logo_notxt@2x.png';
 
 import styles from './index.less';
@@ -152,14 +152,14 @@ class NavLeft extends React.Component {
       onSelectSearchMenu,
       tenantSetting,
     } = this.props;
-    let collapsedMenuLogo = collapsedLogo;
-    let menuLogo = logo;
-    if (tenantSetting && tenantSetting.logo) {
-      const logoObj = JSON.parse(tenantSetting.logo);
-      if (!logoObj.disabled) {
-        ({ collapsedMenuLogo, menuLogo } = logoObj);
-      }
-    }
+    const collapsedMenuLogo = collapsedLogo;
+    const menuLogo = logo;
+    // if (tenantSetting && tenantSetting.logo) {
+    //   const logoObj = JSON.parse(tenantSetting.logo);
+    //   if (!logoObj.disabled) {
+    //     ({ collapsedMenuLogo, menuLogo } = logoObj);
+    //   }
+    // }
     return (
       <div
         className={cls({
