@@ -9,7 +9,7 @@ import { eventBus } from '@/utils';
 import MenuSearch from '@/components/MenuSearch';
 import FavoriteMenu from '@/components/FavoriteMenu';
 import logo from '../../../assets/logo.png';
-import collapsedLogo from '../../../assets/logo_notxt@2x.png';
+// import collapsedLogo from '../../../assets/logo_notxt@2x.png';
 
 import styles from './index.less';
 
@@ -150,9 +150,9 @@ class NavLeft extends React.Component {
       favoriteMenus,
       onCollapse,
       onSelectSearchMenu,
-      tenantSetting,
+      // tenantSetting,
     } = this.props;
-    const collapsedMenuLogo = collapsedLogo;
+    // const collapsedMenuLogo = collapsedLogo;
     const menuLogo = logo;
     // if (tenantSetting && tenantSetting.logo) {
     //   const logoObj = JSON.parse(tenantSetting.logo);
@@ -170,7 +170,7 @@ class NavLeft extends React.Component {
         <ProLayout>
           <Header height={56} gutter={[0, 0]} style={{ padding: 0 }}>
             <div className="layout-logo" onClick={this.handleLogoClick}>
-              <img src={collapsed ? collapsedMenuLogo : menuLogo} alt="logo" />
+              <img src={menuLogo} alt="logo" />
             </div>
           </Header>
           <Header height="auto" gutter={[0, 0]}>
