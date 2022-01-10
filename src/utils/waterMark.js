@@ -18,11 +18,12 @@ class Watermark {
     rotate = '30',
     watermarkImg = '',
     isUseUserNameText = false,
+    isUseUserAccountText = false,
     fontSize = '20',
   }) => {
     this.container = container;
     let base64Url = watermarkImg;
-    if (!watermarkImg || isUseUserNameText) {
+    if (!watermarkImg || isUseUserNameText || isUseUserAccountText) {
       const canvas = document.createElement('canvas');
       canvas.setAttribute('width', width);
       canvas.setAttribute('height', height);
@@ -38,7 +39,7 @@ class Watermark {
       base64Url = canvas.toDataURL();
     }
 
-    const __wm = document.getElementById('__watermark-base__');
+    let __wm = document.getElementById('__watermark-base__');
 
     if (!__wm) {
       const watermarkDiv = document.createElement('div');
@@ -62,7 +63,7 @@ class Watermark {
       /** 监听dom变化 */
       if (MutationObserver) {
         this.mo = new MutationObserver(() => {
-          const __wm = document.getElementById('__watermark-base__');
+          __wm = document.getElementById('__watermark-base__');
           // 只在__wm元素变动才重新调用 __canvasWM
           if ((__wm && __wm.getAttribute('style') !== styleStr) || !__wm) {
             // 避免一直触发

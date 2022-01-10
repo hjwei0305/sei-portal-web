@@ -100,23 +100,19 @@ export default class Login extends Component {
       <div className={styles['container-box']}>
         <div className={cls('form-logo', 'horizontal')}>
           <Animate type="fadeInLeft" delay={400}>
-            S
+            U
           </Animate>
           <Animate type="tada" delay={800} duration={2000}>
-            E
+            A
           </Animate>
           <Animate type="fadeInRight" delay={400}>
-            I
+            P
           </Animate>
         </div>
         <div className="login-form-title vertical">
           <Animate type="flipInY" delay={600}>
-            <div className="title">
-              <FormattedMessage id="app.title" defaultMessage="业务协同平台" />
-            </div>
-            <div className="desc">
-              <FormattedMessage id="app.subtitle" defaultMessage="智慧创造价值 专业赢得信赖" />
-            </div>
+            <div className="title">统一应用平台</div>
+            <div className="desc">努力超越 追求卓越</div>
           </Animate>
         </div>
         <LoginForm
