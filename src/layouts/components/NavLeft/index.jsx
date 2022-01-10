@@ -9,7 +9,7 @@ import { eventBus } from '@/utils';
 import MenuSearch from '@/components/MenuSearch';
 import FavoriteMenu from '@/components/FavoriteMenu';
 import logo from '../../../assets/logo.png';
-// import collapsedLogo from '../../../assets/logo_notxt@2x.png';
+import collapsedLogo from '../../../assets/logo_notxt.png';
 
 import styles from './index.less';
 
@@ -150,16 +150,16 @@ class NavLeft extends React.Component {
       favoriteMenus,
       onCollapse,
       onSelectSearchMenu,
-      // tenantSetting,
+      tenantSetting,
     } = this.props;
-    // const collapsedMenuLogo = collapsedLogo;
-    const menuLogo = logo;
-    // if (tenantSetting && tenantSetting.logo) {
-    //   const logoObj = JSON.parse(tenantSetting.logo);
-    //   if (!logoObj.disabled) {
-    //     ({ collapsedMenuLogo, menuLogo } = logoObj);
-    //   }
-    // }
+    let collapsedMenuLogo = collapsedLogo;
+    let menuLogo = logo;
+    if (tenantSetting && tenantSetting.logo) {
+      const logoObj = JSON.parse(tenantSetting.logo);
+      if (!logoObj.disabled) {
+        ({ collapsedMenuLogo, menuLogo } = logoObj);
+      }
+    }
     return (
       <div
         className={cls({
@@ -170,7 +170,7 @@ class NavLeft extends React.Component {
         <ProLayout>
           <Header height={56} gutter={[0, 0]} style={{ padding: 0 }}>
             <div className="layout-logo" onClick={this.handleLogoClick}>
-              <img src={menuLogo} alt="logo" />
+              <img src={collapsed ? collapsedMenuLogo : menuLogo} alt="logo" />
             </div>
           </Header>
           <Header height="auto" gutter={[0, 0]}>
