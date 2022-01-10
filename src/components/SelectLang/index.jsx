@@ -1,8 +1,7 @@
-import { Icon, Menu } from 'antd';
+import { Icon, Menu, Dropdown } from 'antd';
 import { formatMessage, getLocale, setLocale } from 'umi-plugin-react/locale';
 import React from 'react';
 import cls from 'classnames';
-import ExtDropdown from '@/components/ExtDropdown';
 import { userInfoOperation } from '@/utils';
 
 import styles from './index.less';
@@ -40,13 +39,13 @@ const SelectLang = props => {
   );
 
   return (
-    <ExtDropdown overlay={langMenu} className={cls(styles.trigger)}>
+    <Dropdown trigger={['click']} overlay={langMenu} className={cls(styles.trigger)}>
       <span className={cls(styles.dropDown, className)}>
         <Icon type="global" title={formatMessage({ id: 'app.lang', desc: '语种' })} />
         <span style={{ fontSize: 12 }}>{languageLabels[selectedLang]}</span>
         <Icon type="down" title={formatMessage({ id: 'app.lang', desc: '语种' })} />
       </span>
-    </ExtDropdown>
+    </Dropdown>
   );
 };
 

@@ -2,8 +2,9 @@
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
  * @Last Modified by: Eason
- * @Last Modified time: 2021-12-27 08:40:49
+ * @Last Modified time: 2022-01-10 15:43:43
  */
+import { take as takeLeft } from 'lodash';
 import { router } from 'umi';
 import { notification } from 'antd';
 import { setLocale } from 'umi-plugin-react/locale';
@@ -57,6 +58,7 @@ export default {
     qrConfig: null,
     tenantSetting: null,
     showLog: false,
+    userData: storage.localStorage.get(LOCALE_USER_LIST_KEY) || [],
   },
 
   subscriptions: {
@@ -70,14 +72,16 @@ export default {
   },
 
   effects: {
-    *processUser({ payload }, { put, call }) {
+    *processUser({ payload }, { put, call, select }) {
+      const { userData: originUserData } = yield select(sel => sel.user);
       const { userInfo } = payload;
       const { sessionId, locale, authorityPolicy, account, userName } = userInfo || {};
-      const userData = storage.localStorage.get(LOCALE_USER_LIST_KEY) || [];
+      let userData = [...originUserData];
       const localUsers = userData.filter(u => u.account === account);
       if (localUsers.length === 0) {
         userData.unshift({ account, userName });
       }
+      userData = takeLeft(userData, 5);
       storage.localStorage.set(LOCALE_USER_LIST_KEY, userData);
       setSessionId(sessionId);
       setCurrentPolicy(authorityPolicy);
@@ -101,6 +105,7 @@ export default {
       yield put({
         type: 'updateState',
         payload: {
+          userData,
           userInfo: {
             preferences,
             ...userInfo,

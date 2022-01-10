@@ -15,12 +15,16 @@ import styles from './index.less';
 @connect(({ user, loading }) => ({ user, loading }))
 @Form.create()
 export default class Login extends Component {
-  state = {
-    showTenant: false,
-    showVertifCode: false,
-  };
+  static loginReqId;
 
-  loginReqId = utils.getUUID();
+  constructor(props) {
+    super(props);
+    this.loginReqId = utils.getUUID();
+    this.state = {
+      showTenant: false,
+      showVertifCode: false,
+    };
+  }
 
   componentDidMount() {
     waterMark.removeWatermark();
@@ -89,10 +93,9 @@ export default class Login extends Component {
 
   render() {
     const { loading, user } = this.props;
-    const { verifyCode } = user;
+    const { verifyCode, userData } = user;
     const { showTenant, showVertifCode } = this.state;
     const isLoading = loading.effects['user/userLogin'];
-
     return (
       <div className={styles['container-box']}>
         <div className={cls('form-logo', 'horizontal')}>
@@ -125,6 +128,7 @@ export default class Login extends Component {
           loading={isLoading}
           showTenant={showTenant}
           showVertifCode={showVertifCode}
+          userData={userData}
         >
           <Button
             loading={isLoading}

@@ -53,10 +53,15 @@ class LoginForm extends Component {
   };
 
   handlerDeleteLocalAccount = account => {
-    const userData = storage.localStorage.get(LOCALE_USER_LIST_KEY) || [];
-    const localUsers = userData.filter(u => u.account !== account);
-    storage.localStorage.set(LOCALE_USER_LIST_KEY, localUsers);
-    this.forceUpdate();
+    const { dispatch, userData: originUserData } = this.props;
+    const userData = originUserData.filter(u => u.account !== account);
+    storage.localStorage.set(LOCALE_USER_LIST_KEY, userData);
+    dispatch({
+      type: 'user/updateState',
+      payload: {
+        userData,
+      },
+    });
   };
 
   handlerSelectAccount = e => {
@@ -97,8 +102,7 @@ class LoginForm extends Component {
   };
 
   renderUserMore = () => {
-    const { timeoutLogin = false } = this.props;
-    const userData = storage.localStorage.get(LOCALE_USER_LIST_KEY) || [];
+    const { timeoutLogin = false, userData } = this.props;
     if (!timeoutLogin && userData.length > 0) {
       return (
         <Dropdown
