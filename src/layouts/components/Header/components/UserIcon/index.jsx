@@ -22,14 +22,17 @@ class UserIcon extends React.Component {
   }
 
   refreshCredit = () => {
-    const { dispatch, loading } = this.props;
-    const creditLoading = loading.effects['user/refreshCredit'];
-    if (creditLoading) {
-      return false;
+    const { dispatch, loading, user } = this.props;
+    const { enableCredit } = user;
+    if (enableCredit) {
+      const creditLoading = loading.effects['user/refreshCredit'];
+      if (creditLoading) {
+        return false;
+      }
+      dispatch({
+        type: 'user/refreshCredit',
+      });
     }
-    dispatch({
-      type: 'user/refreshCredit',
-    });
   };
 
   handleClick = () => {
@@ -169,6 +172,9 @@ class UserIcon extends React.Component {
   };
 
   dropdownRender = () => {
+    const {
+      user: { enableCredit },
+    } = this.props;
     const menu = (
       <Menu
         onClick={({ key }) => {
@@ -192,9 +198,11 @@ class UserIcon extends React.Component {
         selectedKeys={[]}
         className={cls(styles['user-menu-item'])}
       >
-        <Menu.Item key="credit" className="credit-box">
-          {this.renderUserCredit()}
-        </Menu.Item>
+        {enableCredit && (
+          <Menu.Item key="credit" className="credit-box">
+            {this.renderUserCredit()}
+          </Menu.Item>
+        )}
         <Menu.Item key="setting">
           <Icon type="setting" />
           {formatMessage({ id: 'app.user.setting', defaultMessage: '个人设置' })}

@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-01-16 09:17:05
- * @Last Modified by: Eason
- * @Last Modified time: 2022-01-10 15:44:39
+ * @Last Modified by: zp
+ * @Last Modified time: 2022-03-01 16:10:01
  */
 import { take as takeLeft } from 'lodash';
 import { router } from 'umi';
@@ -26,6 +26,7 @@ import {
   findpwd,
   checkExisted,
   getCurrentUserCredit,
+  enableCreditManagement,
 } from '@/services/user';
 import { userInfoOperation, eventBus, waterMark, CONSTANTS } from '@/utils';
 
@@ -58,6 +59,7 @@ export default {
     qrConfig: null,
     tenantSetting: null,
     showLog: false,
+    enableCredit: false,
     userData: storage.localStorage.get(LOCALE_USER_LIST_KEY) || [],
   },
 
@@ -88,7 +90,18 @@ export default {
       setCurrentLocale(adaptLocale(locale || 'zh_CN'));
       setLocale(adaptLocale(locale || 'zh_CN'));
       const resultPreferences = yield call(getPreferences);
-      const creditResult = yield call(getCurrentUserCredit);
+      const enableCreditResult = yield call(enableCreditManagement);
+      let enableCredit = false;
+      let credit = null;
+      if (enableCreditResult && enableCreditResult.success) {
+        enableCredit = !!enableCreditResult.data;
+      }
+      if (enableCredit) {
+        const creditResult = yield call(getCurrentUserCredit);
+        if (creditResult.success) {
+          credit = creditResult.data;
+        }
+      }
       const preferences = { portrait: defaultHeadIcon };
       if (resultPreferences.success) {
         try {
@@ -98,14 +111,11 @@ export default {
           Object.assign(preferences, { portrait: resultPreferences.data || defaultHeadIcon });
         }
       }
-      let credit = null;
-      if (creditResult.success) {
-        credit = creditResult.data;
-      }
       yield put({
         type: 'updateState',
         payload: {
           userData,
+          enableCredit,
           userInfo: {
             preferences,
             ...userInfo,
