@@ -95,7 +95,6 @@ class Iframe extends Component {
       [styles['iframe-wrap_hidden']]: !visible,
       [styles['iframe-wrap_loading']]: loading,
     });
-
     return (
       <div key={id} className={className} id={`np_${id}`}>
         {loading && <PageLoader className="iframe-wrap-loading" size="large" tip="加载中..." />}
