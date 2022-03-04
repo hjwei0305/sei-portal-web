@@ -22,10 +22,6 @@ export default class index extends PureComponent {
 
   static msgElm = null;
 
-  cateGoryMap = {};
-
-  TabKey = '';
-
   constructor(props) {
     super(props);
     this.state = {
@@ -53,10 +49,15 @@ export default class index extends PureComponent {
       const { data, success } = result;
       if (success && data) {
         this.msg = data;
-        this.setState({
-          isDetail: true,
-          isFirst: true,
+        eventBus.emit('openTab', {
+          id: this.msg.id,
+          title: '用户消息',
+          url: `/sei-notify-web/message/msgDetail?detailId=${this.msg.id}&category=${this.msg.category}`,
         });
+        // this.setState({
+        //   isDetail: true,
+        //   isFirst: true,
+        // });
       }
     });
     getCategory().then(result => {
@@ -64,6 +65,10 @@ export default class index extends PureComponent {
       if (success) {
         this.cateGoryMap = data || {};
       }
+    });
+
+    eventBus.on('messageCountChange', () => {
+      this.getMessageCount();
     });
   }
 
@@ -76,6 +81,10 @@ export default class index extends PureComponent {
       focus.unbind(this.msgElm, this.handleOutside);
     }
   }
+
+  cateGoryMap = {};
+
+  TabKey = '';
 
   handleOutside = () => {
     setTimeout(() => {
@@ -115,20 +124,25 @@ export default class index extends PureComponent {
   };
 
   handleViewDetail = (item, e) => {
-    const { onViewDetail } = this.props;
+    // const { onViewDetail } = this.props;
     this.msg = item;
-    this.setState(
-      {
-        isDetail: true,
-        isFirst: false,
-        visible: false,
-      },
-      () => {
-        if (onViewDetail) {
-          onViewDetail(item);
-        }
-      },
-    );
+    eventBus.emit('openTab', {
+      id: this.msg.id,
+      title: '用户消息',
+      url: `/sei-notify-web/message/msgDetail?detailId=${this.msg.id}&category=${this.msg.category}`,
+    });
+    // this.setState(
+    //   {
+    //     isDetail: true,
+    //     isFirst: false,
+    //     visible: false,
+    //   },
+    //   () => {
+    //     if (onViewDetail) {
+    //       onViewDetail(item);
+    //     }
+    //   },
+    // );
     e.stopPropagation();
   };
 

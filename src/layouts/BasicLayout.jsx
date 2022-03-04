@@ -329,7 +329,7 @@ export default class BasicLayout extends React.Component {
       moreTabData,
       favoriteMenus,
     } = menu;
-    const { tenantSetting, showLog } = user;
+    const { tenantSetting, showLog, enableCredit } = user;
     const isSubAppRouter = this.isSubAppRouter();
     let activedKey = '';
     let title = formatMessage({ id: 'app.dashboard', desc: '平台首页' });
@@ -448,7 +448,7 @@ export default class BasicLayout extends React.Component {
             />
           ) : null}
         </section>
-        <CreditLog showLog={showLog} closeLog={this.handlerCloseLog} />
+        {enableCredit && <CreditLog showLog={showLog} closeLog={this.handlerCloseLog} />}
       </ScrollBar>
     );
   }

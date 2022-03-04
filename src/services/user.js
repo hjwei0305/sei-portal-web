@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-01-16 09:17:57
- * @Last Modified by: Eason
- * @Last Modified time: 2021-09-22 08:15:17
+ * @Last Modified by: zp
+ * @Last Modified time: 2022-03-01 15:58:24
  */
 import { request, CONSTANTS } from '@/utils';
 
@@ -194,5 +194,12 @@ export const findpwd = ({ id, newPassword, verifyCode }) =>
 export async function getCurrentUserCredit() {
   return request({
     url: `${BASEURL}/soms-v6/employeeCredit/findCurrentUserCredit`,
+  });
+}
+
+/** 当前租户是否启用信用管理 */
+export async function enableCreditManagement() {
+  return request({
+    url: `${BASICSERVICE}/tenant/enableCreditManagement`,
   });
 }
