@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
+import { noop, startsWith, endsWith } from 'lodash';
 import classNames from 'classnames';
 import NProgress from 'nprogress';
-// import { Spin } from 'antd';
 import { PageLoader } from 'suid';
-import { noop } from 'lodash';
+import { userInfoOperation } from '@/utils';
 import styles from './index.less';
-
 import 'nprogress/nprogress.css';
 
+const { getCurrentUser } = userInfoOperation;
+
 class Iframe extends Component {
-  refIframe = null;
+  static refIframe = null;
 
   static propTypes = {
     /** iframe 加载成功后的回调函数 */
@@ -76,9 +77,19 @@ class Iframe extends Component {
   };
 
   render() {
-    const { url = '', visible, id, title } = this.props;
+    const { url: originUrl = '', visible, id, title } = this.props;
     const { loading } = this.state;
-
+    let url = originUrl;
+    if (startsWith(url, 'http')) {
+      const { sessionId } = getCurrentUser();
+      if (url.split('?').length === 2) {
+        url = `${url}&sid=${sessionId}`;
+      } else if (endsWith(url, '/')) {
+        url = `${url}?sid=${sessionId}`;
+      } else {
+        url = `${url}/?sid=${sessionId}`;
+      }
+    }
     const className = classNames({
       [styles['iframe-wrap']]: true,
       [styles['iframe-wrap_hidden']]: !visible,
