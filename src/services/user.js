@@ -88,7 +88,7 @@ export async function getVerifyCode(reqId) {
 /** 获取生成二维码配置信息 */
 export async function authorizeData(authType = 'weChat') {
   return request({
-    method: 'GET',
+    method: 'POST',
     url: `${SEIAUTHSERVICE}/sso/authorizeData?authType=${authType}`,
     headers: {
       needToken: false,
