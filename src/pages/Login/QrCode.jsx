@@ -8,9 +8,9 @@ import webChatBase64 from '@/assets/wechat.logo.png';
 class QrCode extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'user/authorizeData',
-    });
+    //dispatch({
+      //type: 'user/authorizeData',
+    //});
   }
 
   handleClick = () => {
